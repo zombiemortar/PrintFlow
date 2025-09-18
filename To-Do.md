@@ -96,8 +96,10 @@ This is a Java program.
       - System configuration impact on pricing
     - All integration tests pass successfully, demonstrating complete end-to-end functionality
 
-23. **Create performance tests**
-    - Test system behavior with large order volumes
+23. **Create performance tests** (Done)
+   - Test system behavior with large order volumes
+   - Added `PerformanceTest` covering high-volume creation/queueing, batch price calculations, and time estimation stability
+   - Integrated into `ComprehensiveTestRunner`; all tests pass successfully
 
 24. **Generate code coverage reports**
     - Ensure adequate testing coverage

@@ -1,0 +1,2270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="JUnit Jupiter" tests="368" skipped="0" failures="0" errors="0" time="0.5" hostname="DarkStar" timestamp="2025-09-18T10:06:28">
+<properties>
+<property name="file.encoding" value="UTF-8"/>
+<property name="file.separator" value="\"/>
+<property name="java.class.path" value=".;lib\junit-platform-console-standalone-1.10.2.jar"/>
+<property name="java.class.version" value="67.0"/>
+<property name="java.home" value="C:\Program Files\Java\jdk-23"/>
+<property name="java.io.tmpdir" value="C:\Users\zombi\AppData\Local\Temp\"/>
+<property name="java.library.path" value="C:\Program Files\Java\jdk-23\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\NVIDIA Corporation\NVIDIA app\NvDLISR;C:\Program Files\Git\cmd;C:\Program Files\Git\bin;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs\;C:\Program Files\dotnet\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\PuTTY\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\NVIDIA Corporation\NVIDIA app\NvDLISR;C:\Program Files\Git\cmd;C:\Program Files\Git\bin;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs\;C:\Users\zombi\AppData\Local\Programs\Python\Launcher\;C:\Users\zombi\AppData\Local\Microsoft\WindowsApps;C:\Users\zombi\.dotnet\tools;C:\Program Files\JetBrains\IntelliJ IDEA 2024.3.4.1\bin;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.3.4.1\bin;C:\Users\zombi\AppData\Local\Programs\Python\Python313;C:\Users\zombi\AppData\Local\GitHubDesktop\bin;C:\Users\zombi\AppData\Local\Programs\Microsoft VS Code\bin;C:\xampp\php\;C:\Users\zombi\AppData\Roaming\npm;C:\Users\zombi\AppData\Roaming\npm;C:\Users\zombi\AppData\Roaming\npm;c:\users\zombi\appdata\local\packages\pythonsoftwarefoundation.python.3.13_qbz5n2kfra8p0\localcache\local-packages\python313\scripts;c:\users\zombi\.local\bin;C:\Users\zombi\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\zombi\.dotnet\tools;C:\Users\zombi\AppData\Local\Programs\MiKTeX\miktex\bin\x64\;."/>
+<property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+<property name="java.runtime.version" value="23.0.2+7-58"/>
+<property name="java.specification.name" value="Java Platform API Specification"/>
+<property name="java.specification.vendor" value="Oracle Corporation"/>
+<property name="java.specification.version" value="23"/>
+<property name="java.vendor" value="Oracle Corporation"/>
+<property name="java.vendor.url" value="https://java.oracle.com/"/>
+<property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+<property name="java.version" value="23.0.2"/>
+<property name="java.version.date" value="2025-01-21"/>
+<property name="java.vm.compressedOopsMode" value="Zero based"/>
+<property name="java.vm.info" value="mixed mode, sharing"/>
+<property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+<property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+<property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+<property name="java.vm.specification.version" value="23"/>
+<property name="java.vm.vendor" value="Oracle Corporation"/>
+<property name="java.vm.version" value="23.0.2+7-58"/>
+<property name="jdk.debug" value="release"/>
+<property name="line.separator" value="
+"/>
+<property name="native.encoding" value="Cp1252"/>
+<property name="os.arch" value="amd64"/>
+<property name="os.name" value="Windows 11"/>
+<property name="os.version" value="10.0"/>
+<property name="path.separator" value=";"/>
+<property name="stderr.encoding" value="cp437"/>
+<property name="stdout.encoding" value="cp437"/>
+<property name="sun.arch.data.model" value="64"/>
+<property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-23\bin"/>
+<property name="sun.cpu.endian" value="little"/>
+<property name="sun.cpu.isalist" value="amd64"/>
+<property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+<property name="sun.java.command" value="JUnitTestRunner"/>
+<property name="sun.java.launcher" value="SUN_STANDARD"/>
+<property name="sun.jnu.encoding" value="Cp1252"/>
+<property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+<property name="sun.os.patch.level" value=""/>
+<property name="user.country" value="US"/>
+<property name="user.dir" value="C:\Users\zombi\OneDrive\Desktop\CSC 3100 Data Structures and Algorithms\10_Course Project\Project"/>
+<property name="user.home" value="C:\Users\zombi"/>
+<property name="user.language" value="en"/>
+<property name="user.name" value="zombi"/>
+<property name="user.script" value=""/>
+<property name="user.timezone" value="America/New_York"/>
+<property name="user.variant" value=""/>
+</properties>
+<testcase name="testGetConfigurationSummaryAfterChanges()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testGetConfigurationSummaryAfterChanges()]
+display-name: testGetConfigurationSummaryAfterChanges()
+]]></system-out>
+</testcase>
+<testcase name="testGetOrderByIdZeroId()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testGetOrderByIdZeroId()]
+display-name: testGetOrderByIdZeroId()
+]]></system-out>
+</testcase>
+<testcase name="testSpecialInstructionsGetterAndSetter()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testSpecialInstructionsGetterAndSetter()]
+display-name: testSpecialInstructionsGetterAndSetter()
+]]></system-out>
+</testcase>
+<testcase name="testCalculatePriceWithZeroQuantity()" classname="OrderTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testCalculatePriceWithZeroQuantity()]
+display-name: testCalculatePriceWithZeroQuantity()
+]]></system-out>
+</testcase>
+<testcase name="testDefaultConstructor()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testDefaultConstructor()]
+display-name: testDefaultConstructor()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidOrderExceptionWithNullMessage()" classname="ExceptionClassesTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidOrderExceptionWithNullMessage()]
+display-name: testInvalidOrderExceptionWithNullMessage()
+]]></system-out>
+</testcase>
+<testcase name="testSetTaxRateValidValue()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetTaxRateValidValue()]
+display-name: testSetTaxRateValidValue()
+]]></system-out>
+</testcase>
+<testcase name="testUpdateStatusWithNull()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testUpdateStatusWithNull()]
+display-name: testUpdateStatusWithNull()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidMaterialExceptionDefaultConstructor()" classname="ExceptionClassesTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidMaterialExceptionDefaultConstructor()]
+display-name: testInvalidMaterialExceptionDefaultConstructor()
+]]></system-out>
+</testcase>
+<testcase name="testSetPriorityValidInput()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testSetPriorityValidInput()]
+display-name: testSetPriorityValidInput()
+]]></system-out>
+</testcase>
+<testcase name="testInsufficientMaterialExceptionInheritance()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInsufficientMaterialExceptionInheritance()]
+display-name: testInsufficientMaterialExceptionInheritance()
+]]></system-out>
+</testcase>
+<testcase name="testInvoiceWithOrderHavingLargeQuantity()" classname="InvoiceTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testInvoiceWithOrderHavingLargeQuantity()]
+display-name: testInvoiceWithOrderHavingLargeQuantity()
+]]></system-out>
+</testcase>
+<testcase name="testAddMaterialWithSpecialCharacters()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testAddMaterialWithSpecialCharacters()]
+display-name: testAddMaterialWithSpecialCharacters()
+]]></system-out>
+</testcase>
+<testcase name="testEnqueueOrderFIFOOrder()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testEnqueueOrderFIFOOrder()]
+display-name: testEnqueueOrderFIFOOrder()
+]]></system-out>
+</testcase>
+<testcase name="testGenerateSummaryWithNullOrder()" classname="InvoiceTest" time="0.002">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testGenerateSummaryWithNullOrder()]
+display-name: testGenerateSummaryWithNullOrder()
+]]></system-out>
+</testcase>
+<testcase name="testOrderWithVeryLargeQuantity()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testOrderWithVeryLargeQuantity()]
+display-name: testOrderWithVeryLargeQuantity()
+]]></system-out>
+</testcase>
+<testcase name="testAddMaterialWithVeryHighTemperature()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testAddMaterialWithVeryHighTemperature()]
+display-name: testAddMaterialWithVeryHighTemperature()
+]]></system-out>
+</testcase>
+<testcase name="testEstimatePrintTimeHoursWithSmallDimensions()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testEstimatePrintTimeHoursWithSmallDimensions()]
+display-name: testEstimatePrintTimeHoursWithSmallDimensions()
+]]></system-out>
+</testcase>
+<testcase name="testSystemConfigWithIntegerMaxValue()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSystemConfigWithIntegerMaxValue()]
+display-name: testSystemConfigWithIntegerMaxValue()
+]]></system-out>
+</testcase>
+<testcase name="testEstimatePrintTimeHoursWithInvalidDimensions()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testEstimatePrintTimeHoursWithInvalidDimensions()]
+display-name: testEstimatePrintTimeHoursWithInvalidDimensions()
+]]></system-out>
+</testcase>
+<testcase name="testGetTaxRateDefault()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testGetTaxRateDefault()]
+display-name: testGetTaxRateDefault()
+]]></system-out>
+</testcase>
+<testcase name="testSubmitOrderWithEmptyStringInstructions()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testSubmitOrderWithEmptyStringInstructions()]
+display-name: testSubmitOrderWithEmptyStringInstructions()
+]]></system-out>
+</testcase>
+<testcase name="testOrderGetterAndSetter()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testOrderGetterAndSetter()]
+display-name: testOrderGetterAndSetter()
+]]></system-out>
+</testcase>
+<testcase name="testGetOrderByIdNonExistentId()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testGetOrderByIdNonExistentId()]
+display-name: testGetOrderByIdNonExistentId()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidMaterialExceptionWithWhitespaceMessage()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidMaterialExceptionWithWhitespaceMessage()]
+display-name: testInvalidMaterialExceptionWithWhitespaceMessage()
+]]></system-out>
+</testcase>
+<testcase name="testRegisterOrderOverwritesExisting()" classname="OrderManagerTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testRegisterOrderOverwritesExisting()]
+display-name: testRegisterOrderOverwritesExisting()
+]]></system-out>
+</testcase>
+<testcase name="testInventoryWithWhitespaceInMaterialName()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testInventoryWithWhitespaceInMaterialName()]
+display-name: testInventoryWithWhitespaceInMaterialName()
+]]></system-out>
+</testcase>
+<testcase name="testGetAllOrdersReturnsNewArray()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testGetAllOrdersReturnsNewArray()]
+display-name: testGetAllOrdersReturnsNewArray()
+]]></system-out>
+</testcase>
+<testcase name="testAddMaterialWithNegativeTemperature()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testAddMaterialWithNegativeTemperature()]
+display-name: testAddMaterialWithNegativeTemperature()
+]]></system-out>
+</testcase>
+<testcase name="testAddMaterialWithWhitespaceName()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testAddMaterialWithWhitespaceName()]
+display-name: testAddMaterialWithWhitespaceName()
+]]></system-out>
+</testcase>
+<testcase name="testMaterialWithWhitespaceInColor()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testMaterialWithWhitespaceInColor()]
+display-name: testMaterialWithWhitespaceInColor()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidMaterialExceptionWithMessage()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidMaterialExceptionWithMessage()]
+display-name: testInvalidMaterialExceptionWithMessage()
+]]></system-out>
+</testcase>
+<testcase name="testCalculatePriceBasicOrder()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testCalculatePriceBasicOrder()]
+display-name: testCalculatePriceBasicOrder()
+]]></system-out>
+</testcase>
+<testcase name="testConsumeValidAmount()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testConsumeValidAmount()]
+display-name: testConsumeValidAmount()
+]]></system-out>
+</testcase>
+<testcase name="testConstructorWithNullOrder()" classname="InvoiceTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testConstructorWithNullOrder()]
+display-name: testConstructorWithNullOrder()
+]]></system-out>
+</testcase>
+<testcase name="testDefaultConstructor()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testDefaultConstructor()]
+display-name: testDefaultConstructor()
+]]></system-out>
+</testcase>
+<testcase name="testToString()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testToString()]
+display-name: testToString()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidOrderExceptionWithUnicodeCharacters()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidOrderExceptionWithUnicodeCharacters()]
+display-name: testInvalidOrderExceptionWithUnicodeCharacters()
+]]></system-out>
+</testcase>
+<testcase name="testInsufficientMaterialExceptionWithEmptyMessage()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInsufficientMaterialExceptionWithEmptyMessage()]
+display-name: testInsufficientMaterialExceptionWithEmptyMessage()
+]]></system-out>
+</testcase>
+<testcase name="testSetElectricityCostPerHourValidValue()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetElectricityCostPerHourValidValue()]
+display-name: testSetElectricityCostPerHourValidValue()
+]]></system-out>
+</testcase>
+<testcase name="testConstructorWithZeroCost()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testConstructorWithZeroCost()]
+display-name: testConstructorWithZeroCost()
+]]></system-out>
+</testcase>
+<testcase name="testGenerateSummaryWithNullMaterial()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testGenerateSummaryWithNullMaterial()]
+display-name: testGenerateSummaryWithNullMaterial()
+]]></system-out>
+</testcase>
+<testcase name="testGetQueueSizeMultipleOrders()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testGetQueueSizeMultipleOrders()]
+display-name: testGetQueueSizeMultipleOrders()
+]]></system-out>
+</testcase>
+<testcase name="testSetElectricityCostPerHourZero()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetElectricityCostPerHourZero()]
+display-name: testSetElectricityCostPerHourZero()
+]]></system-out>
+</testcase>
+<testcase name="testToStringWithNullValues()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testToStringWithNullValues()]
+display-name: testToStringWithNullValues()
+]]></system-out>
+</testcase>
+<testcase name="testAddMaterialWithNegativeCost()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testAddMaterialWithNegativeCost()]
+display-name: testAddMaterialWithNegativeCost()
+]]></system-out>
+</testcase>
+<testcase name="testSetStockValidInput()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testSetStockValidInput()]
+display-name: testSetStockValidInput()
+]]></system-out>
+</testcase>
+<testcase name="testGetOrderByIdNegativeId()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testGetOrderByIdNegativeId()]
+display-name: testGetOrderByIdNegativeId()
+]]></system-out>
+</testcase>
+<testcase name="testInsufficientMaterialExceptionDefaultConstructor()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInsufficientMaterialExceptionDefaultConstructor()]
+display-name: testInsufficientMaterialExceptionDefaultConstructor()
+]]></system-out>
+</testcase>
+<testcase name="testDateIssuedGetterAndSetter()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testDateIssuedGetterAndSetter()]
+display-name: testDateIssuedGetterAndSetter()
+]]></system-out>
+</testcase>
+<testcase name="testInsufficientMaterialExceptionWithMessage()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInsufficientMaterialExceptionWithMessage()]
+display-name: testInsufficientMaterialExceptionWithMessage()
+]]></system-out>
+</testcase>
+<testcase name="testSetMachineTimeCostPerHourNegative()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetMachineTimeCostPerHourNegative()]
+display-name: testSetMachineTimeCostPerHourNegative()
+]]></system-out>
+</testcase>
+<testcase name="testConsumeZeroAmount()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testConsumeZeroAmount()]
+display-name: testConsumeZeroAmount()
+]]></system-out>
+</testcase>
+<testcase name="testInventoryWithNullMaterialName()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testInventoryWithNullMaterialName()]
+display-name: testInventoryWithNullMaterialName()
+]]></system-out>
+</testcase>
+<testcase name="testGetStockExistingMaterial()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testGetStockExistingMaterial()]
+display-name: testGetStockExistingMaterial()
+]]></system-out>
+</testcase>
+<testcase name="testConstructorWithNullValues()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testConstructorWithNullValues()]
+display-name: testConstructorWithNullValues()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidOrderExceptionWithSpecialCharacters()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidOrderExceptionWithSpecialCharacters()]
+display-name: testInvalidOrderExceptionWithSpecialCharacters()
+]]></system-out>
+</testcase>
+<testcase name="testExportInvoiceWithNullMaterial()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testExportInvoiceWithNullMaterial()]
+display-name: testExportInvoiceWithNullMaterial()
+]]></system-out>
+</testcase>
+<testcase name="testSetNameWithNull()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testSetNameWithNull()]
+display-name: testSetNameWithNull()
+]]></system-out>
+</testcase>
+<testcase name="testOrderManagerWithNullOrderProperties()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testOrderManagerWithNullOrderProperties()]
+display-name: testOrderManagerWithNullOrderProperties()
+]]></system-out>
+</testcase>
+<testcase name="testCalculatePriceWithVipDiscount()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testCalculatePriceWithVipDiscount()]
+display-name: testCalculatePriceWithVipDiscount()
+]]></system-out>
+</testcase>
+<testcase name="testConstructorWithNegativeValues()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testConstructorWithNegativeValues()]
+display-name: testConstructorWithNegativeValues()
+]]></system-out>
+</testcase>
+<testcase name="testSetDateIssuedWithNull()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testSetDateIssuedWithNull()]
+display-name: testSetDateIssuedWithNull()
+]]></system-out>
+</testcase>
+<testcase name="testHighVolumeOrderCreationAndQueueing()" classname="PerformanceTest" time="0.005">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:PerformanceTest]/[method:testHighVolumeOrderCreationAndQueueing()]
+display-name: testHighVolumeOrderCreationAndQueueing()
+]]></system-out>
+</testcase>
+<testcase name="testCalculatePriceWithRushSurcharge()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testCalculatePriceWithRushSurcharge()]
+display-name: testCalculatePriceWithRushSurcharge()
+]]></system-out>
+</testcase>
+<testcase name="testQuantityGetterAndSetter()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testQuantityGetterAndSetter()]
+display-name: testQuantityGetterAndSetter()
+]]></system-out>
+</testcase>
+<testcase name="testInheritedMethods()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testInheritedMethods()]
+display-name: testInheritedMethods()
+]]></system-out>
+</testcase>
+<testcase name="testGenerateSummaryWithNullUser()" classname="InvoiceTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testGenerateSummaryWithNullUser()]
+display-name: testGenerateSummaryWithNullUser()
+]]></system-out>
+</testcase>
+<testcase name="testParameterizedConstructor()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testParameterizedConstructor()]
+display-name: testParameterizedConstructor()
+]]></system-out>
+</testcase>
+<testcase name="testOrderIDIncrement()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testOrderIDIncrement()]
+display-name: testOrderIDIncrement()
+]]></system-out>
+</testcase>
+<testcase name="testHasSufficientWithDefaultStock()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testHasSufficientWithDefaultStock()]
+display-name: testHasSufficientWithDefaultStock()
+]]></system-out>
+</testcase>
+<testcase name="testSetCostPerGramWithNegativeValue()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testSetCostPerGramWithNegativeValue()]
+display-name: testSetCostPerGramWithNegativeValue()
+]]></system-out>
+</testcase>
+<testcase name="testEnqueueOrderWithNull()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testEnqueueOrderWithNull()]
+display-name: testEnqueueOrderWithNull()
+]]></system-out>
+</testcase>
+<testcase name="testAddMaterialSetsDefaultStock()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testAddMaterialSetsDefaultStock()]
+display-name: testAddMaterialSetsDefaultStock()
+]]></system-out>
+</testcase>
+<testcase name="testHasSufficientWithZeroStock()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testHasSufficientWithZeroStock()]
+display-name: testHasSufficientWithZeroStock()
+]]></system-out>
+</testcase>
+<testcase name="testMaterialWithVeryLowTemperature()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testMaterialWithVeryLowTemperature()]
+display-name: testMaterialWithVeryLowTemperature()
+]]></system-out>
+</testcase>
+<testcase name="testToString()" classname="OrderTest" time="0.004">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testToString()]
+display-name: testToString()
+]]></system-out>
+</testcase>
+<testcase name="testInvoiceWithVeryPreciseCost()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testInvoiceWithVeryPreciseCost()]
+display-name: testInvoiceWithVeryPreciseCost()
+]]></system-out>
+</testcase>
+<testcase name="testUpdateStatusTrimsWhitespace()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testUpdateStatusTrimsWhitespace()]
+display-name: testUpdateStatusTrimsWhitespace()
+]]></system-out>
+</testcase>
+<testcase name="testUsernameGetterAndSetter()" classname="UserTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testUsernameGetterAndSetter()]
+display-name: testUsernameGetterAndSetter()
+]]></system-out>
+</testcase>
+<testcase name="testMaterialWithDecimalPrecision()" classname="MaterialTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testMaterialWithDecimalPrecision()]
+display-name: testMaterialWithDecimalPrecision()
+]]></system-out>
+</testcase>
+<testcase name="testInventoryWithMultipleMaterials()" classname="InventoryTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testInventoryWithMultipleMaterials()]
+display-name: testInventoryWithMultipleMaterials()
+]]></system-out>
+</testcase>
+<testcase name="testInventoryWithMaterialNameChanges()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testInventoryWithMaterialNameChanges()]
+display-name: testInventoryWithMaterialNameChanges()
+]]></system-out>
+</testcase>
+<testcase name="testHasSufficientWithNullMaterial()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testHasSufficientWithNullMaterial()]
+display-name: testHasSufficientWithNullMaterial()
+]]></system-out>
+</testcase>
+<testcase name="testSystemConfigWithIntegerMinValue()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSystemConfigWithIntegerMinValue()]
+display-name: testSystemConfigWithIntegerMinValue()
+]]></system-out>
+</testcase>
+<testcase name="testToStringWithEmptyValues()" classname="MaterialTest" time="0.004">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testToStringWithEmptyValues()]
+display-name: testToStringWithEmptyValues()
+]]></system-out>
+</testcase>
+<testcase name="testPrintTimeEstimationStability()" classname="PerformanceTest" time="0.009">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:PerformanceTest]/[method:testPrintTimeEstimationStability()]
+display-name: testPrintTimeEstimationStability()
+]]></system-out>
+</testcase>
+<testcase name="testCalculatePriceWithRushDisabled()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testCalculatePriceWithRushDisabled()]
+display-name: testCalculatePriceWithRushDisabled()
+]]></system-out>
+</testcase>
+<testcase name="testUserGetterAndSetter()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testUserGetterAndSetter()]
+display-name: testUserGetterAndSetter()
+]]></system-out>
+</testcase>
+<testcase name="testSetStockWithNegativeAmount()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testSetStockWithNegativeAmount()]
+display-name: testSetStockWithNegativeAmount()
+]]></system-out>
+</testcase>
+<testcase name="testSetStockZero()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testSetStockZero()]
+display-name: testSetStockZero()
+]]></system-out>
+</testcase>
+<testcase name="testAddMaterialWithNullColor()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testAddMaterialWithNullColor()]
+display-name: testAddMaterialWithNullColor()
+]]></system-out>
+</testcase>
+<testcase name="testCompleteQueueProcessingWorkflow()" classname="IntegrationTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:IntegrationTest]/[method:testCompleteQueueProcessingWorkflow()]
+display-name: testCompleteQueueProcessingWorkflow()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidMaterialExceptionWithUnicodeCharacters()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidMaterialExceptionWithUnicodeCharacters()]
+display-name: testInvalidMaterialExceptionWithUnicodeCharacters()
+]]></system-out>
+</testcase>
+<testcase name="testSubmitOrderValidInput()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testSubmitOrderValidInput()]
+display-name: testSubmitOrderValidInput()
+]]></system-out>
+</testcase>
+<testcase name="testInvoiceWithNegativeCost()" classname="InvoiceTest" time="0.002">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testInvoiceWithNegativeCost()]
+display-name: testInvoiceWithNegativeCost()
+]]></system-out>
+</testcase>
+<testcase name="testGetCurrencyDefault()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testGetCurrencyDefault()]
+display-name: testGetCurrencyDefault()
+]]></system-out>
+</testcase>
+<testcase name="testGetMaterialInfo()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testGetMaterialInfo()]
+display-name: testGetMaterialInfo()
+]]></system-out>
+</testcase>
+<testcase name="testConstructorWithNullValues()" classname="OrderTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testConstructorWithNullValues()]
+display-name: testConstructorWithNullValues()
+]]></system-out>
+</testcase>
+<testcase name="testExportInvoiceWithNullUser()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testExportInvoiceWithNullUser()]
+display-name: testExportInvoiceWithNullUser()
+]]></system-out>
+</testcase>
+<testcase name="testEstimatedPrintHoursGetter()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testEstimatedPrintHoursGetter()]
+display-name: testEstimatedPrintHoursGetter()
+]]></system-out>
+</testcase>
+<testcase name="testToString()" classname="UserTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testToString()]
+display-name: testToString()
+]]></system-out>
+</testcase>
+<testcase name="testGetOrderByIdValidId()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testGetOrderByIdValidId()]
+display-name: testGetOrderByIdValidId()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidMaterialExceptionWithVeryLongMessage()" classname="ExceptionClassesTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidMaterialExceptionWithVeryLongMessage()]
+display-name: testInvalidMaterialExceptionWithVeryLongMessage()
+]]></system-out>
+</testcase>
+<testcase name="testSubmitOrderWithEmptyDimensions()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testSubmitOrderWithEmptyDimensions()]
+display-name: testSubmitOrderWithEmptyDimensions()
+]]></system-out>
+</testcase>
+<testcase name="testSetMachineTimeCostPerHourZero()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetMachineTimeCostPerHourZero()]
+display-name: testSetMachineTimeCostPerHourZero()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidOrderExceptionWithEmptyMessage()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidOrderExceptionWithEmptyMessage()]
+display-name: testInvalidOrderExceptionWithEmptyMessage()
+]]></system-out>
+</testcase>
+<testcase name="testExceptionThrowingAndCatchingWithCause()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testExceptionThrowingAndCatchingWithCause()]
+display-name: testExceptionThrowingAndCatchingWithCause()
+]]></system-out>
+</testcase>
+<testcase name="testHasSufficientWithNegativeRequired()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testHasSufficientWithNegativeRequired()]
+display-name: testHasSufficientWithNegativeRequired()
+]]></system-out>
+</testcase>
+<testcase name="testOrderWithVeryHighCostMaterial()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testOrderWithVeryHighCostMaterial()]
+display-name: testOrderWithVeryHighCostMaterial()
+]]></system-out>
+</testcase>
+<testcase name="testTotalCostGetterAndSetter()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testTotalCostGetterAndSetter()]
+display-name: testTotalCostGetterAndSetter()
+]]></system-out>
+</testcase>
+<testcase name="testAddMaterialWithEmptyName()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testAddMaterialWithEmptyName()]
+display-name: testAddMaterialWithEmptyName()
+]]></system-out>
+</testcase>
+<testcase name="testSetElectricityCostPerHourNegative()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetElectricityCostPerHourNegative()]
+display-name: testSetElectricityCostPerHourNegative()
+]]></system-out>
+</testcase>
+<testcase name="testSetRushOrderSurchargeValidValue()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetRushOrderSurchargeValidValue()]
+display-name: testSetRushOrderSurchargeValidValue()
+]]></system-out>
+</testcase>
+<testcase name="testToStringWithZeroCost()" classname="InvoiceTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testToStringWithZeroCost()]
+display-name: testToStringWithZeroCost()
+]]></system-out>
+</testcase>
+<testcase name="testSetTotalCostWithNegativeValue()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testSetTotalCostWithNegativeValue()]
+display-name: testSetTotalCostWithNegativeValue()
+]]></system-out>
+</testcase>
+<testcase name="testBatchPriceCalculations()" classname="PerformanceTest" time="0.007">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:PerformanceTest]/[method:testBatchPriceCalculations()]
+display-name: testBatchPriceCalculations()
+]]></system-out>
+</testcase>
+<testcase name="testSetCurrencyWithNull()" classname="SystemConfigTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetCurrencyWithNull()]
+display-name: testSetCurrencyWithNull()
+]]></system-out>
+</testcase>
+<testcase name="testToString()" classname="InvoiceTest" time="0.004">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testToString()]
+display-name: testToString()
+]]></system-out>
+</testcase>
+<testcase name="testExceptionThrowingAndCatching()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testExceptionThrowingAndCatching()]
+display-name: testExceptionThrowingAndCatching()
+]]></system-out>
+</testcase>
+<testcase name="testModifyPricingConstantsWithNegativeValues()" classname="AdminUserTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testModifyPricingConstantsWithNegativeValues()]
+display-name: testModifyPricingConstantsWithNegativeValues()
+]]></system-out>
+</testcase>
+<testcase name="testSetCurrencyWithWhitespaceOnly()" classname="SystemConfigTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetCurrencyWithWhitespaceOnly()]
+display-name: testSetCurrencyWithWhitespaceOnly()
+]]></system-out>
+</testcase>
+<testcase name="testConstructorWithZeroValues()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testConstructorWithZeroValues()]
+display-name: testConstructorWithZeroValues()
+]]></system-out>
+</testcase>
+<testcase name="testCompleteErrorScenarioWorkflow()" classname="IntegrationTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:IntegrationTest]/[method:testCompleteErrorScenarioWorkflow()]
+display-name: testCompleteErrorScenarioWorkflow()
+]]></system-out>
+</testcase>
+<testcase name="testResetToDefaults()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testResetToDefaults()]
+display-name: testResetToDefaults()
+]]></system-out>
+</testcase>
+<testcase name="testModifyPricingConstantsValidInput()" classname="AdminUserTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testModifyPricingConstantsValidInput()]
+display-name: testModifyPricingConstantsValidInput()
+]]></system-out>
+</testcase>
+<testcase name="testInsufficientMaterialExceptionWithMessageAndCause()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInsufficientMaterialExceptionWithMessageAndCause()]
+display-name: testInsufficientMaterialExceptionWithMessageAndCause()
+]]></system-out>
+</testcase>
+<testcase name="testRoleGetterAndSetter()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testRoleGetterAndSetter()]
+display-name: testRoleGetterAndSetter()
+]]></system-out>
+</testcase>
+<testcase name="testSetPriorityWithNull()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testSetPriorityWithNull()]
+display-name: testSetPriorityWithNull()
+]]></system-out>
+</testcase>
+<testcase name="testCompleteInventoryWorkflow()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testCompleteInventoryWorkflow()]
+display-name: testCompleteInventoryWorkflow()
+]]></system-out>
+</testcase>
+<testcase name="testParameterizedConstructor()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testParameterizedConstructor()]
+display-name: testParameterizedConstructor()
+]]></system-out>
+</testcase>
+<testcase name="testCalculatePriceWithBulkDiscount()" classname="OrderTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testCalculatePriceWithBulkDiscount()]
+display-name: testCalculatePriceWithBulkDiscount()
+]]></system-out>
+</testcase>
+<testcase name="testGetAllOrdersSingleOrder()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testGetAllOrdersSingleOrder()]
+display-name: testGetAllOrdersSingleOrder()
+]]></system-out>
+</testcase>
+<testcase name="testGetMaterialInfoWithNullValues()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testGetMaterialInfoWithNullValues()]
+display-name: testGetMaterialInfoWithNullValues()
+]]></system-out>
+</testcase>
+<testcase name="testGetMaterialInfoWithHighPrecisionCost()" classname="MaterialTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testGetMaterialInfoWithHighPrecisionCost()]
+display-name: testGetMaterialInfoWithHighPrecisionCost()
+]]></system-out>
+</testcase>
+<testcase name="testCompleteVIPOrderWorkflow()" classname="IntegrationTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:IntegrationTest]/[method:testCompleteVIPOrderWorkflow()]
+display-name: testCompleteVIPOrderWorkflow()
+]]></system-out>
+</testcase>
+<testcase name="testExportInvoiceBaseSetupCost()" classname="InvoiceTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testExportInvoiceBaseSetupCost()]
+display-name: testExportInvoiceBaseSetupCost()
+]]></system-out>
+</testcase>
+<testcase name="testSubmitOrderWithNullInstructions()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testSubmitOrderWithNullInstructions()]
+display-name: testSubmitOrderWithNullInstructions()
+]]></system-out>
+</testcase>
+<testcase name="testSubmitOrderWithSpecialCharactersInDimensions()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testSubmitOrderWithSpecialCharactersInDimensions()]
+display-name: testSubmitOrderWithSpecialCharactersInDimensions()
+]]></system-out>
+</testcase>
+<testcase name="testParameterizedConstructor()" classname="MaterialTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testParameterizedConstructor()]
+display-name: testParameterizedConstructor()
+]]></system-out>
+</testcase>
+<testcase name="testMaterialWithSpecialCharactersInColor()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testMaterialWithSpecialCharactersInColor()]
+display-name: testMaterialWithSpecialCharactersInColor()
+]]></system-out>
+</testcase>
+<testcase name="testSetRushOrderSurchargeZero()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetRushOrderSurchargeZero()]
+display-name: testSetRushOrderSurchargeZero()
+]]></system-out>
+</testcase>
+<testcase name="testSetElectricityCostPerHourLargeValue()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetElectricityCostPerHourLargeValue()]
+display-name: testSetElectricityCostPerHourLargeValue()
+]]></system-out>
+</testcase>
+<testcase name="testConsumeInsufficientStock()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testConsumeInsufficientStock()]
+display-name: testConsumeInsufficientStock()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidMaterialExceptionWithMaterialNameAndValidationErrorNullError()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidMaterialExceptionWithMaterialNameAndValidationErrorNullError()]
+display-name: testInvalidMaterialExceptionWithMaterialNameAndValidationErrorNullError()
+]]></system-out>
+</testcase>
+<testcase name="testMaterialWithUnicodeCharacters()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testMaterialWithUnicodeCharacters()]
+display-name: testMaterialWithUnicodeCharacters()
+]]></system-out>
+</testcase>
+<testcase name="testUpdateStatusWithSpecialCharacters()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testUpdateStatusWithSpecialCharacters()]
+display-name: testUpdateStatusWithSpecialCharacters()
+]]></system-out>
+</testcase>
+<testcase name="testToStringWithNullValues()" classname="AdminUserTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testToStringWithNullValues()]
+display-name: testToStringWithNullValues()
+]]></system-out>
+</testcase>
+<testcase name="testInventoryWithSpecialCharactersInMaterialName()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testInventoryWithSpecialCharactersInMaterialName()]
+display-name: testInventoryWithSpecialCharactersInMaterialName()
+]]></system-out>
+</testcase>
+<testcase name="testEstimatePrintTimeHoursWithNullDimensions()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testEstimatePrintTimeHoursWithNullDimensions()]
+display-name: testEstimatePrintTimeHoursWithNullDimensions()
+]]></system-out>
+</testcase>
+<testcase name="testGetAllOrdersMultipleOrders()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testGetAllOrdersMultipleOrders()]
+display-name: testGetAllOrdersMultipleOrders()
+]]></system-out>
+</testcase>
+<testcase name="testSetPriorityWithEmptyString()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testSetPriorityWithEmptyString()]
+display-name: testSetPriorityWithEmptyString()
+]]></system-out>
+</testcase>
+<testcase name="testSetMaxOrderValueZero()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetMaxOrderValueZero()]
+display-name: testSetMaxOrderValueZero()
+]]></system-out>
+</testcase>
+<testcase name="testGetAllOrdersEmpty()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testGetAllOrdersEmpty()]
+display-name: testGetAllOrdersEmpty()
+]]></system-out>
+</testcase>
+<testcase name="testSetTaxRateNegative()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetTaxRateNegative()]
+display-name: testSetTaxRateNegative()
+]]></system-out>
+</testcase>
+<testcase name="testMaterialGetterAndSetter()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testMaterialGetterAndSetter()]
+display-name: testMaterialGetterAndSetter()
+]]></system-out>
+</testcase>
+<testcase name="testSetCurrencyValidValue()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetCurrencyValidValue()]
+display-name: testSetCurrencyValidValue()
+]]></system-out>
+</testcase>
+<testcase name="testCalculatePriceWithNegativeQuantity()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testCalculatePriceWithNegativeQuantity()]
+display-name: testCalculatePriceWithNegativeQuantity()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidMaterialExceptionWithMaterialNameAndValidationErrorUnicode()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidMaterialExceptionWithMaterialNameAndValidationErrorUnicode()]
+display-name: testInvalidMaterialExceptionWithMaterialNameAndValidationErrorUnicode()
+]]></system-out>
+</testcase>
+<testcase name="testOrderWithSpecialCharactersInDimensions()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testOrderWithSpecialCharactersInDimensions()]
+display-name: testOrderWithSpecialCharactersInDimensions()
+]]></system-out>
+</testcase>
+<testcase name="testSetRushOrderSurchargeLargeValue()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetRushOrderSurchargeLargeValue()]
+display-name: testSetRushOrderSurchargeLargeValue()
+]]></system-out>
+</testcase>
+<testcase name="testSetCurrencyWithSpecialCharacters()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetCurrencyWithSpecialCharacters()]
+display-name: testSetCurrencyWithSpecialCharacters()
+]]></system-out>
+</testcase>
+<testcase name="testMaterialWithWhitespaceInName()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testMaterialWithWhitespaceInName()]
+display-name: testMaterialWithWhitespaceInName()
+]]></system-out>
+</testcase>
+<testcase name="testToString()" classname="AdminUserTest" time="0.003">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testToString()]
+display-name: testToString()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidMaterialExceptionWithMaterialNameAndValidationError()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidMaterialExceptionWithMaterialNameAndValidationError()]
+display-name: testInvalidMaterialExceptionWithMaterialNameAndValidationError()
+]]></system-out>
+</testcase>
+<testcase name="testSetPriorityWithWhitespace()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testSetPriorityWithWhitespace()]
+display-name: testSetPriorityWithWhitespace()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidMaterialExceptionWithSpecialCharacters()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidMaterialExceptionWithSpecialCharacters()]
+display-name: testInvalidMaterialExceptionWithSpecialCharacters()
+]]></system-out>
+</testcase>
+<testcase name="testCompleteRushOrderWorkflow()" classname="IntegrationTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:IntegrationTest]/[method:testCompleteRushOrderWorkflow()]
+display-name: testCompleteRushOrderWorkflow()
+]]></system-out>
+</testcase>
+<testcase name="testExportInvoiceDateFormat()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testExportInvoiceDateFormat()]
+display-name: testExportInvoiceDateFormat()
+]]></system-out>
+</testcase>
+<testcase name="testExceptionToStringWithCause()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testExceptionToStringWithCause()]
+display-name: testExceptionToStringWithCause()
+]]></system-out>
+</testcase>
+<testcase name="testPrintTempGetterAndSetter()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testPrintTempGetterAndSetter()]
+display-name: testPrintTempGetterAndSetter()
+]]></system-out>
+</testcase>
+<testcase name="testCompleteRegularOrderWorkflow()" classname="IntegrationTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:IntegrationTest]/[method:testCompleteRegularOrderWorkflow()]
+display-name: testCompleteRegularOrderWorkflow()
+]]></system-out>
+</testcase>
+<testcase name="testSetPriorityTrimsAndLowercases()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testSetPriorityTrimsAndLowercases()]
+display-name: testSetPriorityTrimsAndLowercases()
+]]></system-out>
+</testcase>
+<testcase name="testSubmitOrderExceedsMaxQuantity()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testSubmitOrderExceedsMaxQuantity()]
+display-name: testSubmitOrderExceedsMaxQuantity()
+]]></system-out>
+</testcase>
+<testcase name="testExceptionThrowingAndCatchingWithValidationError()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testExceptionThrowingAndCatchingWithValidationError()]
+display-name: testExceptionThrowingAndCatchingWithValidationError()
+]]></system-out>
+</testcase>
+<testcase name="testCompleteComplexOrderWorkflow()" classname="IntegrationTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:IntegrationTest]/[method:testCompleteComplexOrderWorkflow()]
+display-name: testCompleteComplexOrderWorkflow()
+]]></system-out>
+</testcase>
+<testcase name="testOrderWithUnicodeCharacters()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testOrderWithUnicodeCharacters()]
+display-name: testOrderWithUnicodeCharacters()
+]]></system-out>
+</testcase>
+<testcase name="testRegisterAndEnqueueWorkflow()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testRegisterAndEnqueueWorkflow()]
+display-name: testRegisterAndEnqueueWorkflow()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidMaterialExceptionInheritance()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidMaterialExceptionInheritance()]
+display-name: testInvalidMaterialExceptionInheritance()
+]]></system-out>
+</testcase>
+<testcase name="testSetTaxRateZero()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetTaxRateZero()]
+display-name: testSetTaxRateZero()
+]]></system-out>
+</testcase>
+<testcase name="testInsufficientMaterialExceptionWithMaterialDetailsNegativeValues()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInsufficientMaterialExceptionWithMaterialDetailsNegativeValues()]
+display-name: testInsufficientMaterialExceptionWithMaterialDetailsNegativeValues()
+]]></system-out>
+</testcase>
+<testcase name="testModifyPricingConstantsWithZeroValues()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testModifyPricingConstantsWithZeroValues()]
+display-name: testModifyPricingConstantsWithZeroValues()
+]]></system-out>
+</testcase>
+<testcase name="testRoleAlwaysReturnsAdmin()" classname="AdminUserTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testRoleAlwaysReturnsAdmin()]
+display-name: testRoleAlwaysReturnsAdmin()
+]]></system-out>
+</testcase>
+<testcase name="testSubmitOrderWithNullMaterial()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testSubmitOrderWithNullMaterial()]
+display-name: testSubmitOrderWithNullMaterial()
+]]></system-out>
+</testcase>
+<testcase name="testExportInvoiceWithNullOrder()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testExportInvoiceWithNullOrder()]
+display-name: testExportInvoiceWithNullOrder()
+]]></system-out>
+</testcase>
+<testcase name="testMaterialWithVeryLongName()" classname="MaterialTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testMaterialWithVeryLongName()]
+display-name: testMaterialWithVeryLongName()
+]]></system-out>
+</testcase>
+<testcase name="testGetMaxOrderValueDefault()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testGetMaxOrderValueDefault()]
+display-name: testGetMaxOrderValueDefault()
+]]></system-out>
+</testcase>
+<testcase name="testSetTaxRateDecimalPrecision()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetTaxRateDecimalPrecision()]
+display-name: testSetTaxRateDecimalPrecision()
+]]></system-out>
+</testcase>
+<testcase name="testSetMaxOrderQuantityValidValue()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetMaxOrderQuantityValidValue()]
+display-name: testSetMaxOrderQuantityValidValue()
+]]></system-out>
+</testcase>
+<testcase name="testSubmitOrderInsufficientMaterial()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testSubmitOrderInsufficientMaterial()]
+display-name: testSubmitOrderInsufficientMaterial()
+]]></system-out>
+</testcase>
+<testcase name="testEmailGetterAndSetter()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testEmailGetterAndSetter()]
+display-name: testEmailGetterAndSetter()
+]]></system-out>
+</testcase>
+<testcase name="testSystemConfigWithVeryLongCurrencyString()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSystemConfigWithVeryLongCurrencyString()]
+display-name: testSystemConfigWithVeryLongCurrencyString()
+]]></system-out>
+</testcase>
+<testcase name="testEstimatePrintTimeHoursWithEmptyDimensions()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testEstimatePrintTimeHoursWithEmptyDimensions()]
+display-name: testEstimatePrintTimeHoursWithEmptyDimensions()
+]]></system-out>
+</testcase>
+<testcase name="testDefaultConstructor()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testDefaultConstructor()]
+display-name: testDefaultConstructor()
+]]></system-out>
+</testcase>
+<testcase name="testToStringWithNullOrder()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testToStringWithNullOrder()]
+display-name: testToStringWithNullOrder()
+]]></system-out>
+</testcase>
+<testcase name="testCompleteAdminWorkflow()" classname="IntegrationTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:IntegrationTest]/[method:testCompleteAdminWorkflow()]
+display-name: testCompleteAdminWorkflow()
+]]></system-out>
+</testcase>
+<testcase name="testDequeueNextOrderValidOrder()" classname="OrderManagerTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testDequeueNextOrderValidOrder()]
+display-name: testDequeueNextOrderValidOrder()
+]]></system-out>
+</testcase>
+<testcase name="testInsufficientMaterialExceptionWithNullMessage()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInsufficientMaterialExceptionWithNullMessage()]
+display-name: testInsufficientMaterialExceptionWithNullMessage()
+]]></system-out>
+</testcase>
+<testcase name="testPriorityGetterAndSetter()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testPriorityGetterAndSetter()]
+display-name: testPriorityGetterAndSetter()
+]]></system-out>
+</testcase>
+<testcase name="testOrderManagerWithOrdersHavingSameProperties()" classname="OrderManagerTest" time="0.002">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testOrderManagerWithOrdersHavingSameProperties()]
+display-name: testOrderManagerWithOrdersHavingSameProperties()
+]]></system-out>
+</testcase>
+<testcase name="testConsumeNegativeAmount()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testConsumeNegativeAmount()]
+display-name: testConsumeNegativeAmount()
+]]></system-out>
+</testcase>
+<testcase name="testUpdateStatusWithWhitespace()" classname="OrderTest" time="0.002">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testUpdateStatusWithWhitespace()]
+display-name: testUpdateStatusWithWhitespace()
+]]></system-out>
+</testcase>
+<testcase name="testSetBaseSetupCostZero()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetBaseSetupCostZero()]
+display-name: testSetBaseSetupCostZero()
+]]></system-out>
+</testcase>
+<testcase name="testCalculatePriceWithNullMaterial()" classname="OrderTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testCalculatePriceWithNullMaterial()]
+display-name: testCalculatePriceWithNullMaterial()
+]]></system-out>
+</testcase>
+<testcase name="testSetBaseSetupCostNegative()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetBaseSetupCostNegative()]
+display-name: testSetBaseSetupCostNegative()
+]]></system-out>
+</testcase>
+<testcase name="testDequeueNextOrderFIFOBehavior()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testDequeueNextOrderFIFOBehavior()]
+display-name: testDequeueNextOrderFIFOBehavior()
+]]></system-out>
+</testcase>
+<testcase name="testSetMaxOrderValueValidValue()" classname="SystemConfigTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetMaxOrderValueValidValue()]
+display-name: testSetMaxOrderValueValidValue()
+]]></system-out>
+</testcase>
+<testcase name="testUpdateStatusValidInput()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testUpdateStatusValidInput()]
+display-name: testUpdateStatusValidInput()
+]]></system-out>
+</testcase>
+<testcase name="testViewAllOrdersWithOrders()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testViewAllOrdersWithOrders()]
+display-name: testViewAllOrdersWithOrders()
+]]></system-out>
+</testcase>
+<testcase name="testSetUsernameWithNull()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testSetUsernameWithNull()]
+display-name: testSetUsernameWithNull()
+]]></system-out>
+</testcase>
+<testcase name="testEstimatePrintTimeHoursWithLargeDimensions()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testEstimatePrintTimeHoursWithLargeDimensions()]
+display-name: testEstimatePrintTimeHoursWithLargeDimensions()
+]]></system-out>
+</testcase>
+<testcase name="testInvoiceWithVeryHighCost()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testInvoiceWithVeryHighCost()]
+display-name: testInvoiceWithVeryHighCost()
+]]></system-out>
+</testcase>
+<testcase name="testSubmitOrderWithVeryLargeQuantity()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testSubmitOrderWithVeryLargeQuantity()]
+display-name: testSubmitOrderWithVeryLargeQuantity()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidMaterialExceptionWithMaterialNameAndValidationErrorEmptyError()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidMaterialExceptionWithMaterialNameAndValidationErrorEmptyError()]
+display-name: testInvalidMaterialExceptionWithMaterialNameAndValidationErrorEmptyError()
+]]></system-out>
+</testcase>
+<testcase name="testMaterialWithScientificNotation()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testMaterialWithScientificNotation()]
+display-name: testMaterialWithScientificNotation()
+]]></system-out>
+</testcase>
+<testcase name="testInsufficientMaterialExceptionWithMaterialDetailsZeroRequired()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInsufficientMaterialExceptionWithMaterialDetailsZeroRequired()]
+display-name: testInsufficientMaterialExceptionWithMaterialDetailsZeroRequired()
+]]></system-out>
+</testcase>
+<testcase name="testInventoryWithZeroStockAfterConsumption()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testInventoryWithZeroStockAfterConsumption()]
+display-name: testInventoryWithZeroStockAfterConsumption()
+]]></system-out>
+</testcase>
+<testcase name="testConsumeWithNullMaterial()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testConsumeWithNullMaterial()]
+display-name: testConsumeWithNullMaterial()
+]]></system-out>
+</testcase>
+<testcase name="testAddMaterialWithVeryHighCost()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testAddMaterialWithVeryHighCost()]
+display-name: testAddMaterialWithVeryHighCost()
+]]></system-out>
+</testcase>
+<testcase name="testAddMaterialWithZeroTemperature()" classname="AdminUserTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testAddMaterialWithZeroTemperature()]
+display-name: testAddMaterialWithZeroTemperature()
+]]></system-out>
+</testcase>
+<testcase name="testParameterizedConstructor()" classname="InvoiceTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testParameterizedConstructor()]
+display-name: testParameterizedConstructor()
+]]></system-out>
+</testcase>
+<testcase name="testDequeueNextOrderEmptyQueue()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testDequeueNextOrderEmptyQueue()]
+display-name: testDequeueNextOrderEmptyQueue()
+]]></system-out>
+</testcase>
+<testcase name="testConsumeExactAmount()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testConsumeExactAmount()]
+display-name: testConsumeExactAmount()
+]]></system-out>
+</testcase>
+<testcase name="testGetQueueSizeAfterDequeue()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testGetQueueSizeAfterDequeue()]
+display-name: testGetQueueSizeAfterDequeue()
+]]></system-out>
+</testcase>
+<testcase name="testGetStockDefaultValue()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testGetStockDefaultValue()]
+display-name: testGetStockDefaultValue()
+]]></system-out>
+</testcase>
+<testcase name="testExceptionEquality()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testExceptionEquality()]
+display-name: testExceptionEquality()
+]]></system-out>
+</testcase>
+<testcase name="testHasSufficientWithExactStock()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testHasSufficientWithExactStock()]
+display-name: testHasSufficientWithExactStock()
+]]></system-out>
+</testcase>
+<testcase name="testToStringWithNullValues()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testToStringWithNullValues()]
+display-name: testToStringWithNullValues()
+]]></system-out>
+</testcase>
+<testcase name="testEnqueueOrderValidOrder()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testEnqueueOrderValidOrder()]
+display-name: testEnqueueOrderValidOrder()
+]]></system-out>
+</testcase>
+<testcase name="testGetStockAfterSetStock()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testGetStockAfterSetStock()]
+display-name: testGetStockAfterSetStock()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidOrderExceptionWithVeryLongMessage()" classname="ExceptionClassesTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidOrderExceptionWithVeryLongMessage()]
+display-name: testInvalidOrderExceptionWithVeryLongMessage()
+]]></system-out>
+</testcase>
+<testcase name="testUpdateStatusWithEmptyString()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testUpdateStatusWithEmptyString()]
+display-name: testUpdateStatusWithEmptyString()
+]]></system-out>
+</testcase>
+<testcase name="testSetPrintTempWithNegativeValue()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testSetPrintTempWithNegativeValue()]
+display-name: testSetPrintTempWithNegativeValue()
+]]></system-out>
+</testcase>
+<testcase name="testSubmitOrderWithZeroQuantity()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testSubmitOrderWithZeroQuantity()]
+display-name: testSubmitOrderWithZeroQuantity()
+]]></system-out>
+</testcase>
+<testcase name="testSubmitOrderWithRushInstructions()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testSubmitOrderWithRushInstructions()]
+display-name: testSubmitOrderWithRushInstructions()
+]]></system-out>
+</testcase>
+<testcase name="testDimensionsGetterAndSetter()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testDimensionsGetterAndSetter()]
+display-name: testDimensionsGetterAndSetter()
+]]></system-out>
+</testcase>
+<testcase name="testInvoiceWithOrderHavingVeryLongDimensions()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testInvoiceWithOrderHavingVeryLongDimensions()]
+display-name: testInvoiceWithOrderHavingVeryLongDimensions()
+]]></system-out>
+</testcase>
+<testcase name="testHasSufficientWithEnoughStock()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testHasSufficientWithEnoughStock()]
+display-name: testHasSufficientWithEnoughStock()
+]]></system-out>
+</testcase>
+<testcase name="testViewInvoiceReturnsNull()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testViewInvoiceReturnsNull()]
+display-name: testViewInvoiceReturnsNull()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidOrderExceptionInheritance()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidOrderExceptionInheritance()]
+display-name: testInvalidOrderExceptionInheritance()
+]]></system-out>
+</testcase>
+<testcase name="testInsufficientMaterialExceptionWithMaterialDetails()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInsufficientMaterialExceptionWithMaterialDetails()]
+display-name: testInsufficientMaterialExceptionWithMaterialDetails()
+]]></system-out>
+</testcase>
+<testcase name="testInvoiceWithOrderHavingSpecialCharacters()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testInvoiceWithOrderHavingSpecialCharacters()]
+display-name: testInvoiceWithOrderHavingSpecialCharacters()
+]]></system-out>
+</testcase>
+<testcase name="testExceptionToString()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testExceptionToString()]
+display-name: testExceptionToString()
+]]></system-out>
+</testcase>
+<testcase name="testMaterialWithVeryHighCost()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testMaterialWithVeryHighCost()]
+display-name: testMaterialWithVeryHighCost()
+]]></system-out>
+</testcase>
+<testcase name="testSetEmailWithNull()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testSetEmailWithNull()]
+display-name: testSetEmailWithNull()
+]]></system-out>
+</testcase>
+<testcase name="testExceptionThrowingAndCatchingWithMaterialDetails()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testExceptionThrowingAndCatchingWithMaterialDetails()]
+display-name: testExceptionThrowingAndCatchingWithMaterialDetails()
+]]></system-out>
+</testcase>
+<testcase name="testSetMaxOrderQuantityNegative()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetMaxOrderQuantityNegative()]
+display-name: testSetMaxOrderQuantityNegative()
+]]></system-out>
+</testcase>
+<testcase name="testSetCurrencyWithWhitespace()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetCurrencyWithWhitespace()]
+display-name: testSetCurrencyWithWhitespace()
+]]></system-out>
+</testcase>
+<testcase name="testColorGetterAndSetter()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testColorGetterAndSetter()]
+display-name: testColorGetterAndSetter()
+]]></system-out>
+</testcase>
+<testcase name="testHasSufficientWithInsufficientStock()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testHasSufficientWithInsufficientStock()]
+display-name: testHasSufficientWithInsufficientStock()
+]]></system-out>
+</testcase>
+<testcase name="testStatusGetter()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testStatusGetter()]
+display-name: testStatusGetter()
+]]></system-out>
+</testcase>
+<testcase name="testInventoryWithVeryLargeStock()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testInventoryWithVeryLargeStock()]
+display-name: testInventoryWithVeryLargeStock()
+]]></system-out>
+</testcase>
+<testcase name="testMaterialWithVeryHighTemperature()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testMaterialWithVeryHighTemperature()]
+display-name: testMaterialWithVeryHighTemperature()
+]]></system-out>
+</testcase>
+<testcase name="testInsufficientMaterialExceptionWithSpecialCharacters()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInsufficientMaterialExceptionWithSpecialCharacters()]
+display-name: testInsufficientMaterialExceptionWithSpecialCharacters()
+]]></system-out>
+</testcase>
+<testcase name="testSetCostPerGramWithZero()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testSetCostPerGramWithZero()]
+display-name: testSetCostPerGramWithZero()
+]]></system-out>
+</testcase>
+<testcase name="testSetStockLargeAmount()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testSetStockLargeAmount()]
+display-name: testSetStockLargeAmount()
+]]></system-out>
+</testcase>
+<testcase name="testSetTotalCostWithZero()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testSetTotalCostWithZero()]
+display-name: testSetTotalCostWithZero()
+]]></system-out>
+</testcase>
+<testcase name="testGetElectricityCostPerHourDefault()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testGetElectricityCostPerHourDefault()]
+display-name: testGetElectricityCostPerHourDefault()
+]]></system-out>
+</testcase>
+<testcase name="testInheritanceFromUser()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testInheritanceFromUser()]
+display-name: testInheritanceFromUser()
+]]></system-out>
+</testcase>
+<testcase name="testSetMaxOrderValueNegative()" classname="SystemConfigTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetMaxOrderValueNegative()]
+display-name: testSetMaxOrderValueNegative()
+]]></system-out>
+</testcase>
+<testcase name="testSystemConfigWithVeryLargeValues()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSystemConfigWithVeryLargeValues()]
+display-name: testSystemConfigWithVeryLargeValues()
+]]></system-out>
+</testcase>
+<testcase name="testInsufficientMaterialExceptionWithUnicodeCharacters()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInsufficientMaterialExceptionWithUnicodeCharacters()]
+display-name: testInsufficientMaterialExceptionWithUnicodeCharacters()
+]]></system-out>
+</testcase>
+<testcase name="testGetStockNonExistentMaterial()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testGetStockNonExistentMaterial()]
+display-name: testGetStockNonExistentMaterial()
+]]></system-out>
+</testcase>
+<testcase name="testGenerateSummaryWithValidOrder()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testGenerateSummaryWithValidOrder()]
+display-name: testGenerateSummaryWithValidOrder()
+]]></system-out>
+</testcase>
+<testcase name="testInvoiceWithOrderHavingZeroQuantity()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testInvoiceWithOrderHavingZeroQuantity()]
+display-name: testInvoiceWithOrderHavingZeroQuantity()
+]]></system-out>
+</testcase>
+<testcase name="testAddMaterialTrimsWhitespace()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testAddMaterialTrimsWhitespace()]
+display-name: testAddMaterialTrimsWhitespace()
+]]></system-out>
+</testcase>
+<testcase name="testGetQueueSizeEmpty()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testGetQueueSizeEmpty()]
+display-name: testGetQueueSizeEmpty()
+]]></system-out>
+</testcase>
+<testcase name="testConstructorWithNullValues()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testConstructorWithNullValues()]
+display-name: testConstructorWithNullValues()
+]]></system-out>
+</testcase>
+<testcase name="testExportInvoiceMaterialCostCalculation()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testExportInvoiceMaterialCostCalculation()]
+display-name: testExportInvoiceMaterialCostCalculation()
+]]></system-out>
+</testcase>
+<testcase name="testInvoiceWithOrderHavingUnicodeCharacters()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testInvoiceWithOrderHavingUnicodeCharacters()]
+display-name: testInvoiceWithOrderHavingUnicodeCharacters()
+]]></system-out>
+</testcase>
+<testcase name="testCalculatePriceWithZeroTaxRate()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testCalculatePriceWithZeroTaxRate()]
+display-name: testCalculatePriceWithZeroTaxRate()
+]]></system-out>
+</testcase>
+<testcase name="testSetMaxOrderQuantityZero()" classname="SystemConfigTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetMaxOrderQuantityZero()]
+display-name: testSetMaxOrderQuantityZero()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidOrderExceptionWithWhitespaceMessage()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidOrderExceptionWithWhitespaceMessage()]
+display-name: testInvalidOrderExceptionWithWhitespaceMessage()
+]]></system-out>
+</testcase>
+<testcase name="testAddMaterialWithZeroCost()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testAddMaterialWithZeroCost()]
+display-name: testAddMaterialWithZeroCost()
+]]></system-out>
+</testcase>
+<testcase name="testDefaultConstructor()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testDefaultConstructor()]
+display-name: testDefaultConstructor()
+]]></system-out>
+</testcase>
+<testcase name="testSetTaxRateAboveMaximum()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetTaxRateAboveMaximum()]
+display-name: testSetTaxRateAboveMaximum()
+]]></system-out>
+</testcase>
+<testcase name="testAddMaterialWithVeryLongName()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testAddMaterialWithVeryLongName()]
+display-name: testAddMaterialWithVeryLongName()
+]]></system-out>
+</testcase>
+<testcase name="testConstructorWithNegativeCost()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testConstructorWithNegativeCost()]
+display-name: testConstructorWithNegativeCost()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidMaterialExceptionWithMessageAndCause()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidMaterialExceptionWithMessageAndCause()]
+display-name: testInvalidMaterialExceptionWithMessageAndCause()
+]]></system-out>
+</testcase>
+<testcase name="testOrderWithVeryLongInstructions()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testOrderWithVeryLongInstructions()]
+display-name: testOrderWithVeryLongInstructions()
+]]></system-out>
+</testcase>
+<testcase name="testViewAllOrdersEmpty()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testViewAllOrdersEmpty()]
+display-name: testViewAllOrdersEmpty()
+]]></system-out>
+</testcase>
+<testcase name="testCompleteOrderWorkflow()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testCompleteOrderWorkflow()]
+display-name: testCompleteOrderWorkflow()
+]]></system-out>
+</testcase>
+<testcase name="testAddMaterialWithNullName()" classname="AdminUserTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testAddMaterialWithNullName()]
+display-name: testAddMaterialWithNullName()
+]]></system-out>
+</testcase>
+<testcase name="testSetStockWithNullMaterial()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testSetStockWithNullMaterial()]
+display-name: testSetStockWithNullMaterial()
+]]></system-out>
+</testcase>
+<testcase name="testInsufficientMaterialExceptionWithMaterialDetailsZeroAvailable()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInsufficientMaterialExceptionWithMaterialDetailsZeroAvailable()]
+display-name: testInsufficientMaterialExceptionWithMaterialDetailsZeroAvailable()
+]]></system-out>
+</testcase>
+<testcase name="testExceptionHashCode()" classname="ExceptionClassesTest" time="0.002">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testExceptionHashCode()]
+display-name: testExceptionHashCode()
+]]></system-out>
+</testcase>
+<testcase name="testSystemConfigWithUnicodeCurrency()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSystemConfigWithUnicodeCurrency()]
+display-name: testSystemConfigWithUnicodeCurrency()
+]]></system-out>
+</testcase>
+<testcase name="testExceptionStackTrace()" classname="ExceptionClassesTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testExceptionStackTrace()]
+display-name: testExceptionStackTrace()
+]]></system-out>
+</testcase>
+<testcase name="testGetConfigurationSummary()" classname="SystemConfigTest" time="0.002">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testGetConfigurationSummary()]
+display-name: testGetConfigurationSummary()
+]]></system-out>
+</testcase>
+<testcase name="testInventoryWithVeryLargeConsumption()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testInventoryWithVeryLargeConsumption()]
+display-name: testInventoryWithVeryLargeConsumption()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidOrderExceptionDefaultConstructor()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidOrderExceptionDefaultConstructor()]
+display-name: testInvalidOrderExceptionDefaultConstructor()
+]]></system-out>
+</testcase>
+<testcase name="testToStringWithNullValues()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testToStringWithNullValues()]
+display-name: testToStringWithNullValues()
+]]></system-out>
+</testcase>
+<testcase name="testSetMachineTimeCostPerHourValidValue()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetMachineTimeCostPerHourValidValue()]
+display-name: testSetMachineTimeCostPerHourValidValue()
+]]></system-out>
+</testcase>
+<testcase name="testGetMachineTimeCostPerHourDefault()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testGetMachineTimeCostPerHourDefault()]
+display-name: testGetMachineTimeCostPerHourDefault()
+]]></system-out>
+</testcase>
+<testcase name="testSetAllowRushOrdersFalse()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetAllowRushOrdersFalse()]
+display-name: testSetAllowRushOrdersFalse()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidMaterialExceptionWithEmptyMessage()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidMaterialExceptionWithEmptyMessage()]
+display-name: testInvalidMaterialExceptionWithEmptyMessage()
+]]></system-out>
+</testcase>
+<testcase name="testSetCurrencyLowerCase()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetCurrencyLowerCase()]
+display-name: testSetCurrencyLowerCase()
+]]></system-out>
+</testcase>
+<testcase name="testSetRushOrderSurchargeNegative()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetRushOrderSurchargeNegative()]
+display-name: testSetRushOrderSurchargeNegative()
+]]></system-out>
+</testcase>
+<testcase name="testSetBaseSetupCostLargeValue()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetBaseSetupCostLargeValue()]
+display-name: testSetBaseSetupCostLargeValue()
+]]></system-out>
+</testcase>
+<testcase name="testEstimatePrintTimeHoursWithQuantity()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testEstimatePrintTimeHoursWithQuantity()]
+display-name: testEstimatePrintTimeHoursWithQuantity()
+]]></system-out>
+</testcase>
+<testcase name="testModifyPricingConstantsWithVeryLargeValues()" classname="AdminUserTest" time="0.018">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testModifyPricingConstantsWithVeryLargeValues()]
+display-name: testModifyPricingConstantsWithVeryLargeValues()
+]]></system-out>
+</testcase>
+<testcase name="testSetOrderWithNull()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testSetOrderWithNull()]
+display-name: testSetOrderWithNull()
+]]></system-out>
+</testcase>
+<testcase name="testSetMaxOrderValueLargeValue()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetMaxOrderValueLargeValue()]
+display-name: testSetMaxOrderValueLargeValue()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidMaterialExceptionWithMaterialNameAndValidationErrorNullName()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidMaterialExceptionWithMaterialNameAndValidationErrorNullName()]
+display-name: testInvalidMaterialExceptionWithMaterialNameAndValidationErrorNullName()
+]]></system-out>
+</testcase>
+<testcase name="testSetCurrencyWithEmptyString()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetCurrencyWithEmptyString()]
+display-name: testSetCurrencyWithEmptyString()
+]]></system-out>
+</testcase>
+<testcase name="testSubmitOrderConsumesInventory()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testSubmitOrderConsumesInventory()]
+display-name: testSubmitOrderConsumesInventory()
+]]></system-out>
+</testcase>
+<testcase name="testInventoryWithEmptyMaterialName()" classname="InventoryTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testInventoryWithEmptyMaterialName()]
+display-name: testInventoryWithEmptyMaterialName()
+]]></system-out>
+</testcase>
+<testcase name="testConsumeMultipleTimes()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testConsumeMultipleTimes()]
+display-name: testConsumeMultipleTimes()
+]]></system-out>
+</testcase>
+<testcase name="testSystemConfigWithDecimalPrecision()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSystemConfigWithDecimalPrecision()]
+display-name: testSystemConfigWithDecimalPrecision()
+]]></system-out>
+</testcase>
+<testcase name="testEnqueueOrderMultipleOrders()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testEnqueueOrderMultipleOrders()]
+display-name: testEnqueueOrderMultipleOrders()
+]]></system-out>
+</testcase>
+<testcase name="testSubmitOrderWithNegativeQuantity()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testSubmitOrderWithNegativeQuantity()]
+display-name: testSubmitOrderWithNegativeQuantity()
+]]></system-out>
+</testcase>
+<testcase name="testGetQueueSizeAfterMixedOperations()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testGetQueueSizeAfterMixedOperations()]
+display-name: testGetQueueSizeAfterMixedOperations()
+]]></system-out>
+</testcase>
+<testcase name="testHasSufficientWithZeroRequired()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testHasSufficientWithZeroRequired()]
+display-name: testHasSufficientWithZeroRequired()
+]]></system-out>
+</testcase>
+<testcase name="testSetAllowRushOrdersTrue()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetAllowRushOrdersTrue()]
+display-name: testSetAllowRushOrdersTrue()
+]]></system-out>
+</testcase>
+<testcase name="testModifyPricingConstantsWithDecimalPrecision()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testModifyPricingConstantsWithDecimalPrecision()]
+display-name: testModifyPricingConstantsWithDecimalPrecision()
+]]></system-out>
+</testcase>
+<testcase name="testCostPerGramGetterAndSetter()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testCostPerGramGetterAndSetter()]
+display-name: testCostPerGramGetterAndSetter()
+]]></system-out>
+</testcase>
+<testcase name="testDequeueNextOrderMultipleOrders()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testDequeueNextOrderMultipleOrders()]
+display-name: testDequeueNextOrderMultipleOrders()
+]]></system-out>
+</testcase>
+<testcase name="testSetStockOverwritesExisting()" classname="InventoryTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testSetStockOverwritesExisting()]
+display-name: testSetStockOverwritesExisting()
+]]></system-out>
+</testcase>
+<testcase name="testSubmitOrderWithNullDimensions()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testSubmitOrderWithNullDimensions()]
+display-name: testSubmitOrderWithNullDimensions()
+]]></system-out>
+</testcase>
+<testcase name="testSystemConfigWithVerySmallValues()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSystemConfigWithVerySmallValues()]
+display-name: testSystemConfigWithVerySmallValues()
+]]></system-out>
+</testcase>
+<testcase name="testSetPrintTempWithZero()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testSetPrintTempWithZero()]
+display-name: testSetPrintTempWithZero()
+]]></system-out>
+</testcase>
+<testcase name="testSetMaxOrderQuantityLargeValue()" classname="SystemConfigTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetMaxOrderQuantityLargeValue()]
+display-name: testSetMaxOrderQuantityLargeValue()
+]]></system-out>
+</testcase>
+<testcase name="testConsumeWithDefaultStock()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testConsumeWithDefaultStock()]
+display-name: testConsumeWithDefaultStock()
+]]></system-out>
+</testcase>
+<testcase name="testGetMaterialInfoWithSpecialCharacters()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testGetMaterialInfoWithSpecialCharacters()]
+display-name: testGetMaterialInfoWithSpecialCharacters()
+]]></system-out>
+</testcase>
+<testcase name="testCalculatePriceWithDifferentTaxRate()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testCalculatePriceWithDifferentTaxRate()]
+display-name: testCalculatePriceWithDifferentTaxRate()
+]]></system-out>
+</testcase>
+<testcase name="testSetBaseSetupCostValidValue()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetBaseSetupCostValidValue()]
+display-name: testSetBaseSetupCostValidValue()
+]]></system-out>
+</testcase>
+<testcase name="testSetElectricityCostPerHourDecimalPrecision()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetElectricityCostPerHourDecimalPrecision()]
+display-name: testSetElectricityCostPerHourDecimalPrecision()
+]]></system-out>
+</testcase>
+<testcase name="testSystemConfigWithSpecialCurrencyCodes()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSystemConfigWithSpecialCurrencyCodes()]
+display-name: testSystemConfigWithSpecialCurrencyCodes()
+]]></system-out>
+</testcase>
+<testcase name="testGenerateSummaryDateFormat()" classname="InvoiceTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testGenerateSummaryDateFormat()]
+display-name: testGenerateSummaryDateFormat()
+]]></system-out>
+</testcase>
+<testcase name="testRegisterOrderMultipleOrders()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testRegisterOrderMultipleOrders()]
+display-name: testRegisterOrderMultipleOrders()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidOrderExceptionWithMessageAndCause()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidOrderExceptionWithMessageAndCause()]
+display-name: testInvalidOrderExceptionWithMessageAndCause()
+]]></system-out>
+</testcase>
+<testcase name="testGetMaxOrderQuantityDefault()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testGetMaxOrderQuantityDefault()]
+display-name: testGetMaxOrderQuantityDefault()
+]]></system-out>
+</testcase>
+<testcase name="testGetRushOrderSurchargeDefault()" classname="SystemConfigTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testGetRushOrderSurchargeDefault()]
+display-name: testGetRushOrderSurchargeDefault()
+]]></system-out>
+</testcase>
+<testcase name="testAddMaterialWithEmptyColor()" classname="AdminUserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testAddMaterialWithEmptyColor()]
+display-name: testAddMaterialWithEmptyColor()
+]]></system-out>
+</testcase>
+<testcase name="testSetMachineTimeCostPerHourLargeValue()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetMachineTimeCostPerHourLargeValue()]
+display-name: testSetMachineTimeCostPerHourLargeValue()
+]]></system-out>
+</testcase>
+<testcase name="testGetMaterialInfoWithEmptyValues()" classname="MaterialTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testGetMaterialInfoWithEmptyValues()]
+display-name: testGetMaterialInfoWithEmptyValues()
+]]></system-out>
+</testcase>
+<testcase name="testConstructorWithNullValues()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testConstructorWithNullValues()]
+display-name: testConstructorWithNullValues()
+]]></system-out>
+</testcase>
+<testcase name="testExceptionStackTraceWithCause()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testExceptionStackTraceWithCause()]
+display-name: testExceptionStackTraceWithCause()
+]]></system-out>
+</testcase>
+<testcase name="testInventoryWithUnicodeCharactersInMaterialName()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testInventoryWithUnicodeCharactersInMaterialName()]
+display-name: testInventoryWithUnicodeCharactersInMaterialName()
+]]></system-out>
+</testcase>
+<testcase name="testGetStockWithNullMaterial()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testGetStockWithNullMaterial()]
+display-name: testGetStockWithNullMaterial()
+]]></system-out>
+</testcase>
+<testcase name="testSetPriorityWithVip()" classname="OrderTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testSetPriorityWithVip()]
+display-name: testSetPriorityWithVip()
+]]></system-out>
+</testcase>
+<testcase name="testEstimatePrintTimeHoursBasicDimensions()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testEstimatePrintTimeHoursBasicDimensions()]
+display-name: testEstimatePrintTimeHoursBasicDimensions()
+]]></system-out>
+</testcase>
+<testcase name="testGetQueueSizeSingleOrder()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testGetQueueSizeSingleOrder()]
+display-name: testGetQueueSizeSingleOrder()
+]]></system-out>
+</testcase>
+<testcase name="testEstimatePrintTimeHoursWithDifferentFormats()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testEstimatePrintTimeHoursWithDifferentFormats()]
+display-name: testEstimatePrintTimeHoursWithDifferentFormats()
+]]></system-out>
+</testcase>
+<testcase name="testRegisterOrderValidOrder()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testRegisterOrderValidOrder()]
+display-name: testRegisterOrderValidOrder()
+]]></system-out>
+</testcase>
+<testcase name="testInvoiceIDIncrement()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testInvoiceIDIncrement()]
+display-name: testInvoiceIDIncrement()
+]]></system-out>
+</testcase>
+<testcase name="testSetTaxRateMaximum()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testSetTaxRateMaximum()]
+display-name: testSetTaxRateMaximum()
+]]></system-out>
+</testcase>
+<testcase name="testNameGetterAndSetter()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testNameGetterAndSetter()]
+display-name: testNameGetterAndSetter()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidOrderExceptionWithMessage()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidOrderExceptionWithMessage()]
+display-name: testInvalidOrderExceptionWithMessage()
+]]></system-out>
+</testcase>
+<testcase name="testSetColorWithNull()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testSetColorWithNull()]
+display-name: testSetColorWithNull()
+]]></system-out>
+</testcase>
+<testcase name="testSetRoleWithNull()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testSetRoleWithNull()]
+display-name: testSetRoleWithNull()
+]]></system-out>
+</testcase>
+<testcase name="testRegisterOrderWithNull()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testRegisterOrderWithNull()]
+display-name: testRegisterOrderWithNull()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidMaterialExceptionWithMaterialNameAndValidationErrorEmptyName()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidMaterialExceptionWithMaterialNameAndValidationErrorEmptyName()]
+display-name: testInvalidMaterialExceptionWithMaterialNameAndValidationErrorEmptyName()
+]]></system-out>
+</testcase>
+<testcase name="testOrderManagerWithVeryLargeNumberOfOrders()" classname="OrderManagerTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderManagerTest]/[method:testOrderManagerWithVeryLargeNumberOfOrders()]
+display-name: testOrderManagerWithVeryLargeNumberOfOrders()
+]]></system-out>
+</testcase>
+<testcase name="testAddMaterialValidInput()" classname="AdminUserTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:AdminUserTest]/[method:testAddMaterialValidInput()]
+display-name: testAddMaterialValidInput()
+]]></system-out>
+</testcase>
+<testcase name="testExportInvoiceWithValidOrder()" classname="InvoiceTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testExportInvoiceWithValidOrder()]
+display-name: testExportInvoiceWithValidOrder()
+]]></system-out>
+</testcase>
+<testcase name="testDefaultConstructor()" classname="UserTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:UserTest]/[method:testDefaultConstructor()]
+display-name: testDefaultConstructor()
+]]></system-out>
+</testcase>
+<testcase name="testIsAllowRushOrdersDefault()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testIsAllowRushOrdersDefault()]
+display-name: testIsAllowRushOrdersDefault()
+]]></system-out>
+</testcase>
+<testcase name="testInsufficientMaterialExceptionWithMaterialDetailsLargeValues()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInsufficientMaterialExceptionWithMaterialDetailsLargeValues()]
+display-name: testInsufficientMaterialExceptionWithMaterialDetailsLargeValues()
+]]></system-out>
+</testcase>
+<testcase name="testGetBaseSetupCostDefault()" classname="SystemConfigTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:SystemConfigTest]/[method:testGetBaseSetupCostDefault()]
+display-name: testGetBaseSetupCostDefault()
+]]></system-out>
+</testcase>
+<testcase name="testInvoiceWithOrderHavingVeryLongInstructions()" classname="InvoiceTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InvoiceTest]/[method:testInvoiceWithOrderHavingVeryLongInstructions()]
+display-name: testInvoiceWithOrderHavingVeryLongInstructions()
+]]></system-out>
+</testcase>
+<testcase name="testParameterizedConstructor()" classname="OrderTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:OrderTest]/[method:testParameterizedConstructor()]
+display-name: testParameterizedConstructor()
+]]></system-out>
+</testcase>
+<testcase name="testSetStockMultipleMaterials()" classname="InventoryTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:InventoryTest]/[method:testSetStockMultipleMaterials()]
+display-name: testSetStockMultipleMaterials()
+]]></system-out>
+</testcase>
+<testcase name="testMaterialWithSpecialCharactersInName()" classname="MaterialTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:MaterialTest]/[method:testMaterialWithSpecialCharactersInName()]
+display-name: testMaterialWithSpecialCharactersInName()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidMaterialExceptionWithNullMessage()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidMaterialExceptionWithNullMessage()]
+display-name: testInvalidMaterialExceptionWithNullMessage()
+]]></system-out>
+</testcase>
+<testcase name="testCompleteBulkOrderWorkflow()" classname="IntegrationTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:IntegrationTest]/[method:testCompleteBulkOrderWorkflow()]
+display-name: testCompleteBulkOrderWorkflow()
+]]></system-out>
+</testcase>
+<testcase name="testCompleteSystemConfigWorkflow()" classname="IntegrationTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:IntegrationTest]/[method:testCompleteSystemConfigWorkflow()]
+display-name: testCompleteSystemConfigWorkflow()
+]]></system-out>
+</testcase>
+<testcase name="testInvalidMaterialExceptionWithMaterialNameAndValidationErrorSpecialCharacters()" classname="ExceptionClassesTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:ExceptionClassesTest]/[method:testInvalidMaterialExceptionWithMaterialNameAndValidationErrorSpecialCharacters()]
+display-name: testInvalidMaterialExceptionWithMaterialNameAndValidationErrorSpecialCharacters()
+]]></system-out>
+</testcase>
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]
+display-name: JUnit Jupiter
+]]></system-out>
+</testsuite>

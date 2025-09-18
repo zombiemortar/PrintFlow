@@ -20,7 +20,8 @@ public class ComprehensiveTestRunner {
             "InventoryTest",
             "SystemConfigTest",
             "ExceptionClassesTest",
-            "IntegrationTest"
+            "IntegrationTest",
+            "PerformanceTest"
         };
         
         int totalTests = 0;
