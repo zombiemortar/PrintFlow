@@ -204,6 +204,32 @@ The `Tests` class exercises core and extended functionality of the system:
 java Tests
 ```
 
+## Code Coverage
+
+This project includes JaCoCo-based coverage reporting for JUnit 5 tests.
+
+Prerequisites:
+- JDK 17+ installed and on your PATH
+- Internet access on first run (to fetch JaCoCo jars)
+
+Generate coverage reports (Windows):
+- PowerShell:
+  - `powershell -NoProfile -ExecutionPolicy Bypass -File ./coverage.ps1`
+- Command Prompt:
+  - `coverage.bat`
+
+What it does:
+- Compiles all `*.java` into `out/classes`
+- Runs all JUnit 5 tests via `lib/junit-platform-console-standalone-1.10.2.jar` with the JaCoCo Java agent
+- Produces reports under `coverage/`:
+  - HTML: `coverage/html/index.html`
+  - XML: `coverage/jacoco.xml`
+  - CSV: `coverage/jacoco.csv`
+
+Notes:
+- On the first run, the script downloads JaCoCo agent and CLI jars into `lib/`.
+- Paths are configured to work even when the project path contains spaces.
+
 ### Expected Output
 The test driver will output:
 - User creation and display

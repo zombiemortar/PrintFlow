@@ -101,8 +101,10 @@ This is a Java program.
    - Added `PerformanceTest` covering high-volume creation/queueing, batch price calculations, and time estimation stability
    - Integrated into `ComprehensiveTestRunner`; all tests pass successfully
 
-24. **Generate code coverage reports**
+24. **Generate code coverage reports** (Done)
     - Ensure adequate testing coverage
+    - Implemented JaCoCo with scripts: `coverage.ps1`, `coverage.bat`
+    - Reports generated to `coverage/` (HTML `coverage/html/index.html`, XML, CSV)
 
 ---
 

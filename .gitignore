@@ -58,3 +58,10 @@ out/
 
 # Test output
 test-output/
+
+# Coverage artifacts
+coverage/
+jacoco.exec
+
+# Downloaded tools
+lib/jacoco*
