@@ -168,5 +168,10 @@ public class SystemConfig {
         maxOrderValue = 1000.00;
         allowRushOrders = true;
         rushOrderSurcharge = 0.25;
+        // Also reset runtime state in managers to ensure clean test isolation
+        try {
+            OrderManager.clearAllOrders();
+        } catch (Throwable ignored) {
+        }
     }
 }

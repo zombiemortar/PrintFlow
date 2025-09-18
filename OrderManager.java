@@ -52,6 +52,7 @@ public class OrderManager {
     public static void clearAllOrders() {
         orderIdToOrder.clear();
         printQueue.clear();
+        Order.resetOrderIdCounter();
     }
 }
 

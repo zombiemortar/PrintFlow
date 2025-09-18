@@ -5,7 +5,7 @@ import java.util.Map;
  * Minimal inventory store for material stock levels (in grams).
  */
 public class Inventory {
-    private static final Map<String, Integer> materialToGramsAvailable = new HashMap<>();
+    private static final Map<Material, Integer> materialToGramsAvailable = new HashMap<>();
 
     private Inventory() {
     }
@@ -14,15 +14,15 @@ public class Inventory {
         if (material == null || grams < 0) {
             return;
         }
-        materialToGramsAvailable.put(material.getName(), grams);
+        materialToGramsAvailable.put(material, grams);
     }
 
     public static int getStock(Material material) {
         if (material == null) {
             return 0;
         }
-        // Provide a generous default for unknown materials to keep flow simple
-        return materialToGramsAvailable.getOrDefault(material.getName(), 1000);
+        Integer grams = materialToGramsAvailable.get(material);
+        return grams != null ? grams : 1000;
     }
 
     public static boolean hasSufficient(Material material, int gramsNeeded) {
@@ -37,7 +37,7 @@ public class Inventory {
         if (current < grams) {
             return false;
         }
-        materialToGramsAvailable.put(material.getName(), current - grams);
+        materialToGramsAvailable.put(material, current - grams);
         return true;
     }
 }

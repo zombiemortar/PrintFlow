@@ -37,6 +37,14 @@ public class Order {
     }
     
     /**
+     * Resets the static order ID counter to its initial value.
+     * Intended for test isolation.
+     */
+    public static void resetOrderIdCounter() {
+        nextOrderID = 1000;
+    }
+    
+    /**
      * Default constructor.
      */
     public Order() {

@@ -45,10 +45,12 @@ public class Invoice {
             return "Invoice #" + invoiceID + " - No order associated";
         }
         
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter
+                .ofPattern("yyyy-MM-dd HH:mm:ss")
+                .withLocale(java.util.Locale.US);
         String formattedDate = dateIssued.format(formatter);
         
-        return String.format("""
+        String summary = String.format("""
                 INVOICE SUMMARY
                 ===============
                 Invoice ID: %d
@@ -69,6 +71,7 @@ public class Invoice {
                 totalCost,
                 order.getStatus()
         );
+        return summary.replaceAll("\\R+", " ");
     }
     
     /**
@@ -80,10 +83,12 @@ public class Invoice {
             return "Invoice #" + invoiceID + " - No order associated";
         }
         
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter
+                .ofPattern("yyyy-MM-dd HH:mm:ss")
+                .withLocale(java.util.Locale.US);
         String formattedDate = dateIssued.format(formatter);
         
-        return String.format("""
+        String invoice = String.format("""
                 ========================================
                 3D PRINTING SERVICE INVOICE
                 ========================================
@@ -126,6 +131,7 @@ public class Invoice {
                 totalCost,
                 order.getStatus()
         );
+        return invoice.replaceAll("\\R+", " ");
     }
     
     // Getters and Setters
