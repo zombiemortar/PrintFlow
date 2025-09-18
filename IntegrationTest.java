@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.Arrays;
 
 /**
  * Integration tests for complete workflows from order creation to invoice generation.
