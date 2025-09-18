@@ -1,7 +1,7 @@
 # Software Bill of Materials (SBOM)
 
 ## Project Information
-- **Project Name**: 3D Printing Service Management System
+- **Project Name**: PrintFlow
 - **Version**: 1.0.0
 - **Language**: Java
 - **SBOM Generated**: 2024

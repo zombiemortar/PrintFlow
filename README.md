@@ -1,4 +1,4 @@
-# 3D Printing Service Management System
+# PrintFlow
 
 ## Project Introduction and Purpose
 
