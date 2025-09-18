@@ -1,3 +1,7 @@
+# Ignore test reports directories
+test reports/
+test-reports/
+
 # Compiled class files
 *.class
 

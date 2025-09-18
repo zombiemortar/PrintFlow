@@ -134,8 +134,34 @@ This is a Java program.
 ---
 
 ### Phase 6: Advanced Features & Analytics
-32. **Design placeholder for UI integration**
-    - Console-based interaction for now; modular hooks for future GUI
+32. **Design and implement full GUI (JavaFX)**
+    - Choose toolkit: JavaFX as primary (fallback: Swing if required)
+    - Define UX flow: login/admin dashboard/order creation/queue/analytics/invoice
+    - Build scenes: Login, Dashboard, New Order, Order Queue, Inventory, Pricing, Invoice Viewer
+    - Implement controllers with data binding to `OrderManager`, `Inventory`, `SystemConfig`
+    - Add input validation, error dialogs, and notifications
+    - Implement theming (light/dark) and responsive layouts
+    - Wire file export/import for invoices and reports
+    - Add accessibility: keyboard navigation and screen reader labels
+    - Integrate with existing tests; add GUI smoke tests
+    - Set up JavaFX dependencies
+      - Option A: Maven add `org.openjfx:javafx-controls`, `javafx-fxml` (matching JDK)
+      - Option B: Local JavaFX SDK; configure `--module-path` and `--add-modules javafx.controls,javafx.fxml`
+      - If modular: create `module-info.java` with `requires javafx.controls; requires javafx.fxml;` and `opens` controller package
+    - Create GUI bootstrap
+      - Add `Main.java` extending `javafx.application.Application`
+      - Initialize primary `Stage`, load `FXML` (e.g., `LoginView.fxml`) via `FXMLLoader`
+      - Set application-wide stylesheet and icon
+    - Scaffold FXML and controllers
+      - Create `resources/` for FXML, CSS, and images; add `LoginView.fxml` and `DashboardView.fxml`
+      - Create controllers `LoginController`, `DashboardController` with basic event handlers
+    - Create initial files for bootstrapping
+      - `src/Main.java` (JavaFX `Application` entrypoint)
+      - `resources/fxml/LoginView.fxml`
+      - `resources/fxml/DashboardView.fxml`
+    - Run configuration
+      - Document IDE run config (VM options, module path) and CLI run command
+      - Verify on Windows with JDK 17+ and JavaFX matching version
 
 33. **Prepare for inventory tracking module**
     - Optional class: `Inventory` with material stock levels
