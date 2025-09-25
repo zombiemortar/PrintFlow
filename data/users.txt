@@ -1,0 +1,5 @@
+# User Data Export
+# Format: username|email|role
+# Generated: Thu Sep 25 19:26:22 EDT 2025
+
+integration_user|integration@example.com|customer

@@ -1,0 +1,7 @@
+# Material Data Export
+# Format: name|costPerGram|printTemp|color
+# Generated: Thu Sep 25 19:26:20 EDT 2025
+
+PLA|0.05|200|Blue
+ABS|0.08|250|Red
+PETG|0.07|240|Clear

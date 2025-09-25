@@ -1,0 +1,5 @@
+# Inventory Data Export
+# Format: materialName|stockInGrams
+# Generated: Thu Sep 25 19:26:22 EDT 2025
+
+TestPLA|2000

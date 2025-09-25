@@ -1,0 +1,5 @@
+# Order Data Export
+# Format: orderID|username|email|role|materialName|materialCostPerGram|materialPrintTemp|materialColor|dimensions|quantity|specialInstructions|status|priority|estimatedPrintHours
+# Generated: Thu Sep 25 19:26:22 EDT 2025
+
+1000|integration_user|integration@example.com|customer|TestPLA|0.06|210|Green|5x5x5cm|1|Integration test|pending|normal|0.125
