@@ -139,6 +139,10 @@ public class Order {
         return orderID;
     }
     
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
+    }
+    
     public User getUser() {
         return user;
     }

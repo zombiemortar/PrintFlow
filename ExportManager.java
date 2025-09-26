@@ -1,12 +1,11 @@
 import java.io.*;
-import java.nio.file.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
- * Central manager for CSV and JSON export functionality.
- * Provides methods to export invoices, reports, and order summaries in various formats.
+ * Simplified export manager for CSV and JSON export functionality.
+ * Consolidates export operations with reduced code duplication.
  */
 public class ExportManager {
     
@@ -14,18 +13,114 @@ public class ExportManager {
     private static final DateTimeFormatter TIMESTAMP_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
     
     /**
-     * Ensures the exports directory exists, creating it if necessary.
+     * Ensures the exports directory exists.
      * @return true if directory exists or was created successfully
      */
     public static boolean ensureExportsDirectory() {
-        try {
-            Path exportsPath = Paths.get(EXPORTS_DIRECTORY);
-            if (!Files.exists(exportsPath)) {
-                Files.createDirectories(exportsPath);
+        return FileManager.ensureDirectory(EXPORTS_DIRECTORY);
+    }
+    
+    /**
+     * Exports data to CSV format.
+     * @param data The data to export
+     * @param filename The filename (if null, generates timestamp-based name)
+     * @param headers The CSV headers
+     * @return true if export was successful
+     */
+    public static boolean exportToCSV(List<String[]> data, String filename, String[] headers) {
+        if (data == null || data.isEmpty()) {
+            return false;
+        }
+        
+        if (!ensureExportsDirectory()) {
+            return false;
+        }
+        
+        if (filename == null) {
+            String timestamp = LocalDateTime.now().format(TIMESTAMP_FORMAT);
+            filename = "export_" + timestamp + ".csv";
+        }
+        
+        try (PrintWriter writer = new PrintWriter(new FileWriter(EXPORTS_DIRECTORY + File.separator + filename))) {
+            // Write headers
+            if (headers != null && headers.length > 0) {
+                writer.println(escapeCSVLine(headers));
             }
-            return Files.exists(exportsPath) && Files.isDirectory(exportsPath);
+            
+            // Write data
+            for (String[] row : data) {
+                writer.println(escapeCSVLine(row));
+            }
+            
+            return true;
         } catch (IOException e) {
-            System.err.println("Error creating exports directory: " + e.getMessage());
+            System.err.println("Error exporting to CSV: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Exports data to JSON format.
+     * @param data The data to export
+     * @param filename The filename (if null, generates timestamp-based name)
+     * @param rootKey The root key for the JSON object
+     * @return true if export was successful
+     */
+    public static boolean exportToJSON(List<Map<String, Object>> data, String filename, String rootKey) {
+        if (data == null) {
+            return false;
+        }
+        
+        if (!ensureExportsDirectory()) {
+            return false;
+        }
+        
+        if (filename == null) {
+            String timestamp = LocalDateTime.now().format(TIMESTAMP_FORMAT);
+            filename = "export_" + timestamp + ".json";
+        }
+        
+        try (PrintWriter writer = new PrintWriter(new FileWriter(EXPORTS_DIRECTORY + File.separator + filename))) {
+            writer.println("{");
+            writer.println("  \"" + rootKey + "\": [");
+            
+            for (int i = 0; i < data.size(); i++) {
+                Map<String, Object> item = data.get(i);
+                writer.println("    {");
+                
+                int fieldIndex = 0;
+                for (Map.Entry<String, Object> entry : item.entrySet()) {
+                    writer.print("      \"" + entry.getKey() + "\": ");
+                    
+                    Object value = entry.getValue();
+                    if (value instanceof String) {
+                        writer.print("\"" + escapeJsonString((String) value) + "\"");
+                    } else if (value instanceof Number || value instanceof Boolean) {
+                        writer.print(value);
+                    } else {
+                        writer.print("\"" + escapeJsonString(value.toString()) + "\"");
+                    }
+                    
+                    if (fieldIndex < item.size() - 1) {
+                        writer.print(",");
+                    }
+                    writer.println();
+                    fieldIndex++;
+                }
+                
+                writer.print("    }");
+                if (i < data.size() - 1) {
+                    writer.print(",");
+                }
+                writer.println();
+            }
+            
+            writer.println("  ]");
+            writer.println("}");
+            
+            return true;
+        } catch (IOException e) {
+            System.err.println("Error exporting to JSON: " + e.getMessage());
             return false;
         }
     }
@@ -33,7 +128,7 @@ public class ExportManager {
     /**
      * Exports a single invoice to CSV format.
      * @param invoice The invoice to export
-     * @param filename Optional filename (if null, generates timestamp-based name)
+     * @param filename Optional filename
      * @return true if export was successful
      */
     public static boolean exportInvoiceToCSV(Invoice invoice, String filename) {
@@ -41,53 +136,14 @@ public class ExportManager {
             return false;
         }
         
-        if (!ensureExportsDirectory()) {
-            return false;
-        }
-        
-        if (filename == null) {
-            String timestamp = LocalDateTime.now().format(TIMESTAMP_FORMAT);
-            filename = "invoice_" + invoice.getInvoiceID() + "_" + timestamp + ".csv";
-        }
-        
-        try (PrintWriter writer = new PrintWriter(new FileWriter(EXPORTS_DIRECTORY + File.separator + filename))) {
-            // CSV Header
-            writer.println("Invoice ID,Order ID,Customer Username,Customer Email,Material Name,Material Cost Per Gram,Material Print Temp,Material Color,Dimensions,Quantity,Special Instructions,Status,Priority,Estimated Print Hours,Total Cost,Date Issued");
-            
-            // CSV Data
-            Order order = invoice.getOrder();
-            if (order != null) {
-                writer.printf("%d,%d,%s,%s,%s,%.4f,%d,%s,%s,%d,%s,%s,%s,%.2f,%.2f,%s%n",
-                    invoice.getInvoiceID(),
-                    order.getOrderID(),
-                    escapeCSV(order.getUser() != null ? order.getUser().getUsername() : ""),
-                    escapeCSV(order.getUser() != null ? order.getUser().getEmail() : ""),
-                    escapeCSV(order.getMaterial() != null ? order.getMaterial().getName() : ""),
-                    order.getMaterial() != null ? order.getMaterial().getCostPerGram() : 0.0,
-                    order.getMaterial() != null ? order.getMaterial().getPrintTemp() : 0,
-                    escapeCSV(order.getMaterial() != null ? order.getMaterial().getColor() : ""),
-                    escapeCSV(order.getDimensions()),
-                    order.getQuantity(),
-                    escapeCSV(order.getSpecialInstructions()),
-                    escapeCSV(order.getStatus()),
-                    escapeCSV(order.getPriority()),
-                    order.getEstimatedPrintHours(),
-                    invoice.getTotalCost(),
-                    invoice.getDateIssued().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-                );
-            }
-            
-            return true;
-        } catch (IOException e) {
-            System.err.println("Error exporting invoice to CSV: " + e.getMessage());
-            return false;
-        }
+        List<Invoice> invoices = Arrays.asList(invoice);
+        return exportInvoicesToCSV(invoices, filename);
     }
     
     /**
      * Exports a single invoice to JSON format.
      * @param invoice The invoice to export
-     * @param filename Optional filename (if null, generates timestamp-based name)
+     * @param filename Optional filename
      * @return true if export was successful
      */
     public static boolean exportInvoiceToJSON(Invoice invoice, String filename) {
@@ -95,333 +151,82 @@ public class ExportManager {
             return false;
         }
         
-        if (!ensureExportsDirectory()) {
+        List<Invoice> invoices = Arrays.asList(invoice);
+        return exportInvoicesToJSON(invoices, filename);
+    }
+    
+    /**
+     * Exports invoices to CSV format.
+     * @param invoices The invoices to export
+     * @param filename Optional filename
+     * @return true if export was successful
+     */
+    public static boolean exportInvoicesToCSV(List<Invoice> invoices, String filename) {
+        if (invoices == null || invoices.isEmpty()) {
             return false;
         }
         
-        if (filename == null) {
-            String timestamp = LocalDateTime.now().format(TIMESTAMP_FORMAT);
-            filename = "invoice_" + invoice.getInvoiceID() + "_" + timestamp + ".json";
-        }
+        String[] headers = {
+            "Invoice ID", "Order ID", "Customer", "Email", "Material", "Dimensions", 
+            "Quantity", "Total Cost", "Date Issued", "Status"
+        };
         
-        try (PrintWriter writer = new PrintWriter(new FileWriter(EXPORTS_DIRECTORY + File.separator + filename))) {
-            writer.println("{");
-            writer.println("  \"invoice\": {");
-            writer.printf("    \"invoiceID\": %d,%n", invoice.getInvoiceID());
-            writer.printf("    \"totalCost\": %.2f,%n", invoice.getTotalCost());
-            writer.printf("    \"dateIssued\": \"%s\",%n", invoice.getDateIssued().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            
+        List<String[]> data = new ArrayList<>();
+        for (Invoice invoice : invoices) {
             Order order = invoice.getOrder();
-            if (order != null) {
-                writer.println("    \"order\": {");
-                writer.printf("      \"orderID\": %d,%n", order.getOrderID());
-                writer.printf("      \"dimensions\": \"%s\",%n", escapeJSON(order.getDimensions()));
-                writer.printf("      \"quantity\": %d,%n", order.getQuantity());
-                writer.printf("      \"specialInstructions\": \"%s\",%n", escapeJSON(order.getSpecialInstructions()));
-                writer.printf("      \"status\": \"%s\",%n", escapeJSON(order.getStatus()));
-                writer.printf("      \"priority\": \"%s\",%n", escapeJSON(order.getPriority()));
-                writer.printf("      \"estimatedPrintHours\": %.2f,%n", order.getEstimatedPrintHours());
-                
-                if (order.getUser() != null) {
-                    writer.println("      \"user\": {");
-                    writer.printf("        \"username\": \"%s\",%n", escapeJSON(order.getUser().getUsername()));
-                    writer.printf("        \"email\": \"%s\",%n", escapeJSON(order.getUser().getEmail()));
-                    writer.printf("        \"role\": \"%s\"%n", escapeJSON(order.getUser().getRole()));
-                    writer.println("      },");
-                }
-                
-                if (order.getMaterial() != null) {
-                    writer.println("      \"material\": {");
-                    writer.printf("        \"name\": \"%s\",%n", escapeJSON(order.getMaterial().getName()));
-                    writer.printf("        \"costPerGram\": %.4f,%n", order.getMaterial().getCostPerGram());
-                    writer.printf("        \"printTemp\": %d,%n", order.getMaterial().getPrintTemp());
-                    writer.printf("        \"color\": \"%s\"%n", escapeJSON(order.getMaterial().getColor()));
-                    writer.println("      }");
-                }
-                
-                writer.println("    }");
-            } else {
-                writer.println("    \"order\": null");
-            }
-            
-            writer.println("  }");
-            writer.println("}");
-            
-            return true;
-        } catch (IOException e) {
-            System.err.println("Error exporting invoice to JSON: " + e.getMessage());
-            return false;
+            String[] row = {
+                String.valueOf(invoice.getInvoiceID()),
+                String.valueOf(order.getOrderID()),
+                order.getUser().getUsername(),
+                order.getUser().getEmail(),
+                order.getMaterial().getName(),
+                order.getDimensions(),
+                String.valueOf(order.getQuantity()),
+                String.valueOf(invoice.getTotalCost()),
+                invoice.getDateIssued().toString(),
+                order.getStatus()
+            };
+            data.add(row);
         }
+        
+        return exportToCSV(data, filename, headers);
     }
     
     /**
-     * Exports all orders to CSV format.
-     * @param filename Optional filename (if null, generates timestamp-based name)
+     * Exports invoices to JSON format.
+     * @param invoices The invoices to export
+     * @param filename Optional filename
      * @return true if export was successful
      */
-    public static boolean exportOrdersToCSV(String filename) {
-        if (!ensureExportsDirectory()) {
+    public static boolean exportInvoicesToJSON(List<Invoice> invoices, String filename) {
+        if (invoices == null) {
             return false;
         }
         
-        if (filename == null) {
-            String timestamp = LocalDateTime.now().format(TIMESTAMP_FORMAT);
-            filename = "orders_export_" + timestamp + ".csv";
+        List<Map<String, Object>> data = new ArrayList<>();
+        for (Invoice invoice : invoices) {
+            Order order = invoice.getOrder();
+            Map<String, Object> invoiceData = new HashMap<>();
+            invoiceData.put("invoiceID", invoice.getInvoiceID());
+            invoiceData.put("orderID", order.getOrderID());
+            invoiceData.put("customer", order.getUser().getUsername());
+            invoiceData.put("email", order.getUser().getEmail());
+            invoiceData.put("material", order.getMaterial().getName());
+            invoiceData.put("dimensions", order.getDimensions());
+            invoiceData.put("quantity", order.getQuantity());
+            invoiceData.put("totalCost", invoice.getTotalCost());
+            invoiceData.put("dateIssued", invoice.getDateIssued().toString());
+            invoiceData.put("status", order.getStatus());
+            data.add(invoiceData);
         }
         
-        Order[] orders = OrderManager.getAllOrders();
-        if (orders.length == 0) {
-            return DataFileManager.writeToFile(filename, "");
-        }
-        
-        try (PrintWriter writer = new PrintWriter(new FileWriter(EXPORTS_DIRECTORY + File.separator + filename))) {
-            // CSV Header
-            writer.println("Order ID,Username,Email,Role,Material Name,Material Cost Per Gram,Material Print Temp,Material Color,Dimensions,Quantity,Special Instructions,Status,Priority,Estimated Print Hours,Calculated Price");
-            
-            // CSV Data
-            for (Order order : orders) {
-                writer.printf("%d,%s,%s,%s,%s,%.4f,%d,%s,%s,%d,%s,%s,%s,%.2f,%.2f%n",
-                    order.getOrderID(),
-                    escapeCSV(order.getUser() != null ? order.getUser().getUsername() : ""),
-                    escapeCSV(order.getUser() != null ? order.getUser().getEmail() : ""),
-                    escapeCSV(order.getUser() != null ? order.getUser().getRole() : ""),
-                    escapeCSV(order.getMaterial() != null ? order.getMaterial().getName() : ""),
-                    order.getMaterial() != null ? order.getMaterial().getCostPerGram() : 0.0,
-                    order.getMaterial() != null ? order.getMaterial().getPrintTemp() : 0,
-                    escapeCSV(order.getMaterial() != null ? order.getMaterial().getColor() : ""),
-                    escapeCSV(order.getDimensions()),
-                    order.getQuantity(),
-                    escapeCSV(order.getSpecialInstructions()),
-                    escapeCSV(order.getStatus()),
-                    escapeCSV(order.getPriority()),
-                    order.getEstimatedPrintHours(),
-                    order.calculatePrice()
-                );
-            }
-            
-            return true;
-        } catch (IOException e) {
-            System.err.println("Error exporting orders to CSV: " + e.getMessage());
-            return false;
-        }
+        return exportToJSON(data, filename, "invoices");
     }
     
     /**
-     * Exports all orders to JSON format.
-     * @param filename Optional filename (if null, generates timestamp-based name)
-     * @return true if export was successful
-     */
-    public static boolean exportOrdersToJSON(String filename) {
-        if (!ensureExportsDirectory()) {
-            return false;
-        }
-        
-        if (filename == null) {
-            String timestamp = LocalDateTime.now().format(TIMESTAMP_FORMAT);
-            filename = "orders_export_" + timestamp + ".json";
-        }
-        
-        Order[] orders = OrderManager.getAllOrders();
-        
-        try (PrintWriter writer = new PrintWriter(new FileWriter(EXPORTS_DIRECTORY + File.separator + filename))) {
-            writer.println("{");
-            writer.println("  \"orders\": [");
-            
-            for (int i = 0; i < orders.length; i++) {
-                Order order = orders[i];
-                writer.println("    {");
-                writer.printf("      \"orderID\": %d,%n", order.getOrderID());
-                writer.printf("      \"dimensions\": \"%s\",%n", escapeJSON(order.getDimensions()));
-                writer.printf("      \"quantity\": %d,%n", order.getQuantity());
-                writer.printf("      \"specialInstructions\": \"%s\",%n", escapeJSON(order.getSpecialInstructions()));
-                writer.printf("      \"status\": \"%s\",%n", escapeJSON(order.getStatus()));
-                writer.printf("      \"priority\": \"%s\",%n", escapeJSON(order.getPriority()));
-                writer.printf("      \"estimatedPrintHours\": %.2f,%n", order.getEstimatedPrintHours());
-                writer.printf("      \"calculatedPrice\": %.2f,%n", order.calculatePrice());
-                
-                if (order.getUser() != null) {
-                    writer.println("      \"user\": {");
-                    writer.printf("        \"username\": \"%s\",%n", escapeJSON(order.getUser().getUsername()));
-                    writer.printf("        \"email\": \"%s\",%n", escapeJSON(order.getUser().getEmail()));
-                    writer.printf("        \"role\": \"%s\"%n", escapeJSON(order.getUser().getRole()));
-                    writer.println("      },");
-                }
-                
-                if (order.getMaterial() != null) {
-                    writer.println("      \"material\": {");
-                    writer.printf("        \"name\": \"%s\",%n", escapeJSON(order.getMaterial().getName()));
-                    writer.printf("        \"costPerGram\": %.4f,%n", order.getMaterial().getCostPerGram());
-                    writer.printf("        \"printTemp\": %d,%n", order.getMaterial().getPrintTemp());
-                    writer.printf("        \"color\": \"%s\"%n", escapeJSON(order.getMaterial().getColor()));
-                    writer.println("      }");
-                }
-                
-                if (i < orders.length - 1) {
-                    writer.println("    },");
-                } else {
-                    writer.println("    }");
-                }
-            }
-            
-            writer.println("  ]");
-            writer.println("}");
-            
-            return true;
-        } catch (IOException e) {
-            System.err.println("Error exporting orders to JSON: " + e.getMessage());
-            return false;
-        }
-    }
-    
-    /**
-     * Exports system report to CSV format.
-     * @param filename Optional filename (if null, generates timestamp-based name)
-     * @return true if export was successful
-     */
-    public static boolean exportSystemReportToCSV(String filename) {
-        if (!ensureExportsDirectory()) {
-            return false;
-        }
-        
-        if (filename == null) {
-            String timestamp = LocalDateTime.now().format(TIMESTAMP_FORMAT);
-            filename = "system_report_" + timestamp + ".csv";
-        }
-        
-        try (PrintWriter writer = new PrintWriter(new FileWriter(EXPORTS_DIRECTORY + File.separator + filename))) {
-            // System Statistics Header
-            writer.println("Report Type,Value,Description");
-            
-            Map<String, Object> stats = FileHandlingManager.getSystemStatistics();
-            for (Map.Entry<String, Object> entry : stats.entrySet()) {
-                writer.printf("%s,%s,%s%n",
-                    escapeCSV(entry.getKey()),
-                    escapeCSV(entry.getValue().toString()),
-                    escapeCSV(getStatDescription(entry.getKey()))
-                );
-            }
-            
-            // Materials Summary
-            writer.println();
-            writer.println("Material Name,Stock Grams,Cost Per Gram,Print Temperature,Color");
-            Material[] materials = MaterialFileHandler.getAllMaterials();
-            for (Material material : materials) {
-                int stock = InventoryFileHandler.getStock(material.getName());
-                writer.printf("%s,%d,%.4f,%d,%s%n",
-                    escapeCSV(material.getName()),
-                    stock,
-                    material.getCostPerGram(),
-                    material.getPrintTemp(),
-                    escapeCSV(material.getColor())
-                );
-            }
-            
-            // Orders Summary
-            writer.println();
-            writer.println("Order ID,Status,Quantity,Priority,Estimated Hours,Price");
-            Order[] orders = OrderManager.getAllOrders();
-            for (Order order : orders) {
-                writer.printf("%d,%s,%d,%s,%.2f,%.2f%n",
-                    order.getOrderID(),
-                    escapeCSV(order.getStatus()),
-                    order.getQuantity(),
-                    escapeCSV(order.getPriority()),
-                    order.getEstimatedPrintHours(),
-                    order.calculatePrice()
-                );
-            }
-            
-            return true;
-        } catch (IOException e) {
-            System.err.println("Error exporting system report to CSV: " + e.getMessage());
-            return false;
-        }
-    }
-    
-    /**
-     * Exports system report to JSON format.
-     * @param filename Optional filename (if null, generates timestamp-based name)
-     * @return true if export was successful
-     */
-    public static boolean exportSystemReportToJSON(String filename) {
-        if (!ensureExportsDirectory()) {
-            return false;
-        }
-        
-        if (filename == null) {
-            String timestamp = LocalDateTime.now().format(TIMESTAMP_FORMAT);
-            filename = "system_report_" + timestamp + ".json";
-        }
-        
-        try (PrintWriter writer = new PrintWriter(new FileWriter(EXPORTS_DIRECTORY + File.separator + filename))) {
-            writer.println("{");
-            writer.printf("  \"reportGenerated\": \"%s\",%n", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            
-            // System Statistics
-            writer.println("  \"systemStatistics\": {");
-            Map<String, Object> stats = FileHandlingManager.getSystemStatistics();
-            boolean first = true;
-            for (Map.Entry<String, Object> entry : stats.entrySet()) {
-                if (!first) writer.println(",");
-                writer.printf("    \"%s\": %s", escapeJSON(entry.getKey()), formatJSONValue(entry.getValue()));
-                first = false;
-            }
-            writer.println();
-            writer.println("  },");
-            
-            // Materials
-            writer.println("  \"materials\": [");
-            Material[] materials = MaterialFileHandler.getAllMaterials();
-            for (int i = 0; i < materials.length; i++) {
-                Material material = materials[i];
-                int stock = InventoryFileHandler.getStock(material.getName());
-                writer.println("    {");
-                writer.printf("      \"name\": \"%s\",%n", escapeJSON(material.getName()));
-                writer.printf("      \"costPerGram\": %.4f,%n", material.getCostPerGram());
-                writer.printf("      \"printTemp\": %d,%n", material.getPrintTemp());
-                writer.printf("      \"color\": \"%s\",%n", escapeJSON(material.getColor()));
-                writer.printf("      \"stockGrams\": %d%n", stock);
-                if (i < materials.length - 1) {
-                    writer.println("    },");
-                } else {
-                    writer.println("    }");
-                }
-            }
-            writer.println("  ],");
-            
-            // Orders
-            writer.println("  \"orders\": [");
-            Order[] orders = OrderManager.getAllOrders();
-            for (int i = 0; i < orders.length; i++) {
-                Order order = orders[i];
-                writer.println("    {");
-                writer.printf("      \"orderID\": %d,%n", order.getOrderID());
-                writer.printf("      \"status\": \"%s\",%n", escapeJSON(order.getStatus()));
-                writer.printf("      \"quantity\": %d,%n", order.getQuantity());
-                writer.printf("      \"priority\": \"%s\",%n", escapeJSON(order.getPriority()));
-                writer.printf("      \"estimatedPrintHours\": %.2f,%n", order.getEstimatedPrintHours());
-                writer.printf("      \"calculatedPrice\": %.2f%n", order.calculatePrice());
-                if (i < orders.length - 1) {
-                    writer.println("    },");
-                } else {
-                    writer.println("    }");
-                }
-            }
-            writer.println("  ]");
-            
-            writer.println("}");
-            
-            return true;
-        } catch (IOException e) {
-            System.err.println("Error exporting system report to JSON: " + e.getMessage());
-            return false;
-        }
-    }
-    
-    /**
-     * Exports all invoices to CSV format.
-     * @param invoices Array of invoices to export
-     * @param filename Optional filename (if null, generates timestamp-based name)
+     * Exports invoices to CSV format (overload for Invoice array).
+     * @param invoices The invoices to export
+     * @param filename Optional filename
      * @return true if export was successful
      */
     public static boolean exportInvoicesToCSV(Invoice[] invoices, String filename) {
@@ -429,55 +234,14 @@ public class ExportManager {
             return false;
         }
         
-        if (!ensureExportsDirectory()) {
-            return false;
-        }
-        
-        if (filename == null) {
-            String timestamp = LocalDateTime.now().format(TIMESTAMP_FORMAT);
-            filename = "invoices_export_" + timestamp + ".csv";
-        }
-        
-        try (PrintWriter writer = new PrintWriter(new FileWriter(EXPORTS_DIRECTORY + File.separator + filename))) {
-            // CSV Header
-            writer.println("Invoice ID,Order ID,Customer Username,Customer Email,Material Name,Material Cost Per Gram,Material Print Temp,Material Color,Dimensions,Quantity,Special Instructions,Status,Priority,Estimated Print Hours,Total Cost,Date Issued");
-            
-            // CSV Data
-            for (Invoice invoice : invoices) {
-                Order order = invoice.getOrder();
-                if (order != null) {
-                    writer.printf("%d,%d,%s,%s,%s,%.4f,%d,%s,%s,%d,%s,%s,%s,%.2f,%.2f,%s%n",
-                        invoice.getInvoiceID(),
-                        order.getOrderID(),
-                        escapeCSV(order.getUser() != null ? order.getUser().getUsername() : ""),
-                        escapeCSV(order.getUser() != null ? order.getUser().getEmail() : ""),
-                        escapeCSV(order.getMaterial() != null ? order.getMaterial().getName() : ""),
-                        order.getMaterial() != null ? order.getMaterial().getCostPerGram() : 0.0,
-                        order.getMaterial() != null ? order.getMaterial().getPrintTemp() : 0,
-                        escapeCSV(order.getMaterial() != null ? order.getMaterial().getColor() : ""),
-                        escapeCSV(order.getDimensions()),
-                        order.getQuantity(),
-                        escapeCSV(order.getSpecialInstructions()),
-                        escapeCSV(order.getStatus()),
-                        escapeCSV(order.getPriority()),
-                        order.getEstimatedPrintHours(),
-                        invoice.getTotalCost(),
-                        invoice.getDateIssued().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-                    );
-                }
-            }
-            
-            return true;
-        } catch (IOException e) {
-            System.err.println("Error exporting invoices to CSV: " + e.getMessage());
-            return false;
-        }
+        List<Invoice> invoiceList = Arrays.asList(invoices);
+        return exportInvoicesToCSV(invoiceList, filename);
     }
     
     /**
-     * Exports all invoices to JSON format.
-     * @param invoices Array of invoices to export
-     * @param filename Optional filename (if null, generates timestamp-based name)
+     * Exports invoices to JSON format (overload for Invoice array).
+     * @param invoices The invoices to export
+     * @param filename Optional filename
      * @return true if export was successful
      */
     public static boolean exportInvoicesToJSON(Invoice[] invoices, String filename) {
@@ -485,217 +249,291 @@ public class ExportManager {
             return false;
         }
         
-        if (!ensureExportsDirectory()) {
+        List<Invoice> invoiceList = Arrays.asList(invoices);
+        return exportInvoicesToJSON(invoiceList, filename);
+    }
+    
+    /**
+     * Exports orders to CSV format.
+     * @param orders The orders to export
+     * @param filename Optional filename
+     * @return true if export was successful
+     */
+    public static boolean exportOrdersToCSV(List<Order> orders, String filename) {
+        if (orders == null || orders.isEmpty()) {
             return false;
         }
         
-        if (filename == null) {
-            String timestamp = LocalDateTime.now().format(TIMESTAMP_FORMAT);
-            filename = "invoices_export_" + timestamp + ".json";
+        String[] headers = {
+            "Order ID", "Customer", "Email", "Role", "Material", "Cost Per Gram",
+            "Print Temp", "Color", "Dimensions", "Quantity", "Instructions", 
+            "Status", "Priority", "Estimated Hours"
+        };
+        
+        List<String[]> data = new ArrayList<>();
+        for (Order order : orders) {
+            String[] row = {
+                String.valueOf(order.getOrderID()),
+                order.getUser().getUsername(),
+                order.getUser().getEmail(),
+                order.getUser().getRole(),
+                order.getMaterial().getName(),
+                String.valueOf(order.getMaterial().getCostPerGram()),
+                String.valueOf(order.getMaterial().getPrintTemp()),
+                order.getMaterial().getColor(),
+                order.getDimensions(),
+                String.valueOf(order.getQuantity()),
+                order.getSpecialInstructions(),
+                order.getStatus(),
+                order.getPriority(),
+                String.valueOf(order.estimatePrintTimeHours())
+            };
+            data.add(row);
         }
         
-        try (PrintWriter writer = new PrintWriter(new FileWriter(EXPORTS_DIRECTORY + File.separator + filename))) {
-            writer.println("{");
-            writer.println("  \"invoices\": [");
+        return exportToCSV(data, filename, headers);
+    }
+    
+    /**
+     * Exports orders to JSON format.
+     * @param orders The orders to export
+     * @param filename Optional filename
+     * @return true if export was successful
+     */
+    public static boolean exportOrdersToJSON(List<Order> orders, String filename) {
+        if (orders == null) {
+            return false;
+        }
+        
+        List<Map<String, Object>> data = new ArrayList<>();
+        for (Order order : orders) {
+            Map<String, Object> orderData = new HashMap<>();
+            orderData.put("orderID", order.getOrderID());
+            orderData.put("customer", order.getUser().getUsername());
+            orderData.put("email", order.getUser().getEmail());
+            orderData.put("role", order.getUser().getRole());
+            orderData.put("material", order.getMaterial().getName());
+            orderData.put("costPerGram", order.getMaterial().getCostPerGram());
+            orderData.put("printTemp", order.getMaterial().getPrintTemp());
+            orderData.put("color", order.getMaterial().getColor());
+            orderData.put("dimensions", order.getDimensions());
+            orderData.put("quantity", order.getQuantity());
+            orderData.put("instructions", order.getSpecialInstructions());
+            orderData.put("status", order.getStatus());
+            orderData.put("priority", order.getPriority());
+            orderData.put("estimatedHours", order.estimatePrintTimeHours());
+            data.add(orderData);
+        }
+        
+        return exportToJSON(data, filename, "orders");
+    }
+    
+    /**
+     * Exports all orders to CSV format (overload with filename only).
+     * @param filename Optional filename
+     * @return true if export was successful
+     */
+    public static boolean exportOrdersToCSV(String filename) {
+        Order[] orders = OrderManager.getAllOrders();
+        List<Order> orderList = Arrays.asList(orders);
+        return exportOrdersToCSV(orderList, filename);
+    }
+    
+    /**
+     * Exports all orders to JSON format (overload with filename only).
+     * @param filename Optional filename
+     * @return true if export was successful
+     */
+    public static boolean exportOrdersToJSON(String filename) {
+        Order[] orders = OrderManager.getAllOrders();
+        List<Order> orderList = Arrays.asList(orders);
+        return exportOrdersToJSON(orderList, filename);
+    }
+    
+    /**
+     * Exports system report to CSV format.
+     * @param filename Optional filename
+     * @return true if export was successful
+     */
+    public static boolean exportSystemReportToCSV(String filename) {
+        String[] headers = {
+            "Metric", "Value", "Description"
+        };
+        
+        List<String[]> data = new ArrayList<>();
+        
+        // System statistics
+        Order[] orders = OrderManager.getAllOrders();
+        data.add(new String[]{"Total Orders", String.valueOf(orders.length), "Total number of orders in system"});
+        
+        List<Material> materials = Arrays.asList(DataManager.getAllMaterials());
+        data.add(new String[]{"Total Materials", String.valueOf(materials.size()), "Number of available materials"});
+        
+        List<User> users = Arrays.asList(DataManager.getAllUsers());
+        data.add(new String[]{"Total Users", String.valueOf(users.size()), "Number of registered users"});
+        
+        // Calculate totals
+        double totalRevenue = 0;
+        int pendingOrders = 0;
+        int processingOrders = 0;
+        int completedOrders = 0;
+        
+        for (Order order : orders) {
+            totalRevenue += order.calculatePrice();
+            switch (order.getStatus()) {
+                case "pending":
+                    pendingOrders++;
+                    break;
+                case "processing":
+                    processingOrders++;
+                    break;
+                case "completed":
+                    completedOrders++;
+                    break;
+            }
+        }
+        
+        data.add(new String[]{"Total Revenue", String.valueOf(totalRevenue), "Total revenue from all orders"});
+        data.add(new String[]{"Pending Orders", String.valueOf(pendingOrders), "Orders waiting to be processed"});
+        data.add(new String[]{"Processing Orders", String.valueOf(processingOrders), "Orders currently being processed"});
+        data.add(new String[]{"Completed Orders", String.valueOf(completedOrders), "Orders that have been completed"});
+        
+        return exportToCSV(data, filename, headers);
+    }
+    
+    /**
+     * Exports system report to JSON format.
+     * @param filename Optional filename
+     * @return true if export was successful
+     */
+    public static boolean exportSystemReportToJSON(String filename) {
+        Map<String, Object> reportData = new HashMap<>();
+        
+        // System statistics
+        Order[] orders = OrderManager.getAllOrders();
+        List<Material> materials = Arrays.asList(DataManager.getAllMaterials());
+        List<User> users = Arrays.asList(DataManager.getAllUsers());
+        
+        reportData.put("totalOrders", orders.length);
+        reportData.put("totalMaterials", materials.size());
+        reportData.put("totalUsers", users.size());
+        
+        // Calculate totals
+        double totalRevenue = 0;
+        int pendingOrders = 0;
+        int processingOrders = 0;
+        int completedOrders = 0;
+        
+        for (Order order : orders) {
+            totalRevenue += order.calculatePrice();
+            switch (order.getStatus()) {
+                case "pending":
+                    pendingOrders++;
+                    break;
+                case "processing":
+                    processingOrders++;
+                    break;
+                case "completed":
+                    completedOrders++;
+                    break;
+            }
+        }
+        
+        reportData.put("totalRevenue", totalRevenue);
+        reportData.put("pendingOrders", pendingOrders);
+        reportData.put("processingOrders", processingOrders);
+        reportData.put("completedOrders", completedOrders);
+        reportData.put("generatedAt", LocalDateTime.now().toString());
+        
+        List<Map<String, Object>> data = Arrays.asList(reportData);
+        return exportToJSON(data, filename, "systemReport");
+    }
+    
+    /**
+     * Escapes a CSV line by properly handling commas and quotes.
+     * @param fields The fields to escape
+     * @return The escaped CSV line
+     */
+    private static String escapeCSVLine(String[] fields) {
+        StringBuilder line = new StringBuilder();
+        
+        for (int i = 0; i < fields.length; i++) {
+            String field = fields[i] != null ? fields[i] : "";
             
-            for (int i = 0; i < invoices.length; i++) {
-                Invoice invoice = invoices[i];
-                writer.println("    {");
-                writer.printf("      \"invoiceID\": %d,%n", invoice.getInvoiceID());
-                writer.printf("      \"totalCost\": %.2f,%n", invoice.getTotalCost());
-                writer.printf("      \"dateIssued\": \"%s\",%n", invoice.getDateIssued().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-                
-                Order order = invoice.getOrder();
-                if (order != null) {
-                    writer.println("      \"order\": {");
-                    writer.printf("        \"orderID\": %d,%n", order.getOrderID());
-                    writer.printf("        \"dimensions\": \"%s\",%n", escapeJSON(order.getDimensions()));
-                    writer.printf("        \"quantity\": %d,%n", order.getQuantity());
-                    writer.printf("        \"specialInstructions\": \"%s\",%n", escapeJSON(order.getSpecialInstructions()));
-                    writer.printf("        \"status\": \"%s\",%n", escapeJSON(order.getStatus()));
-                    writer.printf("        \"priority\": \"%s\",%n", escapeJSON(order.getPriority()));
-                    writer.printf("        \"estimatedPrintHours\": %.2f,%n", order.getEstimatedPrintHours());
-                    
-                    if (order.getUser() != null) {
-                        writer.println("        \"user\": {");
-                        writer.printf("          \"username\": \"%s\",%n", escapeJSON(order.getUser().getUsername()));
-                        writer.printf("          \"email\": \"%s\",%n", escapeJSON(order.getUser().getEmail()));
-                        writer.printf("          \"role\": \"%s\"%n", escapeJSON(order.getUser().getRole()));
-                        writer.println("        },");
-                    }
-                    
-                    if (order.getMaterial() != null) {
-                        writer.println("        \"material\": {");
-                        writer.printf("          \"name\": \"%s\",%n", escapeJSON(order.getMaterial().getName()));
-                        writer.printf("          \"costPerGram\": %.4f,%n", order.getMaterial().getCostPerGram());
-                        writer.printf("          \"printTemp\": %d,%n", order.getMaterial().getPrintTemp());
-                        writer.printf("          \"color\": \"%s\"%n", escapeJSON(order.getMaterial().getColor()));
-                        writer.println("        }");
-                    }
-                    
-                    writer.println("      }");
-                } else {
-                    writer.println("      \"order\": null");
-                }
-                
-                if (i < invoices.length - 1) {
-                    writer.println("    },");
-                } else {
-                    writer.println("    }");
-                }
+            // Escape quotes by doubling them
+            field = field.replace("\"", "\"\"");
+            
+            // Wrap in quotes if field contains comma, quote, or newline
+            if (field.contains(",") || field.contains("\"") || field.contains("\n")) {
+                field = "\"" + field + "\"";
             }
             
-            writer.println("  ]");
-            writer.println("}");
-            
-            return true;
-        } catch (IOException e) {
-            System.err.println("Error exporting invoices to JSON: " + e.getMessage());
-            return false;
-        }
-    }
-    
-    /**
-     * Lists all exported files in the exports directory.
-     * @return Array of exported filenames
-     */
-    public static String[] listExportedFiles() {
-        if (!ensureExportsDirectory()) {
-            return new String[0];
+            line.append(field);
+            if (i < fields.length - 1) {
+                line.append(",");
+            }
         }
         
-        try {
-            Path exportsPath = Paths.get(EXPORTS_DIRECTORY);
-            return Files.list(exportsPath)
-                    .filter(Files::isRegularFile)
-                    .map(path -> path.getFileName().toString())
-                    .toArray(String[]::new);
-        } catch (IOException e) {
-            System.err.println("Error listing exported files: " + e.getMessage());
-            return new String[0];
-        }
+        return line.toString();
     }
     
     /**
-     * Gets the full path to an exported file.
-     * @param filename The name of the exported file
-     * @return The full path as a string
+     * Escapes a JSON string by properly handling quotes and special characters.
+     * @param str The string to escape
+     * @return The escaped JSON string
+     */
+    private static String escapeJsonString(String str) {
+        if (str == null) {
+            return "";
+        }
+        
+        return str.replace("\\", "\\\\")
+                 .replace("\"", "\\\"")
+                 .replace("\b", "\\b")
+                 .replace("\f", "\\f")
+                 .replace("\n", "\\n")
+                 .replace("\r", "\\r")
+                 .replace("\t", "\\t");
+    }
+    
+    /**
+     * Gets the exports directory path.
+     * @return Exports directory path
+     */
+    public static String getExportsDirectory() {
+        return EXPORTS_DIRECTORY;
+    }
+    
+    /**
+     * Lists all export files.
+     * @return Array of export filenames
+     */
+    public static String[] listExportFiles() {
+        return FileManager.listFiles(EXPORTS_DIRECTORY);
+    }
+    
+    /**
+     * Lists all exported files (alias for listExportFiles).
+     * @return Array of export filenames
+     */
+    public static String[] listExportedFiles() {
+        return listExportFiles();
+    }
+    
+    /**
+     * Gets the full file path for an export file.
+     * @param filename The filename
+     * @return Full file path
      */
     public static String getExportFilePath(String filename) {
         return EXPORTS_DIRECTORY + File.separator + filename;
     }
     
-    // Helper methods
-    
     /**
-     * Escapes a string for CSV format.
-     * @param value The string to escape
-     * @return The escaped string
+     * Gets the current timestamp formatted for filenames.
+     * @return Formatted timestamp string
      */
-    private static String escapeCSV(String value) {
-        if (value == null) return "";
-        if (value.contains(",") || value.contains("\"") || value.contains("\n")) {
-            return "\"" + value.replace("\"", "\"\"") + "\"";
-        }
-        return value;
-    }
-    
-    /**
-     * Escapes a string for JSON format.
-     * @param value The string to escape
-     * @return The escaped string
-     */
-    private static String escapeJSON(String value) {
-        if (value == null) return "";
-        return value.replace("\\", "\\\\")
-                   .replace("\"", "\\\"")
-                   .replace("\b", "\\b")
-                   .replace("\f", "\\f")
-                   .replace("\n", "\\n")
-                   .replace("\r", "\\r")
-                   .replace("\t", "\\t");
-    }
-    
-    /**
-     * Formats a value for JSON output.
-     * @param value The value to format
-     * @return The formatted JSON value
-     */
-    private static String formatJSONValue(Object value) {
-        if (value == null) return "null";
-        if (value instanceof String) return "\"" + escapeJSON((String) value) + "\"";
-        if (value instanceof Number) return value.toString();
-        if (value instanceof Boolean) return value.toString();
-        return "\"" + escapeJSON(value.toString()) + "\"";
-    }
-    
-    /**
-     * Gets a description for a system statistic key.
-     * @param key The statistic key
-     * @return A description of the statistic
-     */
-    private static String getStatDescription(String key) {
-        switch (key) {
-            case "materials_count": return "Total number of materials in system";
-            case "users_count": return "Total number of users in system";
-            case "inventory_items_count": return "Total number of inventory items";
-            case "orders_count": return "Total number of orders";
-            case "queue_size": return "Number of orders in print queue";
-            case "total_inventory_value": return "Total value of inventory in dollars";
-            case "customer_count": return "Number of customer users";
-            case "admin_count": return "Number of admin users";
-            case "vip_count": return "Number of VIP users";
-            default: return "System statistic";
-        }
-    }
-    
-    /**
-     * Main method for testing the export manager.
-     * @param args Command line arguments (not used)
-     */
-    public static void main(String[] args) {
-        System.out.println("=== EXPORT MANAGER TEST ===");
-        
-        // Initialize system with test data
-        FileHandlingManager.initializeWithDefaultData();
-        
-        // Create some test orders and invoices
-        User testUser = new User("test_user", "test@example.com", "customer", "TestPass123!");
-        Material testMaterial = new Material("Test PLA", 0.05, 200, "Blue");
-        Order testOrder = new Order(testUser, testMaterial, "10x10x5cm", 2, "Test order");
-        Invoice testInvoice = new Invoice(testOrder, testOrder.calculatePrice());
-        
-        OrderManager.registerOrder(testOrder);
-        
-        // Test CSV exports
-        System.out.println("Testing CSV exports...");
-        boolean csvInvoice = exportInvoiceToCSV(testInvoice, "test_invoice.csv");
-        System.out.println("Invoice CSV export: " + (csvInvoice ? "SUCCESS" : "FAILED"));
-        
-        boolean csvOrders = exportOrdersToCSV("test_orders.csv");
-        System.out.println("Orders CSV export: " + (csvOrders ? "SUCCESS" : "FAILED"));
-        
-        boolean csvReport = exportSystemReportToCSV("test_report.csv");
-        System.out.println("System report CSV export: " + (csvReport ? "SUCCESS" : "FAILED"));
-        
-        // Test JSON exports
-        System.out.println("Testing JSON exports...");
-        boolean jsonInvoice = exportInvoiceToJSON(testInvoice, "test_invoice.json");
-        System.out.println("Invoice JSON export: " + (jsonInvoice ? "SUCCESS" : "FAILED"));
-        
-        boolean jsonOrders = exportOrdersToJSON("test_orders.json");
-        System.out.println("Orders JSON export: " + (jsonOrders ? "SUCCESS" : "FAILED"));
-        
-        boolean jsonReport = exportSystemReportToJSON("test_report.json");
-        System.out.println("System report JSON export: " + (jsonReport ? "SUCCESS" : "FAILED"));
-        
-        // List exported files
-        String[] exportedFiles = listExportedFiles();
-        System.out.println("\nExported files:");
-        for (String file : exportedFiles) {
-            System.out.println("  " + file);
-        }
-        
-        System.out.println("\nExport Manager test completed!");
+    public static String getCurrentTimestamp() {
+        return LocalDateTime.now().format(TIMESTAMP_FORMAT);
     }
 }

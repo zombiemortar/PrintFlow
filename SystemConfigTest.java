@@ -2,480 +2,479 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.*;
+import java.io.File;
 
 /**
  * Comprehensive JUnit test cases for the SystemConfig class.
- * Tests all static methods, configuration management, and edge cases.
+ * Tests configuration file operations, validation, and integration with SystemConfig.
  */
 public class SystemConfigTest {
     
+    private static final String TEST_CONFIG_FILENAME = "test_config.txt";
+    private static final String TEST_DATA_DIR = "data";
+    
     @BeforeEach
     void setUp() {
-        // Reset to defaults before each test
+        // Reset SystemConfig to defaults before each test
         SystemConfig.resetToDefaults();
+        
+        // Ensure test data directory exists
+        FileManager.ensureDirectory(TEST_DATA_DIR);
     }
     
     @AfterEach
     void tearDown() {
-        // Reset to defaults after each test
+        // Reset SystemConfig to defaults after each test
         SystemConfig.resetToDefaults();
+        
+        // Clean up test files
+        File testFile = new File(TEST_DATA_DIR + File.separator + TEST_CONFIG_FILENAME);
+        if (testFile.exists()) {
+            testFile.delete();
+        }
     }
     
-    // Electricity Cost Tests
+    // Configuration File Creation Tests
     @Test
-    void testGetElectricityCostPerHourDefault() {
-        assertEquals(0.15, SystemConfig.getElectricityCostPerHour());
+    void testCreateDefaultConfiguration() {
+        assertTrue(SystemConfig.createDefaultConfigFile());
+        assertTrue(SystemConfig.configFileExists());
     }
     
     @Test
-    void testSetElectricityCostPerHourValidValue() {
+    void testSaveConfiguration() {
+        // Modify some settings
         SystemConfig.setElectricityCostPerHour(0.20);
+        SystemConfig.setTaxRate(0.10);
+        SystemConfig.setCurrency("EUR");
+        
+        // Save configuration
+        assertTrue(SystemConfig.saveToFile());
+        assertTrue(SystemConfig.configFileExists());
+    }
+    
+    @Test
+    void testSaveConfigurationWithAllSettings() {
+        // Modify all settings
+        SystemConfig.setElectricityCostPerHour(0.25);
+        SystemConfig.setMachineTimeCostPerHour(3.00);
+        SystemConfig.setBaseSetupCost(7.50);
+        SystemConfig.setTaxRate(0.12);
+        SystemConfig.setCurrency("GBP");
+        SystemConfig.setMaxOrderQuantity(50);
+        SystemConfig.setMaxOrderValue(1500.00);
+        SystemConfig.setAllowRushOrders(false);
+        SystemConfig.setRushOrderSurcharge(0.30);
+        
+        // Save configuration
+        assertTrue(SystemConfig.saveToFile());
+        assertTrue(SystemConfig.configFileExists());
+    }
+    
+    // Configuration File Loading Tests
+    @Test
+    void testLoadConfigurationFromNonExistentFile() {
+        // Delete config file if it exists
+        File configFile = new File(FileManager.getFilePath("system_config.txt"));
+        if (configFile.exists()) {
+            configFile.delete();
+        }
+        
+        // Try to load from non-existent file
+        assertFalse(SystemConfig.loadFromFile());
+    }
+    
+    @Test
+    void testLoadConfigurationFromValidFile() {
+        // Create a valid configuration file
+        assertTrue(SystemConfig.createDefaultConfigFile());
+        
+        // Modify settings in memory
+        SystemConfig.setElectricityCostPerHour(0.30);
+        SystemConfig.setTaxRate(0.15);
+        
+        // Load configuration (should reset to file values)
+        assertTrue(SystemConfig.loadFromFile());
+        
+        // Verify settings were loaded from file
+        assertEquals(0.15, SystemConfig.getElectricityCostPerHour());
+        assertEquals(0.08, SystemConfig.getTaxRate());
+    }
+    
+    @Test
+    void testLoadConfigurationWithCustomValues() {
+        // Create custom configuration content
+        String customConfig = """
+            # Custom Configuration
+            electricity_cost_per_hour=0.20
+            machine_time_cost_per_hour=3.50
+            base_setup_cost=8.00
+            tax_rate=0.10
+            currency=EUR
+            max_order_quantity=75
+            max_order_value=2000.00
+            allow_rush_orders=false
+            rush_order_surcharge=0.35
+            """;
+        
+        // Write custom config to file
+        assertTrue(FileManager.writeToFile("system_config.txt", customConfig));
+        
+        // Load configuration
+        assertTrue(SystemConfig.loadFromFile());
+        
+        // Verify all values were loaded correctly
+        assertEquals(0.20, SystemConfig.getElectricityCostPerHour());
+        assertEquals(3.50, SystemConfig.getMachineTimeCostPerHour());
+        assertEquals(8.00, SystemConfig.getBaseSetupCost());
+        assertEquals(0.10, SystemConfig.getTaxRate());
+        assertEquals("EUR", SystemConfig.getCurrency());
+        assertEquals(75, SystemConfig.getMaxOrderQuantity());
+        assertEquals(2000.00, SystemConfig.getMaxOrderValue());
+        assertFalse(SystemConfig.isAllowRushOrders());
+        assertEquals(0.35, SystemConfig.getRushOrderSurcharge());
+    }
+    
+    // Configuration File Validation Tests
+    @Test
+    void testValidateConfigurationFileWithValidContent() {
+        // Create valid configuration file
+        assertTrue(SystemConfig.createDefaultConfigFile());
+        assertTrue(SystemConfig.validateConfigFile());
+    }
+    
+    @Test
+    void testValidateConfigurationFileWithMissingKeys() {
+        // Create configuration with missing keys
+        String incompleteConfig = """
+            electricity_cost_per_hour=0.15
+            machine_time_cost_per_hour=2.50
+            # Missing other required keys
+            """;
+        
+        assertTrue(FileManager.writeToFile("system_config.txt", incompleteConfig));
+        assertFalse(SystemConfig.validateConfigFile());
+    }
+    
+    @Test
+    void testValidateConfigurationFileWithInvalidValues() {
+        // Create configuration with invalid values
+        String invalidConfig = """
+            electricity_cost_per_hour=invalid
+            machine_time_cost_per_hour=2.50
+            base_setup_cost=5.00
+            tax_rate=0.08
+            currency=USD
+            max_order_quantity=100
+            max_order_value=1000.00
+            allow_rush_orders=true
+            rush_order_surcharge=0.25
+            """;
+        
+        assertTrue(FileManager.writeToFile("system_config.txt", invalidConfig));
+        assertFalse(SystemConfig.validateConfigFile());
+    }
+    
+    @Test
+    void testValidateConfigurationFileWithComments() {
+        // Create configuration with comments
+        String configWithComments = """
+            # System Configuration File
+            # Pricing constants
+            electricity_cost_per_hour=0.15
+            machine_time_cost_per_hour=2.50
+            base_setup_cost=5.00
+            
+            # Tax settings
+            tax_rate=0.08
+            currency=USD
+            
+            # Order limits
+            max_order_quantity=100
+            max_order_value=1000.00
+            
+            # Rush order settings
+            allow_rush_orders=true
+            rush_order_surcharge=0.25
+            """;
+        
+        assertTrue(FileManager.writeToFile("system_config.txt", configWithComments));
+        assertTrue(SystemConfig.validateConfigFile());
+    }
+    
+    // Configuration File Status Tests
+    @Test
+    void testGetConfigurationFileStatusWithExistingFile() {
+        assertTrue(SystemConfig.createDefaultConfigFile());
+        String status = SystemConfig.getConfigFileStatus();
+        
+        assertNotNull(status);
+        assertTrue(status.contains("CONFIGURATION FILE STATUS"));
+        assertTrue(status.contains("File exists: Yes"));
+        assertTrue(status.contains("File valid: Yes"));
+    }
+    
+    @Test
+    void testGetConfigurationFileStatusWithNonExistentFile() {
+        // Delete config file if it exists
+        File configFile = new File(FileManager.getFilePath("system_config.txt"));
+        if (configFile.exists()) {
+            configFile.delete();
+        }
+        
+        String status = SystemConfig.getConfigFileStatus();
+        
+        assertNotNull(status);
+        assertTrue(status.contains("CONFIGURATION FILE STATUS"));
+        assertTrue(status.contains("File exists: No"));
+    }
+    
+    // Configuration File Backup Tests
+    @Test
+    void testBackupConfiguration() {
+        assertTrue(SystemConfig.createDefaultConfigFile());
+        assertTrue(SystemConfig.backupConfigFile());
+        
+        // Check that backup directory exists and has files
+        File backupDir = new File("backups");
+        assertTrue(backupDir.exists());
+        assertTrue(backupDir.isDirectory());
+    }
+    
+    // Edge Cases and Error Handling Tests
+    @Test
+    void testConfigurationWithEmptyFile() {
+        assertTrue(FileManager.writeToFile("system_config.txt", ""));
+        assertFalse(SystemConfig.validateConfigFile());
+    }
+    
+    @Test
+    void testConfigurationWithOnlyComments() {
+        String onlyComments = """
+            # This is a comment
+            # Another comment
+            # No actual configuration
+            """;
+        
+        assertTrue(FileManager.writeToFile("system_config.txt", onlyComments));
+        assertFalse(SystemConfig.validateConfigFile());
+    }
+    
+    @Test
+    void testConfigurationWithInvalidKeyFormat() {
+        String invalidKeys = """
+            invalid-key=0.15
+            valid_key=2.50
+            invalid.key=5.00
+            tax_rate=0.08
+            currency=USD
+            max_order_quantity=100
+            max_order_value=1000.00
+            allow_rush_orders=true
+            rush_order_surcharge=0.25
+            """;
+        
+        assertTrue(FileManager.writeToFile("system_config.txt", invalidKeys));
+        assertFalse(SystemConfig.validateConfigFile());
+    }
+    
+    @Test
+    void testConfigurationWithDuplicateKeys() {
+        String duplicateKeys = """
+            electricity_cost_per_hour=0.15
+            electricity_cost_per_hour=0.20
+            machine_time_cost_per_hour=2.50
+            base_setup_cost=5.00
+            tax_rate=0.08
+            currency=USD
+            max_order_quantity=100
+            max_order_value=1000.00
+            allow_rush_orders=true
+            rush_order_surcharge=0.25
+            """;
+        
+        assertTrue(FileManager.writeToFile("system_config.txt", duplicateKeys));
+        assertTrue(SystemConfig.validateConfigFile());
+        
+        // Load and verify last value is used
+        assertTrue(SystemConfig.loadFromFile());
         assertEquals(0.20, SystemConfig.getElectricityCostPerHour());
     }
     
     @Test
-    void testSetElectricityCostPerHourZero() {
-        SystemConfig.setElectricityCostPerHour(0.0);
-        assertEquals(0.0, SystemConfig.getElectricityCostPerHour());
-    }
-    
-    @Test
-    void testSetElectricityCostPerHourNegative() {
-        SystemConfig.setElectricityCostPerHour(-0.10);
-        assertEquals(0.15, SystemConfig.getElectricityCostPerHour()); // Should remain unchanged
-    }
-    
-    @Test
-    void testSetElectricityCostPerHourLargeValue() {
-        SystemConfig.setElectricityCostPerHour(100.0);
-        assertEquals(100.0, SystemConfig.getElectricityCostPerHour());
-    }
-    
-    @Test
-    void testSetElectricityCostPerHourDecimalPrecision() {
-        SystemConfig.setElectricityCostPerHour(0.123456789);
-        assertEquals(0.123456789, SystemConfig.getElectricityCostPerHour());
-    }
-    
-    // Machine Time Cost Tests
-    @Test
-    void testGetMachineTimeCostPerHourDefault() {
+    void testConfigurationWithWhitespaceHandling() {
+        String configWithWhitespace = """
+            electricity_cost_per_hour = 0.15
+            machine_time_cost_per_hour= 2.50
+            base_setup_cost =5.00
+            tax_rate = 0.08
+            currency = USD
+            max_order_quantity = 100
+            max_order_value = 1000.00
+            allow_rush_orders = true
+            rush_order_surcharge = 0.25
+            """;
+        
+        assertTrue(FileManager.writeToFile("system_config.txt", configWithWhitespace));
+        assertTrue(SystemConfig.validateConfigFile());
+        
+        assertTrue(SystemConfig.loadFromFile());
+        assertEquals(0.15, SystemConfig.getElectricityCostPerHour());
         assertEquals(2.50, SystemConfig.getMachineTimeCostPerHour());
-    }
-    
-    @Test
-    void testSetMachineTimeCostPerHourValidValue() {
-        SystemConfig.setMachineTimeCostPerHour(3.00);
-        assertEquals(3.00, SystemConfig.getMachineTimeCostPerHour());
-    }
-    
-    @Test
-    void testSetMachineTimeCostPerHourZero() {
-        SystemConfig.setMachineTimeCostPerHour(0.0);
-        assertEquals(0.0, SystemConfig.getMachineTimeCostPerHour());
-    }
-    
-    @Test
-    void testSetMachineTimeCostPerHourNegative() {
-        SystemConfig.setMachineTimeCostPerHour(-1.0);
-        assertEquals(2.50, SystemConfig.getMachineTimeCostPerHour()); // Should remain unchanged
-    }
-    
-    @Test
-    void testSetMachineTimeCostPerHourLargeValue() {
-        SystemConfig.setMachineTimeCostPerHour(1000.0);
-        assertEquals(1000.0, SystemConfig.getMachineTimeCostPerHour());
-    }
-    
-    // Base Setup Cost Tests
-    @Test
-    void testGetBaseSetupCostDefault() {
         assertEquals(5.00, SystemConfig.getBaseSetupCost());
     }
     
+    // Integration Tests with SystemConfig
     @Test
-    void testSetBaseSetupCostValidValue() {
-        SystemConfig.setBaseSetupCost(7.50);
-        assertEquals(7.50, SystemConfig.getBaseSetupCost());
-    }
-    
-    @Test
-    void testSetBaseSetupCostZero() {
-        SystemConfig.setBaseSetupCost(0.0);
-        assertEquals(0.0, SystemConfig.getBaseSetupCost());
-    }
-    
-    @Test
-    void testSetBaseSetupCostNegative() {
-        SystemConfig.setBaseSetupCost(-2.0);
-        assertEquals(5.00, SystemConfig.getBaseSetupCost()); // Should remain unchanged
-    }
-    
-    @Test
-    void testSetBaseSetupCostLargeValue() {
-        SystemConfig.setBaseSetupCost(500.0);
-        assertEquals(500.0, SystemConfig.getBaseSetupCost());
-    }
-    
-    // Tax Rate Tests
-    @Test
-    void testGetTaxRateDefault() {
-        assertEquals(0.08, SystemConfig.getTaxRate());
-    }
-    
-    @Test
-    void testSetTaxRateValidValue() {
-        SystemConfig.setTaxRate(0.10);
-        assertEquals(0.10, SystemConfig.getTaxRate());
-    }
-    
-    @Test
-    void testSetTaxRateZero() {
-        SystemConfig.setTaxRate(0.0);
-        assertEquals(0.0, SystemConfig.getTaxRate());
-    }
-    
-    @Test
-    void testSetTaxRateMaximum() {
-        SystemConfig.setTaxRate(1.0);
-        assertEquals(1.0, SystemConfig.getTaxRate());
-    }
-    
-    @Test
-    void testSetTaxRateNegative() {
-        SystemConfig.setTaxRate(-0.05);
-        assertEquals(0.08, SystemConfig.getTaxRate()); // Should remain unchanged
-    }
-    
-    @Test
-    void testSetTaxRateAboveMaximum() {
-        SystemConfig.setTaxRate(1.5);
-        assertEquals(0.08, SystemConfig.getTaxRate()); // Should remain unchanged
-    }
-    
-    @Test
-    void testSetTaxRateDecimalPrecision() {
-        SystemConfig.setTaxRate(0.0825);
-        assertEquals(0.0825, SystemConfig.getTaxRate());
-    }
-    
-    // Currency Tests
-    @Test
-    void testGetCurrencyDefault() {
-        assertEquals("USD", SystemConfig.getCurrency());
-    }
-    
-    @Test
-    void testSetCurrencyValidValue() {
-        SystemConfig.setCurrency("EUR");
-        assertEquals("EUR", SystemConfig.getCurrency());
-    }
-    
-    @Test
-    void testSetCurrencyLowerCase() {
-        SystemConfig.setCurrency("eur");
-        assertEquals("EUR", SystemConfig.getCurrency()); // Should be converted to uppercase
-    }
-    
-    @Test
-    void testSetCurrencyWithWhitespace() {
-        SystemConfig.setCurrency("  GBP  ");
-        assertEquals("GBP", SystemConfig.getCurrency()); // Should be trimmed and uppercased
-    }
-    
-    @Test
-    void testSetCurrencyWithNull() {
-        SystemConfig.setCurrency(null);
-        assertEquals("USD", SystemConfig.getCurrency()); // Should remain unchanged
-    }
-    
-    @Test
-    void testSetCurrencyWithEmptyString() {
-        SystemConfig.setCurrency("");
-        assertEquals("USD", SystemConfig.getCurrency()); // Should remain unchanged
-    }
-    
-    @Test
-    void testSetCurrencyWithWhitespaceOnly() {
-        SystemConfig.setCurrency("   ");
-        assertEquals("USD", SystemConfig.getCurrency()); // Should remain unchanged
-    }
-    
-    @Test
-    void testSetCurrencyWithSpecialCharacters() {
-        SystemConfig.setCurrency("USD$");
-        assertEquals("USD$", SystemConfig.getCurrency());
-    }
-    
-    // Max Order Quantity Tests
-    @Test
-    void testGetMaxOrderQuantityDefault() {
-        assertEquals(100, SystemConfig.getMaxOrderQuantity());
-    }
-    
-    @Test
-    void testSetMaxOrderQuantityValidValue() {
-        SystemConfig.setMaxOrderQuantity(50);
-        assertEquals(50, SystemConfig.getMaxOrderQuantity());
-    }
-    
-    @Test
-    void testSetMaxOrderQuantityZero() {
-        SystemConfig.setMaxOrderQuantity(0);
-        assertEquals(100, SystemConfig.getMaxOrderQuantity()); // Should remain unchanged
-    }
-    
-    @Test
-    void testSetMaxOrderQuantityNegative() {
-        SystemConfig.setMaxOrderQuantity(-10);
-        assertEquals(100, SystemConfig.getMaxOrderQuantity()); // Should remain unchanged
-    }
-    
-    @Test
-    void testSetMaxOrderQuantityLargeValue() {
-        SystemConfig.setMaxOrderQuantity(10000);
-        assertEquals(10000, SystemConfig.getMaxOrderQuantity());
-    }
-    
-    // Max Order Value Tests
-    @Test
-    void testGetMaxOrderValueDefault() {
-        assertEquals(1000.00, SystemConfig.getMaxOrderValue());
-    }
-    
-    @Test
-    void testSetMaxOrderValueValidValue() {
-        SystemConfig.setMaxOrderValue(1500.00);
-        assertEquals(1500.00, SystemConfig.getMaxOrderValue());
-    }
-    
-    @Test
-    void testSetMaxOrderValueZero() {
-        SystemConfig.setMaxOrderValue(0.0);
-        assertEquals(1000.00, SystemConfig.getMaxOrderValue()); // Should remain unchanged
-    }
-    
-    @Test
-    void testSetMaxOrderValueNegative() {
-        SystemConfig.setMaxOrderValue(-100.0);
-        assertEquals(1000.00, SystemConfig.getMaxOrderValue()); // Should remain unchanged
-    }
-    
-    @Test
-    void testSetMaxOrderValueLargeValue() {
-        SystemConfig.setMaxOrderValue(100000.00);
-        assertEquals(100000.00, SystemConfig.getMaxOrderValue());
-    }
-    
-    // Rush Order Settings Tests
-    @Test
-    void testIsAllowRushOrdersDefault() {
-        assertTrue(SystemConfig.isAllowRushOrders());
-    }
-    
-    @Test
-    void testSetAllowRushOrdersTrue() {
-        SystemConfig.setAllowRushOrders(true);
-        assertTrue(SystemConfig.isAllowRushOrders());
-    }
-    
-    @Test
-    void testSetAllowRushOrdersFalse() {
-        SystemConfig.setAllowRushOrders(false);
-        assertFalse(SystemConfig.isAllowRushOrders());
-    }
-    
-    @Test
-    void testGetRushOrderSurchargeDefault() {
-        assertEquals(0.25, SystemConfig.getRushOrderSurcharge());
-    }
-    
-    @Test
-    void testSetRushOrderSurchargeValidValue() {
-        SystemConfig.setRushOrderSurcharge(0.30);
-        assertEquals(0.30, SystemConfig.getRushOrderSurcharge());
-    }
-    
-    @Test
-    void testSetRushOrderSurchargeZero() {
-        SystemConfig.setRushOrderSurcharge(0.0);
-        assertEquals(0.0, SystemConfig.getRushOrderSurcharge());
-    }
-    
-    @Test
-    void testSetRushOrderSurchargeNegative() {
-        SystemConfig.setRushOrderSurcharge(-0.10);
-        assertEquals(0.25, SystemConfig.getRushOrderSurcharge()); // Should remain unchanged
-    }
-    
-    @Test
-    void testSetRushOrderSurchargeLargeValue() {
-        SystemConfig.setRushOrderSurcharge(1.0);
-        assertEquals(1.0, SystemConfig.getRushOrderSurcharge());
-    }
-    
-    // Configuration Summary Tests
-    @Test
-    void testGetConfigurationSummary() {
-        String summary = SystemConfig.getConfigurationSummary();
-        assertNotNull(summary);
-        assertTrue(summary.contains("SYSTEM CONFIGURATION SUMMARY"));
-        assertTrue(summary.contains("PRICING CONSTANTS:"));
-        assertTrue(summary.contains("Electricity Cost: $0.15 per hour"));
-        assertTrue(summary.contains("Machine Time Cost: $2.50 per hour"));
-        assertTrue(summary.contains("Base Setup Cost: $5.00"));
-        assertTrue(summary.contains("TAX & CURRENCY:"));
-        assertTrue(summary.contains("Tax Rate: 8.0%"));
-        assertTrue(summary.contains("Currency: USD"));
-        assertTrue(summary.contains("ORDER LIMITS:"));
-        assertTrue(summary.contains("Max Order Quantity: 100 items"));
-        assertTrue(summary.contains("Max Order Value: $1000.00"));
-        assertTrue(summary.contains("RUSH ORDER SETTINGS:"));
-        assertTrue(summary.contains("Rush Orders Allowed: Yes"));
-        assertTrue(summary.contains("Rush Order Surcharge: 25.0%"));
-    }
-    
-    @Test
-    void testGetConfigurationSummaryAfterChanges() {
-        SystemConfig.setElectricityCostPerHour(0.20);
-        SystemConfig.setMachineTimeCostPerHour(3.00);
-        SystemConfig.setBaseSetupCost(7.50);
-        SystemConfig.setTaxRate(0.10);
-        SystemConfig.setCurrency("EUR");
-        SystemConfig.setMaxOrderQuantity(50);
-        SystemConfig.setMaxOrderValue(1500.00);
-        SystemConfig.setAllowRushOrders(false);
-        SystemConfig.setRushOrderSurcharge(0.30);
+    void testSystemConfigLoadFromFile() {
+        // Create custom configuration
+        String customConfig = """
+            electricity_cost_per_hour=0.25
+            machine_time_cost_per_hour=4.00
+            base_setup_cost=10.00
+            tax_rate=0.12
+            currency=CAD
+            max_order_quantity=200
+            max_order_value=5000.00
+            allow_rush_orders=false
+            rush_order_surcharge=0.40
+            """;
         
-        String summary = SystemConfig.getConfigurationSummary();
-        assertTrue(summary.contains("Electricity Cost: $0.20 per hour"));
-        assertTrue(summary.contains("Machine Time Cost: $3.00 per hour"));
-        assertTrue(summary.contains("Base Setup Cost: $7.50"));
-        assertTrue(summary.contains("Tax Rate: 10.0%"));
-        assertTrue(summary.contains("Currency: EUR"));
-        assertTrue(summary.contains("Max Order Quantity: 50 items"));
-        assertTrue(summary.contains("Max Order Value: $1500.00"));
-        assertTrue(summary.contains("Rush Orders Allowed: No"));
-        assertTrue(summary.contains("Rush Order Surcharge: 30.0%"));
+        assertTrue(FileManager.writeToFile("system_config.txt", customConfig));
+        
+        // Test SystemConfig.loadFromFile()
+        assertTrue(SystemConfig.loadFromFile());
+        
+        // Verify all values were loaded
+        assertEquals(0.25, SystemConfig.getElectricityCostPerHour());
+        assertEquals(4.00, SystemConfig.getMachineTimeCostPerHour());
+        assertEquals(10.00, SystemConfig.getBaseSetupCost());
+        assertEquals(0.12, SystemConfig.getTaxRate());
+        assertEquals("CAD", SystemConfig.getCurrency());
+        assertEquals(200, SystemConfig.getMaxOrderQuantity());
+        assertEquals(5000.00, SystemConfig.getMaxOrderValue());
+        assertFalse(SystemConfig.isAllowRushOrders());
+        assertEquals(0.40, SystemConfig.getRushOrderSurcharge());
     }
     
-    // Reset to Defaults Tests
     @Test
-    void testResetToDefaults() {
-        // Change all values
+    void testSystemConfigSaveToFile() {
+        // Modify settings
         SystemConfig.setElectricityCostPerHour(0.30);
-        SystemConfig.setMachineTimeCostPerHour(5.00);
-        SystemConfig.setBaseSetupCost(10.00);
         SystemConfig.setTaxRate(0.15);
-        SystemConfig.setCurrency("EUR");
-        SystemConfig.setMaxOrderQuantity(200);
-        SystemConfig.setMaxOrderValue(2000.00);
-        SystemConfig.setAllowRushOrders(false);
-        SystemConfig.setRushOrderSurcharge(0.50);
+        SystemConfig.setCurrency("JPY");
+        
+        // Save to file
+        assertTrue(SystemConfig.saveToFile());
         
         // Reset to defaults
         SystemConfig.resetToDefaults();
         
-        // Verify all values are reset
-        assertEquals(0.15, SystemConfig.getElectricityCostPerHour());
-        assertEquals(2.50, SystemConfig.getMachineTimeCostPerHour());
-        assertEquals(5.00, SystemConfig.getBaseSetupCost());
-        assertEquals(0.08, SystemConfig.getTaxRate());
-        assertEquals("USD", SystemConfig.getCurrency());
-        assertEquals(100, SystemConfig.getMaxOrderQuantity());
-        assertEquals(1000.00, SystemConfig.getMaxOrderValue());
-        assertTrue(SystemConfig.isAllowRushOrders());
-        assertEquals(0.25, SystemConfig.getRushOrderSurcharge());
-    }
-    
-    // Edge Cases
-    @Test
-    void testSystemConfigWithVeryLargeValues() {
-        SystemConfig.setElectricityCostPerHour(Double.MAX_VALUE);
-        SystemConfig.setMachineTimeCostPerHour(Double.MAX_VALUE);
-        SystemConfig.setBaseSetupCost(Double.MAX_VALUE);
-        SystemConfig.setMaxOrderValue(Double.MAX_VALUE);
-        SystemConfig.setRushOrderSurcharge(Double.MAX_VALUE);
+        // Load from file
+        assertTrue(SystemConfig.loadFromFile());
         
-        assertEquals(Double.MAX_VALUE, SystemConfig.getElectricityCostPerHour());
-        assertEquals(Double.MAX_VALUE, SystemConfig.getMachineTimeCostPerHour());
-        assertEquals(Double.MAX_VALUE, SystemConfig.getBaseSetupCost());
-        assertEquals(Double.MAX_VALUE, SystemConfig.getMaxOrderValue());
-        assertEquals(Double.MAX_VALUE, SystemConfig.getRushOrderSurcharge());
-    }
-    
-    @Test
-    void testSystemConfigWithVerySmallValues() {
-        SystemConfig.setElectricityCostPerHour(Double.MIN_VALUE);
-        SystemConfig.setMachineTimeCostPerHour(Double.MIN_VALUE);
-        SystemConfig.setBaseSetupCost(Double.MIN_VALUE);
-        SystemConfig.setMaxOrderValue(Double.MIN_VALUE);
-        SystemConfig.setRushOrderSurcharge(Double.MIN_VALUE);
-        
-        assertEquals(Double.MIN_VALUE, SystemConfig.getElectricityCostPerHour());
-        assertEquals(Double.MIN_VALUE, SystemConfig.getMachineTimeCostPerHour());
-        assertEquals(Double.MIN_VALUE, SystemConfig.getBaseSetupCost());
-        assertEquals(Double.MIN_VALUE, SystemConfig.getMaxOrderValue());
-        assertEquals(Double.MIN_VALUE, SystemConfig.getRushOrderSurcharge());
-    }
-    
-    @Test
-    void testSystemConfigWithIntegerMaxValue() {
-        SystemConfig.setMaxOrderQuantity(Integer.MAX_VALUE);
-        assertEquals(Integer.MAX_VALUE, SystemConfig.getMaxOrderQuantity());
-    }
-    
-    @Test
-    void testSystemConfigWithIntegerMinValue() {
-        SystemConfig.setMaxOrderQuantity(Integer.MIN_VALUE);
-        assertEquals(100, SystemConfig.getMaxOrderQuantity()); // Should remain unchanged
-    }
-    
-    @Test
-    void testSystemConfigWithSpecialCurrencyCodes() {
-        SystemConfig.setCurrency("BTC");
-        assertEquals("BTC", SystemConfig.getCurrency());
-        
-        SystemConfig.setCurrency("ETH");
-        assertEquals("ETH", SystemConfig.getCurrency());
-        
-        SystemConfig.setCurrency("JPY");
+        // Verify settings were restored
+        assertEquals(0.30, SystemConfig.getElectricityCostPerHour());
+        assertEquals(0.15, SystemConfig.getTaxRate());
         assertEquals("JPY", SystemConfig.getCurrency());
     }
     
     @Test
-    void testSystemConfigWithUnicodeCurrency() {
-        SystemConfig.setCurrency("€");
-        assertEquals("€", SystemConfig.getCurrency());
-        
-        SystemConfig.setCurrency("¥");
-        assertEquals("¥", SystemConfig.getCurrency());
-        
-        SystemConfig.setCurrency("£");
-        assertEquals("£", SystemConfig.getCurrency());
+    void testSystemConfigCreateDefaultConfigFile() {
+        assertTrue(SystemConfig.createDefaultConfigFile());
+        assertTrue(SystemConfig.configFileExists());
+        assertTrue(SystemConfig.validateConfigFile());
     }
     
     @Test
-    void testSystemConfigWithVeryLongCurrencyString() {
-        String longCurrency = "VERYLONGCURRENCYCODE";
-        SystemConfig.setCurrency(longCurrency);
-        assertEquals(longCurrency, SystemConfig.getCurrency());
+    void testSystemConfigGetConfigFileStatus() {
+        String status = SystemConfig.getConfigFileStatus();
+        assertNotNull(status);
+        assertTrue(status.contains("CONFIGURATION FILE STATUS"));
     }
     
     @Test
-    void testSystemConfigWithDecimalPrecision() {
-        SystemConfig.setElectricityCostPerHour(0.1234567890123456789);
-        SystemConfig.setMachineTimeCostPerHour(2.9876543210987654321);
-        SystemConfig.setBaseSetupCost(5.5555555555555555555);
-        SystemConfig.setTaxRate(0.0825);
-        SystemConfig.setMaxOrderValue(1234.567890123456789);
-        SystemConfig.setRushOrderSurcharge(0.123456789);
+    void testSystemConfigBackupConfigFile() {
+        assertTrue(SystemConfig.createDefaultConfigFile());
+        assertTrue(SystemConfig.backupConfigFile());
+    }
+    
+    // Performance and Stress Tests
+    @Test
+    void testConfigurationWithLargeValues() {
+        String largeValuesConfig = """
+            electricity_cost_per_hour=999999.99
+            machine_time_cost_per_hour=999999.99
+            base_setup_cost=999999.99
+            tax_rate=0.99
+            currency=USD
+            max_order_quantity=2147483647
+            max_order_value=999999999.99
+            allow_rush_orders=true
+            rush_order_surcharge=0.99
+            """;
         
-        assertEquals(0.1234567890123456789, SystemConfig.getElectricityCostPerHour());
-        assertEquals(2.9876543210987654321, SystemConfig.getMachineTimeCostPerHour());
-        assertEquals(5.5555555555555555555, SystemConfig.getBaseSetupCost());
-        assertEquals(0.0825, SystemConfig.getTaxRate());
-        assertEquals(1234.567890123456789, SystemConfig.getMaxOrderValue());
-        assertEquals(0.123456789, SystemConfig.getRushOrderSurcharge());
+        assertTrue(FileManager.writeToFile("system_config.txt", largeValuesConfig));
+        assertTrue(SystemConfig.validateConfigFile());
+        
+        assertTrue(SystemConfig.loadFromFile());
+        assertEquals(999999.99, SystemConfig.getElectricityCostPerHour());
+        assertEquals(2147483647, SystemConfig.getMaxOrderQuantity());
+    }
+    
+    @Test
+    void testConfigurationWithVerySmallValues() {
+        String smallValuesConfig = """
+            electricity_cost_per_hour=0.0001
+            machine_time_cost_per_hour=0.0001
+            base_setup_cost=0.0001
+            tax_rate=0.0001
+            currency=USD
+            max_order_quantity=1
+            max_order_value=0.01
+            allow_rush_orders=false
+            rush_order_surcharge=0.0001
+            """;
+        
+        assertTrue(FileManager.writeToFile("system_config.txt", smallValuesConfig));
+        assertTrue(SystemConfig.validateConfigFile());
+        
+        assertTrue(SystemConfig.loadFromFile());
+        assertEquals(0.0001, SystemConfig.getElectricityCostPerHour());
+        assertEquals(1, SystemConfig.getMaxOrderQuantity());
+    }
+    
+    @Test
+    void testConfigurationRoundTrip() {
+        // Set custom values
+        SystemConfig.setElectricityCostPerHour(0.18);
+        SystemConfig.setMachineTimeCostPerHour(2.75);
+        SystemConfig.setBaseSetupCost(6.25);
+        SystemConfig.setTaxRate(0.09);
+        SystemConfig.setCurrency("AUD");
+        SystemConfig.setMaxOrderQuantity(150);
+        SystemConfig.setMaxOrderValue(2500.00);
+        SystemConfig.setAllowRushOrders(false);
+        SystemConfig.setRushOrderSurcharge(0.30);
+        
+        // Save configuration
+        assertTrue(SystemConfig.saveToFile());
+        
+        // Reset to defaults
+        SystemConfig.resetToDefaults();
+        
+        // Load configuration
+        assertTrue(SystemConfig.loadFromFile());
+        
+        // Verify all values were restored
+        assertEquals(0.18, SystemConfig.getElectricityCostPerHour());
+        assertEquals(2.75, SystemConfig.getMachineTimeCostPerHour());
+        assertEquals(6.25, SystemConfig.getBaseSetupCost());
+        assertEquals(0.09, SystemConfig.getTaxRate());
+        assertEquals("AUD", SystemConfig.getCurrency());
+        assertEquals(150, SystemConfig.getMaxOrderQuantity());
+        assertEquals(2500.00, SystemConfig.getMaxOrderValue());
+        assertFalse(SystemConfig.isAllowRushOrders());
+        assertEquals(0.30, SystemConfig.getRushOrderSurcharge());
     }
 }

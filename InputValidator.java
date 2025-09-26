@@ -149,7 +149,7 @@ public class InputValidator {
         }
         
         // Additional password strength validation
-        PasswordValidationResult passwordValidation = PasswordSecurity.validatePasswordStrength(password);
+        PasswordValidationResult passwordValidation = SecurityManager.validatePasswordStrength(password);
         if (!passwordValidation.isValid()) {
             for (String error : passwordValidation.getErrors()) {
                 result.addError(error);

@@ -18,7 +18,7 @@ public class ExportTest {
     @BeforeEach
     void setUp() {
         // Clear all data before each test
-        FileHandlingManager.clearAllData();
+        DataManager.clearAllData();
         OrderManager.clearAllOrders();
         
         // Create test data
@@ -31,9 +31,9 @@ public class ExportTest {
         OrderManager.registerOrder(testOrder);
         
         // Add material and user to file handlers
-        MaterialFileHandler.addMaterial(testMaterial);
-        UserFileHandler.addUser(testUser);
-        InventoryFileHandler.setStock("Test PLA", 1000);
+        DataManager.addMaterial(testMaterial);
+        DataManager.addUser(testUser);
+        DataManager.setStock("Test PLA", 1000);
     }
     
     @AfterEach
@@ -49,7 +49,7 @@ public class ExportTest {
         }
         
         // Clear all data after each test
-        FileHandlingManager.clearAllData();
+        DataManager.clearAllData();
         OrderManager.clearAllOrders();
     }
     
@@ -217,27 +217,27 @@ public class ExportTest {
     }
     
     @Test
-    void testFileHandlingManagerIntegration() {
-        // Test FileHandlingManager integration methods
-        assertTrue(FileHandlingManager.exportSystemReportToCSV("fhm_report.csv"));
-        assertTrue(FileHandlingManager.exportSystemReportToJSON("fhm_report.json"));
-        assertTrue(FileHandlingManager.exportOrdersToCSV("fhm_orders.csv"));
-        assertTrue(FileHandlingManager.exportOrdersToJSON("fhm_orders.json"));
+    void testExportManagerIntegration() {
+        // Test ExportManager integration methods
+        assertTrue(ExportManager.exportSystemReportToCSV("fhm_report.csv"));
+        assertTrue(ExportManager.exportSystemReportToJSON("fhm_report.json"));
+        assertTrue(ExportManager.exportOrdersToCSV("fhm_orders.csv"));
+        assertTrue(ExportManager.exportOrdersToJSON("fhm_orders.json"));
         
         Invoice[] invoices = {testInvoice};
-        assertTrue(FileHandlingManager.exportInvoicesToCSV(invoices, "fhm_invoices.csv"));
-        assertTrue(FileHandlingManager.exportInvoicesToJSON(invoices, "fhm_invoices.json"));
+        assertTrue(ExportManager.exportInvoicesToCSV(invoices, "fhm_invoices.csv"));
+        assertTrue(ExportManager.exportInvoicesToJSON(invoices, "fhm_invoices.json"));
         
         // Test auto-generated filenames
-        assertTrue(FileHandlingManager.exportSystemReportToCSV());
-        assertTrue(FileHandlingManager.exportSystemReportToJSON());
-        assertTrue(FileHandlingManager.exportOrdersToCSV());
-        assertTrue(FileHandlingManager.exportOrdersToJSON());
-        assertTrue(FileHandlingManager.exportInvoicesToCSV(invoices));
-        assertTrue(FileHandlingManager.exportInvoicesToJSON(invoices));
+        assertTrue(ExportManager.exportSystemReportToCSV("system_report.csv"));
+        assertTrue(ExportManager.exportSystemReportToJSON("system_report.json"));
+        assertTrue(ExportManager.exportOrdersToCSV("orders.csv"));
+        assertTrue(ExportManager.exportOrdersToJSON("orders.json"));
+        assertTrue(ExportManager.exportInvoicesToCSV(invoices, "invoices.csv"));
+        assertTrue(ExportManager.exportInvoicesToJSON(invoices, "invoices.json"));
         
         // Verify files were created
-        String[] exportedFiles = FileHandlingManager.listExportedFiles();
+        String[] exportedFiles = ExportManager.listExportedFiles();
         assertTrue(exportedFiles.length >= 12);
     }
     
@@ -297,8 +297,8 @@ public class ExportTest {
         assertFalse(ExportManager.exportInvoiceToJSON(null, "test.json"));
         
         // Test null invoices array handling
-        assertFalse(ExportManager.exportInvoicesToCSV(null, "test.csv"));
-        assertFalse(ExportManager.exportInvoicesToJSON(null, "test.json"));
+        assertFalse(ExportManager.exportInvoicesToCSV((Invoice[]) null, "test.csv"));
+        assertFalse(ExportManager.exportInvoicesToJSON((Invoice[]) null, "test.json"));
         
         // Test empty invoices array handling
         Invoice[] emptyInvoices = {};

@@ -19,7 +19,7 @@ public class User {
         this.username = username;
         this.email = email;
         this.role = role;
-        this.passwordHash = PasswordSecurity.hashPassword(password);
+        this.passwordHash = SecurityManager.hashPassword(password);
     }
     
     /**
@@ -34,7 +34,7 @@ public class User {
         this.username = username;
         this.email = email;
         this.role = role;
-        this.passwordHash = isHashed ? passwordHash : PasswordSecurity.hashPassword(passwordHash);
+        this.passwordHash = isHashed ? passwordHash : SecurityManager.hashPassword(passwordHash);
     }
     
     /**
@@ -57,7 +57,7 @@ public class User {
      */
     public Order submitOrder(Material material, String dimensions, int quantity, String specialInstructions) {
         // Enhanced input validation
-        ValidationResult validation = InputValidator.validateOrder(new Order(this, material, dimensions, quantity, specialInstructions));
+        ValidationResult validation = SecurityManager.validateOrder(new Order(this, material, dimensions, quantity, specialInstructions));
         if (!validation.isValid()) {
             System.err.println("Order validation failed:");
             for (String error : validation.getErrors()) {
@@ -160,7 +160,7 @@ public class User {
         if (password == null || passwordHash == null) {
             return false;
         }
-        return PasswordSecurity.verifyPassword(password, passwordHash);
+        return SecurityManager.verifyPassword(password, passwordHash);
     }
     
     /**
@@ -174,7 +174,7 @@ public class User {
             return false;
         }
         
-        PasswordValidationResult validation = PasswordSecurity.validatePasswordStrength(newPassword);
+        PasswordValidationResult validation = SecurityManager.validatePasswordStrength(newPassword);
         if (!validation.isValid()) {
             System.err.println("New password does not meet security requirements:");
             for (String error : validation.getErrors()) {
@@ -183,7 +183,7 @@ public class User {
             return false;
         }
         
-        this.passwordHash = PasswordSecurity.hashPassword(newPassword);
+            this.passwordHash = SecurityManager.hashPassword(newPassword);
         return true;
     }
     
@@ -193,7 +193,7 @@ public class User {
      * @return true if password was set successfully, false otherwise
      */
     public boolean setPassword(String newPassword) {
-        PasswordValidationResult validation = PasswordSecurity.validatePasswordStrength(newPassword);
+        PasswordValidationResult validation = SecurityManager.validatePasswordStrength(newPassword);
         if (!validation.isValid()) {
             System.err.println("Password does not meet security requirements:");
             for (String error : validation.getErrors()) {
@@ -202,7 +202,7 @@ public class User {
             return false;
         }
         
-        this.passwordHash = PasswordSecurity.hashPassword(newPassword);
+            this.passwordHash = SecurityManager.hashPassword(newPassword);
         return true;
     }
     
