@@ -10,9 +10,9 @@ import javafx.scene.control.*;
 import java.util.Map;
 import java.util.List;
 
-import utils.InputValidator;
-import utils.SystemConfig;
-import utils.ValidationResult;
+import util.InputValidator;
+import util.SystemConfig;
+import util.ValidationResult;
 
 
 public class OrderFormController implements SceneNavigator.WithParams {
