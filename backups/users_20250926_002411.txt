@@ -1,9 +1,0 @@
-# User Data Export
-# Format: username|email|role|passwordHash
-# Generated: Fri Sep 26 00:24:11 EDT 2025
-
-statsuser2|stats2@example.com|customer|$2a$12$1fstM36xbExSGemTwjxfCAqIjFD9JjxreX4U3TNzEt4P47ImCvhkis/akNlECDUwL
-newuser|new@example.com|customer|$2a$12$BG993xmpq4K6Bh9myuCbyA/Cv7Oxajs5WkL7I.CI2AX2EXLBJs553mROyFULCaiiM
-changepassuser|change@example.com|customer|$2a$12$NhwDU5Rogtt15GNwgQtyj.HPIdZj5gVtYAx6RF.ON.RevSk9ZmKOcuE5gp9mSRc/.
-resetuser|reset@example.com|customer|$2a$12$fPZsz9CsnBrWEGjFigRWw/EO29gaY4LOy0QHFoJ6WEf.UFNFGqv.yOHtClgt.BSvJ
-statsuser1|stats1@example.com|customer|$2a$12$Cfb8RMSK7mePf33VWNXnAAfQErpUpoV.kkMKO/c69m57608n77s2z4XitLizglXfE

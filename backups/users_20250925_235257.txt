@@ -1,7 +1,0 @@
-# User Data Export
-# Format: username|email|role
-# Generated: Thu Sep 25 23:52:57 EDT 2025
-
-jane_smith|jane@example.com|vip
-john_doe|john@example.com|customer
-admin|admin@printflow.com|admin

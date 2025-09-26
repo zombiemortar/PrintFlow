@@ -1,6 +1,0 @@
-# Order Data Export
-# Format: orderID|username|email|role|materialName|materialCostPerGram|materialPrintTemp|materialColor|dimensions|quantity|specialInstructions|status|priority|estimatedPrintHours
-# Generated: Fri Sep 26 00:24:11 EDT 2025
-
-1000|statsuser2|stats2@example.com|customer|ABS|0.08|250|Red|10x10x5|2|Test order 1|pending|normal|1.0
-1001|newuser|new@example.com|customer|PLA|0.05|200|Blue|15x15x10|1|Test order 2|pending|normal|2.25

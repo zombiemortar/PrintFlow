@@ -1,7 +1,0 @@
-# Inventory Data Export
-# Format: materialName|stockInGrams
-# Generated: Thu Sep 25 23:52:57 EDT 2025
-
-ABS|3000
-PLA|5000
-PETG|2000
