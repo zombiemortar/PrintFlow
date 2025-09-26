@@ -184,4 +184,207 @@ public class DataFileManager {
             return new String[0];
         }
     }
+    
+    /**
+     * Lists all backup files in the backup directory.
+     * @return Array of backup filenames, or empty array if directory doesn't exist
+     */
+    public static String[] listBackupFiles() {
+        if (!ensureBackupDirectory()) {
+            return new String[0];
+        }
+        
+        try {
+            Path backupPath = Paths.get(BACKUP_DIRECTORY);
+            return Files.list(backupPath)
+                    .filter(Files::isRegularFile)
+                    .map(path -> path.getFileName().toString())
+                    .sorted() // Sort by filename (which includes timestamp)
+                    .toArray(String[]::new);
+        } catch (IOException e) {
+            System.err.println("Error listing backup files: " + e.getMessage());
+            return new String[0];
+        }
+    }
+    
+    /**
+     * Lists backup files for a specific data file.
+     * @param filename The base filename to find backups for
+     * @return Array of backup filenames for the specified file
+     */
+    public static String[] listBackupsForFile(String filename) {
+        String[] allBackups = listBackupFiles();
+        String baseName = filename.replace(".txt", "");
+        
+        return java.util.Arrays.stream(allBackups)
+                .filter(backup -> backup.startsWith(baseName + "_") && backup.endsWith(".txt"))
+                .sorted()
+                .toArray(String[]::new);
+    }
+    
+    /**
+     * Restores a file from a backup.
+     * @param backupFilename The backup filename to restore from
+     * @param targetFilename The target filename to restore to (if null, uses original filename)
+     * @return true if restore was successful
+     */
+    public static boolean restoreFromBackup(String backupFilename, String targetFilename) {
+        if (!ensureBackupDirectory() || !ensureDataDirectory()) {
+            return false;
+        }
+        
+        try {
+            Path backupPath = Paths.get(BACKUP_DIRECTORY, backupFilename);
+            if (!Files.exists(backupPath)) {
+                System.err.println("Backup file not found: " + backupFilename);
+                return false;
+            }
+            
+            // Determine target filename
+            String actualTargetFilename = targetFilename;
+            if (actualTargetFilename == null) {
+                // Extract original filename from backup filename
+                // Format: filename_YYYYMMDD_HHMMSS.txt -> filename.txt
+                int lastUnderscore = backupFilename.lastIndexOf('_');
+                if (lastUnderscore > 0) {
+                    actualTargetFilename = backupFilename.substring(0, lastUnderscore) + ".txt";
+                } else {
+                    actualTargetFilename = backupFilename;
+                }
+            }
+            
+            Path targetPath = Paths.get(DATA_DIRECTORY, actualTargetFilename);
+            
+            // Create backup of current file before restoring
+            if (Files.exists(targetPath)) {
+                createBackup(actualTargetFilename);
+            }
+            
+            // Copy backup to target location
+            Files.copy(backupPath, targetPath, StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("Restored " + backupFilename + " to " + actualTargetFilename);
+            return true;
+            
+        } catch (IOException e) {
+            System.err.println("Error restoring from backup " + backupFilename + ": " + e.getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Restores a file from its most recent backup.
+     * @param filename The filename to restore
+     * @return true if restore was successful
+     */
+    public static boolean restoreFromLatestBackup(String filename) {
+        String[] backups = listBackupsForFile(filename);
+        if (backups.length == 0) {
+            System.err.println("No backups found for file: " + filename);
+            return false;
+        }
+        
+        // Get the most recent backup (last in sorted array)
+        String latestBackup = backups[backups.length - 1];
+        return restoreFromBackup(latestBackup, filename);
+    }
+    
+    /**
+     * Gets information about a backup file.
+     * @param backupFilename The backup filename
+     * @return Map containing backup information, or null if file doesn't exist
+     */
+    public static java.util.Map<String, Object> getBackupInfo(String backupFilename) {
+        if (!ensureBackupDirectory()) {
+            return null;
+        }
+        
+        try {
+            Path backupPath = Paths.get(BACKUP_DIRECTORY, backupFilename);
+            if (!Files.exists(backupPath)) {
+                return null;
+            }
+            
+            java.util.Map<String, Object> info = new java.util.HashMap<>();
+            
+            // Extract timestamp from filename
+            String baseName = backupFilename.replace(".txt", "");
+            int lastUnderscore = baseName.lastIndexOf('_');
+            if (lastUnderscore > 0) {
+                String timestampStr = baseName.substring(lastUnderscore + 1);
+                String originalFilename = baseName.substring(0, lastUnderscore) + ".txt";
+                
+                info.put("original_filename", originalFilename);
+                info.put("timestamp", timestampStr);
+                
+                // Parse timestamp
+                try {
+                    LocalDateTime timestamp = LocalDateTime.parse(timestampStr, TIMESTAMP_FORMAT);
+                    info.put("date_time", timestamp);
+                    info.put("formatted_date", timestamp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                } catch (Exception e) {
+                    info.put("date_time", null);
+                    info.put("formatted_date", "Unknown");
+                }
+            }
+            
+            // Get file size
+            long fileSize = Files.size(backupPath);
+            info.put("file_size_bytes", fileSize);
+            info.put("file_size_kb", fileSize / 1024.0);
+            
+            // Get last modified time
+            java.nio.file.attribute.FileTime lastModified = Files.getLastModifiedTime(backupPath);
+            info.put("last_modified", lastModified.toInstant());
+            
+            return info;
+            
+        } catch (IOException e) {
+            System.err.println("Error getting backup info for " + backupFilename + ": " + e.getMessage());
+            return null;
+        }
+    }
+    
+    /**
+     * Deletes old backup files, keeping only the most recent ones.
+     * @param filename The base filename to clean up backups for
+     * @param keepCount Number of recent backups to keep
+     * @return Number of backup files deleted
+     */
+    public static int cleanupOldBackups(String filename, int keepCount) {
+        String[] backups = listBackupsForFile(filename);
+        if (backups.length <= keepCount) {
+            return 0; // No cleanup needed
+        }
+        
+        int deletedCount = 0;
+        // Delete oldest backups (first in sorted array)
+        for (int i = 0; i < backups.length - keepCount; i++) {
+            try {
+                Path backupPath = Paths.get(BACKUP_DIRECTORY, backups[i]);
+                Files.delete(backupPath);
+                deletedCount++;
+                System.out.println("Deleted old backup: " + backups[i]);
+            } catch (IOException e) {
+                System.err.println("Error deleting backup " + backups[i] + ": " + e.getMessage());
+            }
+        }
+        
+        return deletedCount;
+    }
+    
+    /**
+     * Deletes old backup files for all data files, keeping only the most recent ones.
+     * @param keepCount Number of recent backups to keep per file
+     * @return Total number of backup files deleted
+     */
+    public static int cleanupAllOldBackups(int keepCount) {
+        String[] dataFiles = listDataFiles();
+        int totalDeleted = 0;
+        
+        for (String filename : dataFiles) {
+            totalDeleted += cleanupOldBackups(filename, keepCount);
+        }
+        
+        return totalDeleted;
+    }
 }

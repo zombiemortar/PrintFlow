@@ -13,7 +13,7 @@ public class PerformanceTest {
     void setUp() {
         SystemConfig.resetToDefaults();
         OrderManager.clearAllOrders();
-        user = new User("load_tester", "load@test.com", "customer");
+        user = new User("load_tester", "load@test.com", "customer", "password123");
         material = new Material("PLA", 0.03, 200, "Gray");
         // Large stock to avoid InsufficientMaterialException during load
         Inventory.setStock(material, 1_000_000);

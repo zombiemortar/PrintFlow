@@ -163,6 +163,40 @@ public class Invoice {
         this.dateIssued = dateIssued;
     }
     
+    /**
+     * Exports this invoice to CSV format.
+     * @param filename Optional filename (if null, generates timestamp-based name)
+     * @return true if export was successful
+     */
+    public boolean exportToCSV(String filename) {
+        return ExportManager.exportInvoiceToCSV(this, filename);
+    }
+    
+    /**
+     * Exports this invoice to CSV format with auto-generated filename.
+     * @return true if export was successful
+     */
+    public boolean exportToCSV() {
+        return ExportManager.exportInvoiceToCSV(this, null);
+    }
+    
+    /**
+     * Exports this invoice to JSON format.
+     * @param filename Optional filename (if null, generates timestamp-based name)
+     * @return true if export was successful
+     */
+    public boolean exportToJSON(String filename) {
+        return ExportManager.exportInvoiceToJSON(this, filename);
+    }
+    
+    /**
+     * Exports this invoice to JSON format with auto-generated filename.
+     * @return true if export was successful
+     */
+    public boolean exportToJSON() {
+        return ExportManager.exportInvoiceToJSON(this, null);
+    }
+    
     @Override
     public String toString() {
         return "Invoice{" +

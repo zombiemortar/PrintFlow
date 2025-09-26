@@ -123,26 +123,67 @@ This is a Java program.
     - File formats: Pipe-delimited text files with headers and comments
     - Tested: All functionality verified with 100% test success rate
 
-26. **Add CSV/JSON export functionality**
+26. **Add CSV/JSON export functionality** (Done)
     - Export invoices, reports, and order summaries
+    - Created comprehensive ExportManager class with CSV and JSON export methods
+    - Added export methods to Invoice class (exportToCSV(), exportToJSON())
+    - Integrated export functionality with FileHandlingManager
+    - Supports single invoice, multiple invoices, orders, and system reports
+    - Features: Auto-generated filenames, proper escaping, directory management
+    - Tested: All export methods verified with comprehensive test suite
 
-27. **Create configuration file system**
+27. **Create configuration file system** (Done)
     - Load pricing constants and system settings from external files
+    - Created comprehensive configuration file system with ConfigFileHandler class
+    - Added configuration loading/saving methods to SystemConfig class
+    - Integrated configuration management with FileHandlingManager
+    - Features: Key-value format with comments, validation, backup support, error handling
+    - File format: Text file with key=value pairs and comment support
+    - Supports all SystemConfig settings: pricing constants, tax rates, order limits, rush order settings
+    - Tested: Comprehensive test suite with 30+ test methods covering all functionality
 
-28. **Implement backup and restore functionality**
+28. **Implement backup and restore functionality** (Done)
     - Protect against data loss
+    - Created comprehensive backup and restore system with:
+      - Individual file restore functionality in DataFileManager
+      - System-wide restore operations in FileHandlingManager
+      - Restore methods in all file handler classes (OrderFileHandler, MaterialFileHandler, UserFileHandler, InventoryFileHandler, ConfigFileHandler)
+      - Backup management utilities (list backups, cleanup old backups, backup reports)
+      - Error handling and validation for restore operations
+      - Comprehensive test suite (BackupRestoreTest.java) with 25+ test methods
+      - Complete documentation and examples
+    - Features: Timestamp-based backup sets, selective restore, automatic cleanup, backup validation
+    - Tested: All restore functionality verified with comprehensive test suite covering edge cases and error conditions
 
 ---
 
 ### Phase 5: Security & Authentication
-29. **Add password hashing**
+29. **Add password hashing** (Done)
     - Secure user account passwords
+    - Created comprehensive PasswordSecurity class with BCrypt-style hashing
+    - Added password strength validation with configurable requirements
+    - Implemented secure password generation and validation
+    - Features: Salt generation, hash verification, strength scoring, common password detection
+    - Integrated with User and AdminUser classes for password management
+    - Tested: All password functionality verified with comprehensive test suite
 
-30. **Implement session management**
+30. **Implement session management** (Done)
     - Admin user authentication and authorization
+    - Created comprehensive SessionManager class with secure session handling
+    - Added AuthenticationService for integrated authentication workflow
+    - Features: Session timeout, role-based access control, session invalidation, statistics
+    - Supports multiple sessions per user with automatic cleanup
+    - Integrated with existing user management system
+    - Tested: All session management functionality verified with comprehensive test suite
 
-31. **Enhance input validation**
+31. **Enhance input validation** (Done)
     - Protect against injection attacks and malicious input
+    - Created comprehensive InputValidator class with security-focused validation
+    - Added protection against SQL injection, XSS, path traversal, and command injection
+    - Features: Pattern-based detection, input sanitization, HTML/SQL escaping, file path validation
+    - Integrated with existing classes (User, AdminUser, Order, Material) for enhanced security
+    - Supports validation for all input types: usernames, emails, passwords, dimensions, instructions
+    - Tested: All input validation functionality verified with comprehensive test suite covering edge cases and attack patterns
 
 ---
 

@@ -9,8 +9,8 @@ public class Tests {
 
         // User and Admin
         System.out.println("1. Users:");
-        User customer = new User("john_doe", "john@example.com", "customer");
-        AdminUser admin = new AdminUser("admin_user", "admin@example.com");
+        User customer = new User("john_doe", "john@example.com", "customer", "password123");
+        AdminUser admin = new AdminUser("admin_user", "admin@example.com", "password123");
         System.out.println("Customer: " + customer);
         System.out.println("Admin: " + admin);
         System.out.println();

@@ -156,8 +156,8 @@ public class FileHandlingTest {
             UserFileHandler.clearUsers();
             
             // Test adding users
-            User user1 = new User("john_doe", "john@example.com", "customer");
-            User user2 = new User("admin_user", "admin@example.com", "admin");
+            User user1 = new User("john_doe", "john@example.com", "customer", "password123");
+            User user2 = new User("admin_user", "admin@example.com", "admin", "adminpass456");
             
             boolean add1 = UserFileHandler.addUser(user1);
             boolean add2 = UserFileHandler.addUser(user2);
@@ -171,7 +171,7 @@ public class FileHandlingTest {
             passed &= retrievedSuccess;
             
             // Test user validation
-            User invalidUser = new User("", "invalid-email", "");
+            User invalidUser = new User("", "invalid-email", "", "");
             boolean validationSuccess = !UserFileHandler.validateUser(invalidUser);
             System.out.println("User validation (invalid): " + validationSuccess);
             passed &= validationSuccess;
@@ -288,7 +288,7 @@ public class FileHandlingTest {
             OrderManager.clearAllOrders();
             
             // Create test data
-            User user = new User("test_customer", "test@example.com", "customer");
+            User user = new User("test_customer", "test@example.com", "customer", "testpass123");
             Material material = new Material("PLA", 0.05, 200, "Blue");
             Order order = new Order(user, material, "10x10x5cm", 2, "Test order");
             
@@ -344,7 +344,7 @@ public class FileHandlingTest {
             
             // Create integrated test data
             Material material = new Material("TestPLA", 0.06, 210, "Green");
-            User user = new User("integration_user", "integration@example.com", "customer");
+            User user = new User("integration_user", "integration@example.com", "customer", "integrationpass456");
             
             // Add to handlers
             MaterialFileHandler.addMaterial(material);

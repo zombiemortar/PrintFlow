@@ -1,0 +1,17 @@
+# System Configuration File
+# Pricing constants
+electricity_cost_per_hour=0.15
+machine_time_cost_per_hour=2.50
+base_setup_cost=5.00
+
+# Tax settings
+tax_rate=0.08
+currency=USD
+
+# Order limits
+max_order_quantity=100
+max_order_value=1000.00
+
+# Rush order settings
+allow_rush_orders=true
+rush_order_surcharge=0.25

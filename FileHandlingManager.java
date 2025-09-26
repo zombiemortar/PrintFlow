@@ -15,6 +15,11 @@ public class FileHandlingManager {
         
         boolean allSuccess = true;
         
+        // Save configuration first (affects all other operations)
+        boolean configSaved = SystemConfig.saveToFile();
+        System.out.println("Configuration saved: " + configSaved);
+        allSuccess &= configSaved;
+        
         // Save materials
         boolean materialsSaved = MaterialFileHandler.saveMaterials();
         System.out.println("Materials saved: " + materialsSaved);
@@ -52,6 +57,11 @@ public class FileHandlingManager {
         System.out.println("Loading all system data...");
         
         boolean allSuccess = true;
+        
+        // Load configuration first (affects all other operations)
+        boolean configLoaded = SystemConfig.loadFromFile();
+        System.out.println("Configuration loaded: " + configLoaded);
+        allSuccess &= configLoaded;
         
         // Load materials first (needed for other operations)
         boolean materialsLoaded = MaterialFileHandler.loadMaterials();
@@ -91,6 +101,11 @@ public class FileHandlingManager {
         
         boolean allSuccess = true;
         
+        // Backup configuration first
+        boolean configBackedUp = SystemConfig.backupConfigFile();
+        System.out.println("Configuration backup: " + configBackedUp);
+        allSuccess &= configBackedUp;
+        
         // Backup materials
         boolean materialsBackedUp = MaterialFileHandler.backupMaterials();
         System.out.println("Materials backup: " + materialsBackedUp);
@@ -118,6 +133,261 @@ public class FileHandlingManager {
         
         System.out.println("All backup operations completed: " + (allSuccess ? "SUCCESS" : "FAILED"));
         return allSuccess;
+    }
+    
+    /**
+     * Restores all system data from backups.
+     * @param backupTimestamp Optional timestamp to restore from specific backup set
+     * @return true if all restores were successful
+     */
+    public static boolean restoreAllData(String backupTimestamp) {
+        System.out.println("Restoring all system data from backups...");
+        
+        boolean allSuccess = true;
+        
+        // Restore configuration first
+        boolean configRestored = false;
+        if (backupTimestamp != null) {
+            String configBackup = "system_config_" + backupTimestamp + ".txt";
+            configRestored = SystemConfig.restoreConfigFile(configBackup);
+        } else {
+            configRestored = SystemConfig.restoreConfigFileFromLatestBackup();
+        }
+        System.out.println("Configuration restore: " + configRestored);
+        allSuccess &= configRestored;
+        
+        // Restore materials
+        boolean materialsRestored = false;
+        if (backupTimestamp != null) {
+            String materialsBackup = "materials_" + backupTimestamp + ".txt";
+            materialsRestored = MaterialFileHandler.restoreMaterials(materialsBackup);
+        } else {
+            materialsRestored = MaterialFileHandler.restoreMaterialsFromLatestBackup();
+        }
+        System.out.println("Materials restore: " + materialsRestored);
+        allSuccess &= materialsRestored;
+        
+        // Restore users
+        boolean usersRestored = false;
+        if (backupTimestamp != null) {
+            String usersBackup = "users_" + backupTimestamp + ".txt";
+            usersRestored = UserFileHandler.restoreUsers(usersBackup);
+        } else {
+            usersRestored = UserFileHandler.restoreUsersFromLatestBackup();
+        }
+        System.out.println("Users restore: " + usersRestored);
+        allSuccess &= usersRestored;
+        
+        // Restore inventory
+        boolean inventoryRestored = false;
+        if (backupTimestamp != null) {
+            String inventoryBackup = "inventory_" + backupTimestamp + ".txt";
+            inventoryRestored = InventoryFileHandler.restoreInventory(inventoryBackup);
+        } else {
+            inventoryRestored = InventoryFileHandler.restoreInventoryFromLatestBackup();
+        }
+        System.out.println("Inventory restore: " + inventoryRestored);
+        allSuccess &= inventoryRestored;
+        
+        // Restore orders
+        boolean ordersRestored = false;
+        if (backupTimestamp != null) {
+            String ordersBackup = "orders_" + backupTimestamp + ".txt";
+            ordersRestored = OrderFileHandler.restoreOrders(ordersBackup);
+        } else {
+            ordersRestored = OrderFileHandler.restoreOrdersFromLatestBackup();
+        }
+        System.out.println("Orders restore: " + ordersRestored);
+        allSuccess &= ordersRestored;
+        
+        // Restore order queue
+        boolean queueRestored = false;
+        if (backupTimestamp != null) {
+            String queueBackup = "order_queue_" + backupTimestamp + ".txt";
+            queueRestored = OrderFileHandler.restoreOrderQueue(queueBackup);
+        } else {
+            queueRestored = OrderFileHandler.restoreOrderQueueFromLatestBackup();
+        }
+        System.out.println("Order queue restore: " + queueRestored);
+        allSuccess &= queueRestored;
+        
+        System.out.println("All restore operations completed: " + (allSuccess ? "SUCCESS" : "FAILED"));
+        return allSuccess;
+    }
+    
+    /**
+     * Restores all system data from the most recent backups.
+     * @return true if all restores were successful
+     */
+    public static boolean restoreAllDataFromLatestBackups() {
+        return restoreAllData(null);
+    }
+    
+    /**
+     * Lists all available backup sets (by timestamp).
+     * @return Array of backup timestamps
+     */
+    public static String[] listBackupSets() {
+        String[] allBackups = DataFileManager.listBackupFiles();
+        java.util.Set<String> timestamps = new java.util.HashSet<>();
+        
+        for (String backup : allBackups) {
+            // Extract timestamp from backup filename
+            // Format: filename_YYYYMMDD_HHMMSS.txt
+            int lastUnderscore = backup.lastIndexOf('_');
+            if (lastUnderscore > 0) {
+                String timestamp = backup.substring(lastUnderscore + 1).replace(".txt", "");
+                // Validate timestamp format (YYYYMMDD_HHMMSS)
+                if (timestamp.matches("\\d{8}_\\d{6}")) {
+                    timestamps.add(timestamp);
+                }
+            }
+        }
+        
+        return timestamps.stream().sorted().toArray(String[]::new);
+    }
+    
+    /**
+     * Gets detailed information about all backup sets.
+     * @return Map with timestamp as key and backup info as value
+     */
+    public static java.util.Map<String, java.util.Map<String, Object>> getBackupSetInfo() {
+        String[] timestamps = listBackupSets();
+        java.util.Map<String, java.util.Map<String, Object>> backupInfo = new java.util.HashMap<>();
+        
+        for (String timestamp : timestamps) {
+            java.util.Map<String, Object> info = new java.util.HashMap<>();
+            
+            // Check which files exist for this timestamp
+            String[] fileTypes = {"system_config", "materials", "users", "inventory", "orders", "order_queue"};
+            int existingFiles = 0;
+            
+            for (String fileType : fileTypes) {
+                String backupFilename = fileType + "_" + timestamp + ".txt";
+                java.util.Map<String, Object> fileInfo = DataFileManager.getBackupInfo(backupFilename);
+                if (fileInfo != null) {
+                    existingFiles++;
+                    info.put(fileType + "_size", fileInfo.get("file_size_bytes"));
+                }
+            }
+            
+            info.put("existing_files", existingFiles);
+            info.put("total_files", fileTypes.length);
+            info.put("complete", existingFiles == fileTypes.length);
+            
+            backupInfo.put(timestamp, info);
+        }
+        
+        return backupInfo;
+    }
+    
+    /**
+     * Cleans up old backup files, keeping only the most recent ones.
+     * @param keepCount Number of recent backup sets to keep
+     * @return Number of backup files deleted
+     */
+    public static int cleanupOldBackups(int keepCount) {
+        System.out.println("Cleaning up old backup files (keeping " + keepCount + " most recent sets)...");
+        
+        String[] timestamps = listBackupSets();
+        if (timestamps.length <= keepCount) {
+            System.out.println("No cleanup needed - only " + timestamps.length + " backup sets exist");
+            return 0;
+        }
+        
+        int totalDeleted = 0;
+        // Delete oldest backup sets (first in sorted array)
+        for (int i = 0; i < timestamps.length - keepCount; i++) {
+            String timestamp = timestamps[i];
+            System.out.println("Deleting backup set: " + timestamp);
+            
+            String[] fileTypes = {"system_config", "materials", "users", "inventory", "orders", "order_queue"};
+            for (String fileType : fileTypes) {
+                String backupFilename = fileType + "_" + timestamp + ".txt";
+                try {
+                    java.nio.file.Path backupPath = java.nio.file.Paths.get("backups", backupFilename);
+                    if (java.nio.file.Files.exists(backupPath)) {
+                        java.nio.file.Files.delete(backupPath);
+                        totalDeleted++;
+                        System.out.println("  Deleted: " + backupFilename);
+                    }
+                } catch (java.io.IOException e) {
+                    System.err.println("  Error deleting " + backupFilename + ": " + e.getMessage());
+                }
+            }
+        }
+        
+        System.out.println("Cleanup completed: " + totalDeleted + " backup files deleted");
+        return totalDeleted;
+    }
+    
+    /**
+     * Exports a backup management report.
+     * @return Formatted report about backup status and management
+     */
+    public static String exportBackupManagementReport() {
+        StringBuilder report = new StringBuilder();
+        report.append("=== BACKUP MANAGEMENT REPORT ===\n");
+        report.append("Generated: ").append(new Date()).append("\n\n");
+        
+        // List all backup sets
+        String[] timestamps = listBackupSets();
+        report.append("Total Backup Sets: ").append(timestamps.length).append("\n\n");
+        
+        if (timestamps.length > 0) {
+            java.util.Map<String, java.util.Map<String, Object>> backupInfo = getBackupSetInfo();
+            
+            report.append("Backup Set Details:\n");
+            report.append("==================\n");
+            
+            for (String timestamp : timestamps) {
+                java.util.Map<String, Object> info = backupInfo.get(timestamp);
+                report.append("Timestamp: ").append(timestamp).append("\n");
+                report.append("  Files: ").append(info.get("existing_files")).append("/").append(info.get("total_files")).append("\n");
+                report.append("  Complete: ").append(info.get("complete")).append("\n");
+                
+                // Show file sizes
+                String[] fileTypes = {"system_config", "materials", "users", "inventory", "orders", "order_queue"};
+                for (String fileType : fileTypes) {
+                    Object size = info.get(fileType + "_size");
+                    if (size != null) {
+                        report.append("  ").append(fileType).append(": ").append(size).append(" bytes\n");
+                    }
+                }
+                report.append("\n");
+            }
+        }
+        
+        // Show individual file backups
+        report.append("Individual File Backups:\n");
+        report.append("=======================\n");
+        
+        String[] dataFiles = DataFileManager.listDataFiles();
+        for (String filename : dataFiles) {
+            String[] backups = DataFileManager.listBackupsForFile(filename);
+            report.append(filename).append(": ").append(backups.length).append(" backups\n");
+            
+            if (backups.length > 0) {
+                // Show most recent backup info
+                String latestBackup = backups[backups.length - 1];
+                java.util.Map<String, Object> info = DataFileManager.getBackupInfo(latestBackup);
+                if (info != null) {
+                    report.append("  Latest: ").append(info.get("formatted_date")).append(" (")
+                          .append(String.format("%.1f", info.get("file_size_kb"))).append(" KB)\n");
+                }
+            }
+        }
+        
+        return report.toString();
+    }
+    
+    /**
+     * Saves the backup management report to a file.
+     * @return true if save was successful
+     */
+    public static boolean saveBackupManagementReport() {
+        String report = exportBackupManagementReport();
+        return DataFileManager.writeToFile("backup_management_report.txt", report);
     }
     
     /**
@@ -185,6 +455,120 @@ public class FileHandlingManager {
     }
     
     /**
+     * Exports system report to CSV format.
+     * @param filename Optional filename (if null, generates timestamp-based name)
+     * @return true if export was successful
+     */
+    public static boolean exportSystemReportToCSV(String filename) {
+        return ExportManager.exportSystemReportToCSV(filename);
+    }
+    
+    /**
+     * Exports system report to CSV format with auto-generated filename.
+     * @return true if export was successful
+     */
+    public static boolean exportSystemReportToCSV() {
+        return ExportManager.exportSystemReportToCSV(null);
+    }
+    
+    /**
+     * Exports system report to JSON format.
+     * @param filename Optional filename (if null, generates timestamp-based name)
+     * @return true if export was successful
+     */
+    public static boolean exportSystemReportToJSON(String filename) {
+        return ExportManager.exportSystemReportToJSON(filename);
+    }
+    
+    /**
+     * Exports system report to JSON format with auto-generated filename.
+     * @return true if export was successful
+     */
+    public static boolean exportSystemReportToJSON() {
+        return ExportManager.exportSystemReportToJSON(null);
+    }
+    
+    /**
+     * Exports all orders to CSV format.
+     * @param filename Optional filename (if null, generates timestamp-based name)
+     * @return true if export was successful
+     */
+    public static boolean exportOrdersToCSV(String filename) {
+        return ExportManager.exportOrdersToCSV(filename);
+    }
+    
+    /**
+     * Exports all orders to CSV format with auto-generated filename.
+     * @return true if export was successful
+     */
+    public static boolean exportOrdersToCSV() {
+        return ExportManager.exportOrdersToCSV(null);
+    }
+    
+    /**
+     * Exports all orders to JSON format.
+     * @param filename Optional filename (if null, generates timestamp-based name)
+     * @return true if export was successful
+     */
+    public static boolean exportOrdersToJSON(String filename) {
+        return ExportManager.exportOrdersToJSON(filename);
+    }
+    
+    /**
+     * Exports all orders to JSON format with auto-generated filename.
+     * @return true if export was successful
+     */
+    public static boolean exportOrdersToJSON() {
+        return ExportManager.exportOrdersToJSON(null);
+    }
+    
+    /**
+     * Exports all invoices to CSV format.
+     * @param invoices Array of invoices to export
+     * @param filename Optional filename (if null, generates timestamp-based name)
+     * @return true if export was successful
+     */
+    public static boolean exportInvoicesToCSV(Invoice[] invoices, String filename) {
+        return ExportManager.exportInvoicesToCSV(invoices, filename);
+    }
+    
+    /**
+     * Exports all invoices to CSV format with auto-generated filename.
+     * @param invoices Array of invoices to export
+     * @return true if export was successful
+     */
+    public static boolean exportInvoicesToCSV(Invoice[] invoices) {
+        return ExportManager.exportInvoicesToCSV(invoices, null);
+    }
+    
+    /**
+     * Exports all invoices to JSON format.
+     * @param invoices Array of invoices to export
+     * @param filename Optional filename (if null, generates timestamp-based name)
+     * @return true if export was successful
+     */
+    public static boolean exportInvoicesToJSON(Invoice[] invoices, String filename) {
+        return ExportManager.exportInvoicesToJSON(invoices, filename);
+    }
+    
+    /**
+     * Exports all invoices to JSON format with auto-generated filename.
+     * @param invoices Array of invoices to export
+     * @return true if export was successful
+     */
+    public static boolean exportInvoicesToJSON(Invoice[] invoices) {
+        return ExportManager.exportInvoicesToJSON(invoices, null);
+    }
+    
+    /**
+     * Lists all exported files.
+     * @return Array of exported filenames
+     */
+    public static String[] listExportedFiles() {
+        return ExportManager.listExportedFiles();
+    }
+    
+    /**
      * Initializes the system with default data if no data exists.
      * @return true if initialization was successful
      */
@@ -192,6 +576,10 @@ public class FileHandlingManager {
         System.out.println("Initializing system with default data...");
         
         try {
+            // Initialize configuration first
+            boolean configInitialized = SystemConfig.createDefaultConfigFile();
+            System.out.println("Configuration initialized: " + configInitialized);
+            
             // Check if data already exists
             if (MaterialFileHandler.getMaterialCount() > 0 || 
                 UserFileHandler.getUserCount() > 0) {
@@ -209,9 +597,9 @@ public class FileHandlingManager {
             MaterialFileHandler.addMaterial(petg);
             
             // Create default users
-            User admin = new User("admin", "admin@printflow.com", "admin");
-            User customer1 = new User("john_doe", "john@example.com", "customer");
-            User customer2 = new User("jane_smith", "jane@example.com", "vip");
+            User admin = new User("admin", "admin@printflow.com", "admin", "AdminPass123!");
+            User customer1 = new User("john_doe", "john@example.com", "customer", "CustomerPass123!");
+            User customer2 = new User("jane_smith", "jane@example.com", "vip", "VipPass123!");
             
             UserFileHandler.addUser(admin);
             UserFileHandler.addUser(customer1);
@@ -247,6 +635,13 @@ public class FileHandlingManager {
         boolean dataDirExists = DataFileManager.ensureDataDirectory();
         System.out.println("Data directory: " + (dataDirExists ? "OK" : "MISSING"));
         healthy &= dataDirExists;
+        
+        // Check configuration
+        boolean configExists = SystemConfig.configFileExists();
+        boolean configValid = SystemConfig.validateConfigFile();
+        System.out.println("Configuration file: " + (configExists ? "EXISTS" : "MISSING") + 
+                          " / " + (configValid ? "VALID" : "INVALID"));
+        healthy &= configExists && configValid;
         
         // Check material data
         int materialCount = MaterialFileHandler.getMaterialCount();
@@ -341,5 +736,42 @@ public class FileHandlingManager {
         // Test backup
         boolean backupSuccess = backupAllData();
         System.out.println("Backup operation: " + (backupSuccess ? "SUCCESS" : "FAILED"));
+        
+        // Test backup management
+        System.out.println("\n=== BACKUP MANAGEMENT TEST ===");
+        
+        // List backup sets
+        String[] backupSets = listBackupSets();
+        System.out.println("Available backup sets: " + backupSets.length);
+        for (String timestamp : backupSets) {
+            System.out.println("  " + timestamp);
+        }
+        
+        // Test backup management report
+        boolean backupReportSaved = saveBackupManagementReport();
+        System.out.println("Backup management report saved: " + backupReportSaved);
+        
+        // Test restore functionality (if backups exist)
+        if (backupSets.length > 0) {
+            System.out.println("\n=== RESTORE FUNCTIONALITY TEST ===");
+            
+            // Test individual file restore
+            String[] materialBackups = MaterialFileHandler.listMaterialBackups();
+            if (materialBackups.length > 0) {
+                System.out.println("Testing material restore from: " + materialBackups[materialBackups.length - 1]);
+                boolean materialRestored = MaterialFileHandler.restoreMaterialsFromLatestBackup();
+                System.out.println("Material restore: " + (materialRestored ? "SUCCESS" : "FAILED"));
+            }
+            
+            // Test full system restore
+            System.out.println("Testing full system restore from latest backups...");
+            boolean restoreSuccess = restoreAllDataFromLatestBackups();
+            System.out.println("Full system restore: " + (restoreSuccess ? "SUCCESS" : "FAILED"));
+        }
+        
+        // Test cleanup (keep only 2 most recent backup sets)
+        System.out.println("\n=== BACKUP CLEANUP TEST ===");
+        int deletedCount = cleanupOldBackups(2);
+        System.out.println("Backup cleanup: " + deletedCount + " files deleted");
     }
 }

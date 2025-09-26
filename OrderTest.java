@@ -19,7 +19,7 @@ public class OrderTest {
         SystemConfig.resetToDefaults();
         
         // Create test objects
-        testUser = new User("testuser", "test@example.com", "customer");
+        testUser = new User("testuser", "test@example.com", "customer", "password123");
         testMaterial = new Material("PLA", 0.02, 200, "White");
         testOrder = new Order(testUser, testMaterial, "10cm x 5cm x 3cm", 2, "High quality");
     }
@@ -84,7 +84,7 @@ public class OrderTest {
     // Getter and Setter Tests
     @Test
     void testUserGetterAndSetter() {
-        User newUser = new User("newuser", "new@test.com", "vip");
+        User newUser = new User("newuser", "new@test.com", "vip", "password123");
         testOrder.setUser(newUser);
         assertEquals(newUser, testOrder.getUser());
     }
@@ -269,7 +269,7 @@ public class OrderTest {
     
     @Test
     void testCalculatePriceWithVipDiscount() {
-        User vipUser = new User("vipuser", "vip@test.com", "vip");
+        User vipUser = new User("vipuser", "vip@test.com", "vip", "password123");
         testOrder.setUser(vipUser);
         double price = testOrder.calculatePrice();
         assertTrue(price > 0);

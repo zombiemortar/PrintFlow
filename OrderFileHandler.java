@@ -195,16 +195,14 @@ public class OrderFileHandler {
                 return null;
             }
             
-            // Parse order ID
-            int orderId = Integer.parseInt(parts[0]);
-            
             // Create user
             User user = null;
             if (!parts[1].isEmpty() && !parts[2].isEmpty()) {
                 user = new User(
                     unescapeString(parts[1]),
                     unescapeString(parts[2]),
-                    unescapeString(parts[3])
+                    unescapeString(parts[3]),
+                    "DefaultPass123!"
                 );
             }
             
@@ -285,5 +283,75 @@ public class OrderFileHandler {
      */
     public static boolean backupOrderQueue() {
         return DataFileManager.createBackup(ORDER_QUEUE_FILENAME);
+    }
+    
+    /**
+     * Restores orders from a backup file.
+     * @param backupFilename The backup filename to restore from
+     * @return true if restore was successful
+     */
+    public static boolean restoreOrders(String backupFilename) {
+        boolean restored = DataFileManager.restoreFromBackup(backupFilename, ORDERS_FILENAME);
+        if (restored) {
+            // Reload orders after restore
+            return loadOrders();
+        }
+        return false;
+    }
+    
+    /**
+     * Restores orders from the most recent backup.
+     * @return true if restore was successful
+     */
+    public static boolean restoreOrdersFromLatestBackup() {
+        boolean restored = DataFileManager.restoreFromLatestBackup(ORDERS_FILENAME);
+        if (restored) {
+            // Reload orders after restore
+            return loadOrders();
+        }
+        return false;
+    }
+    
+    /**
+     * Restores order queue from a backup file.
+     * @param backupFilename The backup filename to restore from
+     * @return true if restore was successful
+     */
+    public static boolean restoreOrderQueue(String backupFilename) {
+        boolean restored = DataFileManager.restoreFromBackup(backupFilename, ORDER_QUEUE_FILENAME);
+        if (restored) {
+            // Reload order queue after restore
+            return loadOrderQueue();
+        }
+        return false;
+    }
+    
+    /**
+     * Restores order queue from the most recent backup.
+     * @return true if restore was successful
+     */
+    public static boolean restoreOrderQueueFromLatestBackup() {
+        boolean restored = DataFileManager.restoreFromLatestBackup(ORDER_QUEUE_FILENAME);
+        if (restored) {
+            // Reload order queue after restore
+            return loadOrderQueue();
+        }
+        return false;
+    }
+    
+    /**
+     * Lists all available order backups.
+     * @return Array of backup filenames for orders
+     */
+    public static String[] listOrderBackups() {
+        return DataFileManager.listBackupsForFile(ORDERS_FILENAME);
+    }
+    
+    /**
+     * Lists all available order queue backups.
+     * @return Array of backup filenames for order queue
+     */
+    public static String[] listOrderQueueBackups() {
+        return DataFileManager.listBackupsForFile(ORDER_QUEUE_FILENAME);
     }
 }

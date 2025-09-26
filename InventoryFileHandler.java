@@ -202,7 +202,7 @@ public class InventoryFileHandler {
             
             Material material = null;
             if (materialHandler != null) {
-                material = materialHandler.getMaterialByName(materialName);
+                material = MaterialFileHandler.getMaterialByName(materialName);
             } else {
                 material = MaterialFileHandler.getMaterialByName(materialName);
             }
@@ -264,6 +264,41 @@ public class InventoryFileHandler {
     }
     
     /**
+     * Restores inventory from a backup file.
+     * @param backupFilename The backup filename to restore from
+     * @return true if restore was successful
+     */
+    public static boolean restoreInventory(String backupFilename) {
+        boolean restored = DataFileManager.restoreFromBackup(backupFilename, INVENTORY_FILENAME);
+        if (restored) {
+            // Reload inventory after restore
+            return loadInventory();
+        }
+        return false;
+    }
+    
+    /**
+     * Restores inventory from the most recent backup.
+     * @return true if restore was successful
+     */
+    public static boolean restoreInventoryFromLatestBackup() {
+        boolean restored = DataFileManager.restoreFromLatestBackup(INVENTORY_FILENAME);
+        if (restored) {
+            // Reload inventory after restore
+            return loadInventory();
+        }
+        return false;
+    }
+    
+    /**
+     * Lists all available inventory backups.
+     * @return Array of backup filenames for inventory
+     */
+    public static String[] listInventoryBackups() {
+        return DataFileManager.listBackupsForFile(INVENTORY_FILENAME);
+    }
+    
+    /**
      * Exports inventory to a formatted text report.
      * @param materialHandler The MaterialFileHandler to get material details from
      * @return The formatted report as a string
@@ -286,7 +321,7 @@ public class InventoryFileHandler {
             
             Material material = null;
             if (materialHandler != null) {
-                material = materialHandler.getMaterialByName(materialName);
+                material = MaterialFileHandler.getMaterialByName(materialName);
             } else {
                 material = MaterialFileHandler.getMaterialByName(materialName);
             }

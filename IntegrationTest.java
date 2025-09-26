@@ -22,9 +22,9 @@ public class IntegrationTest {
         clearOrderSystem();
         
         // Create test users
-        regularUser = new User("john_doe", "john@example.com", "customer");
-        vipUser = new User("vip_customer", "vip@example.com", "vip");
-        adminUser = new AdminUser("admin_user", "admin@example.com");
+        regularUser = new User("john_doe", "john@example.com", "customer", "password123");
+        vipUser = new User("vip_customer", "vip@example.com", "vip", "vip123");
+        adminUser = new AdminUser("admin_user", "admin@example.com", "admin123");
         
         // Create test materials
         plaMaterial = new Material("PLA", 0.05, 200, "Blue");

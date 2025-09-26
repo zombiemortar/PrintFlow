@@ -21,7 +21,7 @@ public class OrderManagerTest {
         SystemConfig.resetToDefaults();
         
         // Create test objects
-        testUser = new User("testuser", "test@example.com", "customer");
+        testUser = new User("testuser", "test@example.com", "customer", "testpassword");
         testMaterial = new Material("PLA", 0.02, 200, "White");
         
         // Create test orders

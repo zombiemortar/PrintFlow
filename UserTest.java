@@ -18,7 +18,7 @@ public class UserTest {
         SystemConfig.resetToDefaults();
         
         // Create test user
-        testUser = new User("testuser", "test@example.com", "customer");
+        testUser = new User("testuser", "test@example.com", "customer", "password123");
         
         // Create test material
         testMaterial = new Material("PLA", 0.02, 200, "White");
@@ -37,7 +37,7 @@ public class UserTest {
     // Constructor Tests
     @Test
     void testParameterizedConstructor() {
-        User user = new User("john", "john@test.com", "customer");
+        User user = new User("john", "john@test.com", "customer", "password123");
         assertEquals("john", user.getUsername());
         assertEquals("john@test.com", user.getEmail());
         assertEquals("customer", user.getRole());
@@ -53,7 +53,7 @@ public class UserTest {
     
     @Test
     void testConstructorWithNullValues() {
-        User user = new User(null, null, null);
+        User user = new User(null, null, null, null);
         assertNull(user.getUsername());
         assertNull(user.getEmail());
         assertNull(user.getRole());
@@ -195,7 +195,7 @@ public class UserTest {
     
     @Test
     void testToStringWithNullValues() {
-        User user = new User(null, null, null);
+        User user = new User(null, null, null, null);
         String result = user.toString();
         assertTrue(result.contains("null"));
     }

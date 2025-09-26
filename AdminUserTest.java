@@ -18,7 +18,7 @@ public class AdminUserTest {
         SystemConfig.resetToDefaults();
         
         // Create test admin user
-        testAdmin = new AdminUser("adminuser", "admin@example.com");
+        testAdmin = new AdminUser("adminuser", "admin@example.com", "password123");
         
         // Create test material
         testMaterial = new Material("PLA", 0.02, 200, "White");
@@ -34,7 +34,7 @@ public class AdminUserTest {
     // Constructor Tests
     @Test
     void testParameterizedConstructor() {
-        AdminUser admin = new AdminUser("admin", "admin@test.com");
+        AdminUser admin = new AdminUser("admin", "admin@test.com", "password123");
         assertEquals("admin", admin.getUsername());
         assertEquals("admin@test.com", admin.getEmail());
         assertEquals("admin", admin.getRole());
@@ -50,7 +50,7 @@ public class AdminUserTest {
     
     @Test
     void testConstructorWithNullValues() {
-        AdminUser admin = new AdminUser(null, null);
+        AdminUser admin = new AdminUser(null, null, null);
         assertNull(admin.getUsername());
         assertNull(admin.getEmail());
         assertEquals("admin", admin.getRole()); // Role should always be admin
@@ -180,7 +180,7 @@ public class AdminUserTest {
     @Test
     void testViewAllOrdersWithOrders() {
         // Create some orders
-        User customer = new User("customer", "customer@test.com", "customer");
+        User customer = new User("customer", "customer@test.com", "customer", "password123");
         Inventory.setStock(testMaterial, 1000);
         
         customer.submitOrder(testMaterial, "10cm x 5cm x 3cm", 2, "High quality");
@@ -248,7 +248,7 @@ public class AdminUserTest {
     
     @Test
     void testToStringWithNullValues() {
-        AdminUser admin = new AdminUser(null, null);
+        AdminUser admin = new AdminUser(null, null, null);
         String result = admin.toString();
         assertTrue(result.contains("null"));
         assertTrue(result.contains("admin"));

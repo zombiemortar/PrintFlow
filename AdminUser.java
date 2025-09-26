@@ -8,16 +8,28 @@ public class AdminUser extends User {
      * Constructor for creating a new admin user.
      * @param username The unique username for the admin
      * @param email The admin's email address
+     * @param password The plain text password (will be hashed)
      */
-    public AdminUser(String username, String email) {
-        super(username, email, "admin");
+    public AdminUser(String username, String email, String password) {
+        super(username, email, "admin", password);
+    }
+    
+    /**
+     * Constructor for creating a new admin user with pre-hashed password.
+     * @param username The unique username for the admin
+     * @param email The admin's email address
+     * @param passwordHash The pre-hashed password
+     * @param isHashed Flag indicating if password is already hashed
+     */
+    public AdminUser(String username, String email, String passwordHash, boolean isHashed) {
+        super(username, email, "admin", passwordHash, isHashed);
     }
     
     /**
      * Default constructor for admin user.
      */
     public AdminUser() {
-        super("", "", "admin");
+        super();
     }
     
     /**
@@ -29,6 +41,34 @@ public class AdminUser extends User {
      * @return The created Material object
      */
     public Material addMaterial(String name, double costPerGram, int printTemp, String color) {
+        // Enhanced input validation
+        ValidationResult nameValidation = InputValidator.validateMaterialName(name);
+        if (!nameValidation.isValid()) {
+            System.err.println("Material name validation failed:");
+            for (String error : nameValidation.getErrors()) {
+                System.err.println("  - " + error);
+            }
+            return null;
+        }
+        
+        ValidationResult costValidation = InputValidator.validateNumeric(costPerGram, 0.01, 1000.0, "Cost per gram");
+        if (!costValidation.isValid()) {
+            System.err.println("Cost validation failed:");
+            for (String error : costValidation.getErrors()) {
+                System.err.println("  - " + error);
+            }
+            return null;
+        }
+        
+        ValidationResult tempValidation = InputValidator.validateNumeric(printTemp, 50, 500, "Print temperature");
+        if (!tempValidation.isValid()) {
+            System.err.println("Temperature validation failed:");
+            for (String error : tempValidation.getErrors()) {
+                System.err.println("  - " + error);
+            }
+            return null;
+        }
+        
         if (name == null || name.trim().isEmpty() || costPerGram <= 0 || printTemp <= 0 || color == null || color.trim().isEmpty()) {
             return null;
         }

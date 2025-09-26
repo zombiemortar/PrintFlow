@@ -174,4 +174,95 @@ public class SystemConfig {
         } catch (Throwable ignored) {
         }
     }
+    
+    /**
+     * Loads configuration from external file.
+     * @return true if configuration was loaded successfully
+     */
+    public static boolean loadFromFile() {
+        return ConfigFileHandler.loadConfiguration();
+    }
+    
+    /**
+     * Saves current configuration to external file.
+     * @return true if configuration was saved successfully
+     */
+    public static boolean saveToFile() {
+        return ConfigFileHandler.saveConfiguration();
+    }
+    
+    /**
+     * Creates a default configuration file with current settings.
+     * @return true if the default file was created successfully
+     */
+    public static boolean createDefaultConfigFile() {
+        return ConfigFileHandler.createDefaultConfiguration();
+    }
+    
+    /**
+     * Validates the current configuration file.
+     * @return true if the configuration file is valid
+     */
+    public static boolean validateConfigFile() {
+        return ConfigFileHandler.validateConfigurationFile();
+    }
+    
+    /**
+     * Gets the status of the configuration file system.
+     * @return A formatted string describing the configuration file status
+     */
+    public static String getConfigFileStatus() {
+        return ConfigFileHandler.getConfigurationFileStatus();
+    }
+    
+    /**
+     * Checks if the configuration file exists.
+     * @return true if the configuration file exists
+     */
+    public static boolean configFileExists() {
+        return ConfigFileHandler.configFileExists();
+    }
+    
+    /**
+     * Creates a backup of the current configuration file.
+     * @return true if backup was successful
+     */
+    public static boolean backupConfigFile() {
+        return ConfigFileHandler.backupConfiguration();
+    }
+    
+    /**
+     * Restores configuration from a backup file.
+     * @param backupFilename The backup filename to restore from
+     * @return true if restore was successful
+     */
+    public static boolean restoreConfigFile(String backupFilename) {
+        boolean restored = ConfigFileHandler.restoreConfiguration(backupFilename);
+        if (restored) {
+            // Reload configuration after restore
+            return loadFromFile();
+        }
+        return false;
+    }
+    
+    /**
+     * Restores configuration from the most recent backup.
+     * @return true if restore was successful
+     */
+    public static boolean restoreConfigFileFromLatestBackup() {
+        boolean restored = ConfigFileHandler.restoreConfigurationFromLatestBackup();
+        if (restored) {
+            // Reload configuration after restore
+            return loadFromFile();
+        }
+        return false;
+    }
+    
+    /**
+     * Lists all available configuration backups.
+     * @return Array of backup filenames for configuration
+     */
+    public static String[] listConfigBackups() {
+        return ConfigFileHandler.listConfigurationBackups();
+    }
 }

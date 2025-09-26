@@ -250,6 +250,41 @@ public class MaterialFileHandler {
     }
     
     /**
+     * Restores materials from a backup file.
+     * @param backupFilename The backup filename to restore from
+     * @return true if restore was successful
+     */
+    public static boolean restoreMaterials(String backupFilename) {
+        boolean restored = DataFileManager.restoreFromBackup(backupFilename, MATERIALS_FILENAME);
+        if (restored) {
+            // Reload materials after restore
+            return loadMaterials();
+        }
+        return false;
+    }
+    
+    /**
+     * Restores materials from the most recent backup.
+     * @return true if restore was successful
+     */
+    public static boolean restoreMaterialsFromLatestBackup() {
+        boolean restored = DataFileManager.restoreFromLatestBackup(MATERIALS_FILENAME);
+        if (restored) {
+            // Reload materials after restore
+            return loadMaterials();
+        }
+        return false;
+    }
+    
+    /**
+     * Lists all available material backups.
+     * @return Array of backup filenames for materials
+     */
+    public static String[] listMaterialBackups() {
+        return DataFileManager.listBackupsForFile(MATERIALS_FILENAME);
+    }
+    
+    /**
      * Exports materials to a formatted text report.
      * @return The formatted report as a string
      */

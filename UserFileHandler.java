@@ -20,7 +20,7 @@ public class UserFileHandler {
         
         StringBuilder data = new StringBuilder();
         data.append("# User Data Export\n");
-        data.append("# Format: username|email|role\n");
+        data.append("# Format: username|email|role|passwordHash\n");
         data.append("# Generated: ").append(new Date()).append("\n\n");
         
         for (User user : userRegistry.values()) {
@@ -202,25 +202,13 @@ public class UserFileHandler {
             return false;
         }
         
-        String username = user.getUsername();
-        String email = user.getEmail();
-        String role = user.getRole();
-        
-        // Check username
-        if (username == null || username.trim().isEmpty()) {
-            System.err.println("Username cannot be empty");
-            return false;
-        }
-        
-        // Check email format (basic validation)
-        if (email == null || email.trim().isEmpty() || !email.contains("@")) {
-            System.err.println("Invalid email format");
-            return false;
-        }
-        
-        // Check role
-        if (role == null || role.trim().isEmpty()) {
-            System.err.println("Role cannot be empty");
+        // Use enhanced input validation
+        ValidationResult validation = InputValidator.validateUser(user);
+        if (!validation.isValid()) {
+            System.err.println("User validation failed:");
+            for (String error : validation.getErrors()) {
+                System.err.println("  - " + error);
+            }
             return false;
         }
         
@@ -237,7 +225,8 @@ public class UserFileHandler {
         
         sb.append(escapeString(user.getUsername())).append("|");
         sb.append(escapeString(user.getEmail())).append("|");
-        sb.append(escapeString(user.getRole()));
+        sb.append(escapeString(user.getRole())).append("|");
+        sb.append(escapeString(user.getPasswordHash() != null ? user.getPasswordHash() : ""));
         
         return sb.toString();
     }
@@ -258,8 +247,19 @@ public class UserFileHandler {
             String username = unescapeString(parts[0]);
             String email = unescapeString(parts[1]);
             String role = unescapeString(parts[2]);
+            String passwordHash = parts.length > 3 ? unescapeString(parts[3]) : "";
             
-            return new User(username, email, role);
+            // Handle backward compatibility - if no password hash, create user without password
+            if (passwordHash == null || passwordHash.trim().isEmpty()) {
+                User user = new User();
+                user.setUsername(username);
+                user.setEmail(email);
+                user.setRole(role);
+                user.setPasswordHash(null);
+                return user;
+            } else {
+                return new User(username, email, role, passwordHash, true);
+            }
         } catch (Exception e) {
             System.err.println("Error deserializing user: " + e.getMessage());
             return null;
@@ -299,6 +299,41 @@ public class UserFileHandler {
     }
     
     /**
+     * Restores users from a backup file.
+     * @param backupFilename The backup filename to restore from
+     * @return true if restore was successful
+     */
+    public static boolean restoreUsers(String backupFilename) {
+        boolean restored = DataFileManager.restoreFromBackup(backupFilename, USERS_FILENAME);
+        if (restored) {
+            // Reload users after restore
+            return loadUsers();
+        }
+        return false;
+    }
+    
+    /**
+     * Restores users from the most recent backup.
+     * @return true if restore was successful
+     */
+    public static boolean restoreUsersFromLatestBackup() {
+        boolean restored = DataFileManager.restoreFromLatestBackup(USERS_FILENAME);
+        if (restored) {
+            // Reload users after restore
+            return loadUsers();
+        }
+        return false;
+    }
+    
+    /**
+     * Lists all available user backups.
+     * @return Array of backup filenames for users
+     */
+    public static String[] listUserBackups() {
+        return DataFileManager.listBackupsForFile(USERS_FILENAME);
+    }
+    
+    /**
      * Exports users to a formatted text report.
      * @return The formatted report as a string
      */
@@ -316,7 +351,7 @@ public class UserFileHandler {
         Map<String, List<User>> usersByRole = new HashMap<>();
         for (User user : userRegistry.values()) {
             String role = user.getRole();
-            usersByRole.computeIfAbsent(role, k -> new ArrayList<>()).add(user);
+            usersByRole.computeIfAbsent(role, _ -> new ArrayList<>()).add(user);
         }
         
         for (Map.Entry<String, List<User>> entry : usersByRole.entrySet()) {

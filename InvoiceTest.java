@@ -21,7 +21,7 @@ public class InvoiceTest {
         SystemConfig.resetToDefaults();
         
         // Create test objects
-        testUser = new User("testuser", "test@example.com", "customer");
+        testUser = new User("testuser", "test@example.com", "customer", "password123");
         testMaterial = new Material("PLA", 0.02, 200, "White");
         testOrder = new Order(testUser, testMaterial, "10cm x 5cm x 3cm", 2, "High quality");
         testInvoice = new Invoice(testOrder, 25.50);
@@ -327,7 +327,7 @@ public class InvoiceTest {
     
     @Test
     void testInvoiceWithOrderHavingUnicodeCharacters() {
-        User userWithUnicode = new User("usér", "user@tëst.com", "customer");
+        User userWithUnicode = new User("usér", "user@tëst.com", "customer", "password123");
         Order orderWithUnicode = new Order(userWithUnicode, testMaterial, "10cm x 5cm x 3cm", 2, "Special chars: ñáéíóú");
         Invoice invoice = new Invoice(orderWithUnicode, 25.50);
         String result = invoice.exportInvoice();
