@@ -1,0 +1,5 @@
+# User Data Export
+# Format: username|email|role|passwordHash
+# Generated: Fri Sep 26 11:31:27 EDT 2025
+
+joseph|josephsparks2@me.com|admin|$2a$12$hqAP289g25nBf2IchLOUFgab1d43c6d5b6d06a40893392e4e085635b98e3670dfe8867d6627c0a8bcb837c

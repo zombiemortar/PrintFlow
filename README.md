@@ -28,7 +28,11 @@ PrintFlow is a Java-based business management system for 3D printing service pro
 ### Installation
 1. Download all Java files to a directory
 2. Compile: `javac *.java`
-3. Run: `java Tests`
+3. Run demo: `java Tests`
+4. Run CLI (interactive): `java MainCLI`
+5. Run CLI (single command):
+   - Add material: `java MainCLI add-material PLA 0.02 200 White`
+   - Place order: `java MainCLI place-order john_doe PLA 2 "10cm x 5cm x 3cm" rush`
 
 ### What You'll See
 The program demonstrates:

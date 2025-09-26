@@ -25,14 +25,46 @@ public class SimplifiedTestRunner {
         for (String testClass : testClasses) {
             System.out.println("Running " + testClass + "...");
             try {
-                // Use reflection to run each test class
+                // Discover and run @BeforeEach/@Test/@AfterEach methods
                 Class<?> clazz = Class.forName(testClass);
-                java.lang.reflect.Method mainMethod = clazz.getMethod("main", String[].class);
-                mainMethod.invoke(null, (Object) new String[]{});
-                System.out.println("✓ " + testClass + " completed successfully");
-                passedTests++;
+                java.lang.reflect.Method[] methods = clazz.getDeclaredMethods();
+
+                java.util.List<java.lang.reflect.Method> beforeEach = new java.util.ArrayList<>();
+                java.util.List<java.lang.reflect.Method> afterEach = new java.util.ArrayList<>();
+                java.util.List<java.lang.reflect.Method> tests = new java.util.ArrayList<>();
+
+                for (java.lang.reflect.Method m : methods) {
+                    if (m.isAnnotationPresent(org.junit.jupiter.api.BeforeEach.class)) beforeEach.add(m);
+                    if (m.isAnnotationPresent(org.junit.jupiter.api.AfterEach.class)) afterEach.add(m);
+                    if (m.isAnnotationPresent(org.junit.jupiter.api.Test.class)) tests.add(m);
+                }
+
+                Object instance = clazz.getDeclaredConstructor().newInstance();
+                int classPass = 0;
+                int classFail = 0;
+
+                for (java.lang.reflect.Method test : tests) {
+                    try {
+                        for (java.lang.reflect.Method b : beforeEach) { b.setAccessible(true); b.invoke(instance); }
+                        test.setAccessible(true);
+                        test.invoke(instance);
+                        for (java.lang.reflect.Method a : afterEach) { a.setAccessible(true); a.invoke(instance); }
+                        classPass++;
+                    } catch (Throwable t) {
+                        classFail++;
+                        System.out.println("  - Test failed: " + test.getName() + " → " + t.getCause());
+                    }
+                }
+
+                if (classFail == 0) {
+                    System.out.println("✓ " + testClass + " passed (" + classPass + " tests)");
+                    passedTests++;
+                } else {
+                    System.out.println("✗ " + testClass + " failed (" + classFail + " of " + (classPass + classFail) + ")");
+                    failedTests++;
+                }
             } catch (Exception e) {
-                System.out.println("✗ " + testClass + " failed: " + e.getMessage());
+                System.out.println("✗ " + testClass + " failed to execute: " + e.getMessage());
                 failedTests++;
             }
             totalTests++;
