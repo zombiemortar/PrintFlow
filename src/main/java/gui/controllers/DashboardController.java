@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import service.DataManager;
 import model.User;
+import util.ExportManager;
 
 import java.util.Map;
 
@@ -23,6 +24,8 @@ public class DashboardController implements SceneNavigator.WithParams {
     @FXML private Button logoutButton;
     @FXML private Button factoryResetButton;
     @FXML private Button themeToggleButton;
+    @FXML private Button exportSystemReportCsvButton;
+    @FXML private Button exportSystemReportJsonButton;
 
     private SceneNavigator navigator;
     private String currentUser;
@@ -90,6 +93,46 @@ public class DashboardController implements SceneNavigator.WithParams {
             // Apply theme to current scene with background color
             themeManager.applyThemeToCurrentScene(navigator.getPrimaryStage().getScene());
             statusLabel.setText("Theme switched to " + themeManager.getCurrentTheme());
+        }
+    }
+
+    @FXML
+    public void onExportSystemReportCSV() {
+        try {
+            statusLabel.setText("Exporting system report to CSV...");
+            String filename = "system_report_" + ExportManager.getCurrentTimestamp() + ".csv";
+            boolean success = ExportManager.exportSystemReportToCSV(filename);
+            
+            if (success) {
+                AlertUtil.showInfo("Export Successful", "System report exported to CSV successfully.\nFile: " + filename);
+                statusLabel.setText("System report exported to CSV");
+            } else {
+                AlertUtil.showError("Export Failed", "Failed to export system report to CSV.");
+                statusLabel.setText("Export failed");
+            }
+        } catch (Exception e) {
+            AlertUtil.showError("Export Error", "Error exporting system report to CSV: " + e.getMessage());
+            statusLabel.setText("Export error");
+        }
+    }
+
+    @FXML
+    public void onExportSystemReportJSON() {
+        try {
+            statusLabel.setText("Exporting system report to JSON...");
+            String filename = "system_report_" + ExportManager.getCurrentTimestamp() + ".json";
+            boolean success = ExportManager.exportSystemReportToJSON(filename);
+            
+            if (success) {
+                AlertUtil.showInfo("Export Successful", "System report exported to JSON successfully.\nFile: " + filename);
+                statusLabel.setText("System report exported to JSON");
+            } else {
+                AlertUtil.showError("Export Failed", "Failed to export system report to JSON.");
+                statusLabel.setText("Export failed");
+            }
+        } catch (Exception e) {
+            AlertUtil.showError("Export Error", "Error exporting system report to JSON: " + e.getMessage());
+            statusLabel.setText("Export error");
         }
     }
 

@@ -56,6 +56,10 @@
             <padding>
                 <Insets top="10" bottom="20" left="20" right="20" />
             </padding>
+            <Button fx:id="exportSystemReportCsvButton" text="Export System Report CSV" onAction="#onExportSystemReportCSV" 
+                    styleClass="success" style="-fx-min-width: 150; -fx-min-height: 30;" />
+            <Button fx:id="exportSystemReportJsonButton" text="Export System Report JSON" onAction="#onExportSystemReportJSON" 
+                    styleClass="success" style="-fx-min-width: 150; -fx-min-height: 30;" />
             <Label fx:id="statusLabel" text="Ready" styleClass="status" />
             <Button fx:id="themeToggleButton" text="🌙 Dark" onAction="#onThemeToggle" 
                     styleClass="theme-toggle" />

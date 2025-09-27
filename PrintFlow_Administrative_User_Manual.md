@@ -11,8 +11,11 @@
 8. [Invoice Management](#invoice-management)
 9. [System Administration](#system-administration)
 10. [Data Management](#data-management)
-11. [Troubleshooting](#troubleshooting)
-12. [Best Practices](#best-practices)
+11. [Theme Management](#theme-management)
+12. [Export and Reporting](#export-and-reporting)
+13. [Security Features](#security-features)
+14. [Troubleshooting](#troubleshooting)
+15. [Best Practices](#best-practices)
 
 ---
 
@@ -26,12 +29,16 @@ This manual focuses exclusively on administrative functions available through th
 ### Administrative Capabilities
 As an administrative user, you have access to:
 - Complete system oversight and management
-- User account creation and management
-- Material inventory control
-- Order queue management
-- Pricing configuration
-- Invoice generation and export
+- User account creation and management with role-based access
+- Material inventory control and stock management
+- Order queue management and status tracking
+- Advanced pricing configuration and business rules
+- Professional invoice generation and export
 - System configuration and maintenance
+- Theme management (light/dark mode)
+- Comprehensive data export and reporting
+- Factory reset functionality
+- Security management and session control
 
 ---
 
@@ -52,9 +59,10 @@ As an administrative user, you have access to:
 
 ### Login Process
 1. Enter your username and password
-2. Check "Remember Me" if you want automatic login on future sessions
+2. Check "Remember Me" if you want automatic login on future sessions (7-day session validity)
 3. Click "Login" to access the system
-4. If you don't have an account, click "Create Account" (admin approval may be required)
+4. If you don't have an account, click "Create Account" to open the account creation window
+5. The system supports secure session management with automatic timeout
 
 ---
 
@@ -72,23 +80,31 @@ The Dashboard provides access to all major system functions:
 - **Invoices**: Generate and manage customer invoices
 - **Logout**: Securely exit the system
 
+### Additional Features
+- **Theme Toggle**: Switch between light and dark themes
+- **Export System Reports**: Generate comprehensive CSV and JSON reports
+- **Factory Reset**: Admin-only complete system reset (visible only to admin users)
+
 ### Status Information
 - **Welcome Message**: Shows your current username
 - **Status Bar**: Displays current system status and operation feedback
+- **Real-time Updates**: Status messages update as you perform actions
 
 ---
 
 ## User Management
 
 ### Creating New User Accounts
-1. From the login screen, click "Create Account"
+1. From the login screen, click "Create Account" to open the account creation window
 2. Fill in the account creation form:
-   - **Account Type**: Select from Customer, VIP, or Admin
+   - **Account Type**: Select from User, Customer, VIP, or Admin
    - **Username**: Must be unique (3-20 characters)
    - **Email**: Valid email address format
    - **Password**: Must meet security requirements
    - **Confirm Password**: Must match the password
-3. Click "Create Account" to submit
+3. The system provides real-time password strength feedback
+4. Click "Create Account" to submit
+5. The window closes automatically upon successful creation
 
 ### Password Requirements
 All passwords must meet these security standards:
@@ -100,8 +116,9 @@ All passwords must meet these security standards:
 - Cannot be a common/weak password
 
 ### Account Types
+- **User**: Basic users with standard order capabilities
 - **Customer**: Standard users with basic order capabilities
-- **VIP**: Premium users with priority processing and potential discounts
+- **VIP**: Premium users with priority processing and 10% discount on orders
 - **Admin**: Full system access and management capabilities
 
 ### User Account Management
@@ -125,15 +142,16 @@ The Inventory section allows you to manage all 3D printing materials and stock l
    - Current stock levels
 
 ### Adding New Materials
-1. Click "Add Material" button
+1. Click "Add Material" button to open the material creation dialog
 2. Fill in the material details:
-   - **Brand**: Material manufacturer
+   - **Brand**: Material manufacturer (e.g., Overture, Hatchbox)
    - **Type**: Material type (PLA, ABS, PETG, etc.)
-   - **Cost per Gram**: Pricing information
-   - **Print Temperature**: Recommended printing temperature
-   - **Color**: Available color options
-3. Click "Add" to add the material to inventory
-4. New materials are automatically stocked with 1000 grams
+   - **Cost per Gram**: Pricing information (e.g., 0.02)
+   - **Print Temperature**: Recommended printing temperature in Celsius
+   - **Color**: Available color options (e.g., Black, White, Red)
+3. All fields are required and validated in real-time
+4. Click "Add" to add the material to inventory
+5. New materials are automatically stocked with 1000 grams
 
 ### Updating Stock Levels
 1. In the inventory table, click "Update Stock" for any material
@@ -159,14 +177,16 @@ The Inventory section allows you to manage all 3D printing materials and stock l
 ### Creating Orders
 1. Click "New Order" from the Dashboard
 2. Fill in the order form:
-   - **Material**: Select from available materials
-   - **Dimensions**: Enter length × width × height in centimeters
-   - **Quantity**: Number of items to print
-   - **Material Grams**: Estimated material usage per item
-   - **Priority**: Normal or Rush (if rush orders are enabled)
-   - **Special Instructions**: Any specific requirements
-3. Review the order summary
-4. Click "Submit Order" to add to the queue
+   - **Material**: Select from available materials (organized by Type → Brand → Color)
+   - **Dimensions**: Enter length × width × height in centimeters (e.g., 10x5x3)
+   - **Quantity**: Number of items to print (validated against system limits)
+   - **Material Grams**: Estimated material usage per item in grams
+   - **Priority**: Normal, Rush, or VIP (if rush orders are enabled)
+   - **Special Instructions**: Any specific requirements or notes
+3. The system provides real-time material information and order summary
+4. Review the order summary with estimated pricing
+5. Click "Submit Order" to add to the queue
+6. Material stock is automatically updated upon order submission
 
 ### Managing the Order Queue
 1. Click "Order Queue" from the Dashboard
@@ -174,13 +194,16 @@ The Inventory section allows you to manage all 3D printing materials and stock l
    - Order ID and customer information
    - Material and quantity details
    - Current status (pending, processing, completed)
-   - Priority level
-   - Estimated completion time
+   - Priority level (normal, rush, vip)
+   - Estimated print hours
+3. Queue status summary shows total, pending, processing, and completed orders
 
 ### Order Status Management
-- **Set Status**: Change order status between pending, processing, and completed
-- **Change Priority**: Modify order priority (normal to rush, if allowed)
+- **Set Processing**: Change order status to processing
+- **Set Completed**: Mark order as completed
+- **Set Rush**: Upgrade order priority to rush (if enabled)
 - **Refresh Queue**: Update the display with latest information
+- **Selection Required**: Select an order from the table before performing actions
 
 ### Order Processing Workflow
 1. Orders are automatically queued in FIFO (First In, First Out) order
@@ -203,17 +226,21 @@ The Pricing/Config section allows you to manage all business rules and pricing p
 - **Electricity Cost**: Cost per hour for machine operation
 - **Machine Time Cost**: Labor cost per hour
 - **Base Setup Cost**: Fixed cost for order setup
-- **Tax Rate**: Sales tax percentage
-- **Rush Order Surcharge**: Additional cost for rush orders
-- **VIP Discount**: Discount percentage for VIP customers
-- **Bulk Order Discount**: Discount for large quantity orders
+- **Tax Rate**: Sales tax percentage (0-100%)
+- **Currency**: Currency symbol (e.g., USD, EUR)
+- **Rush Order Surcharge**: Additional cost percentage for rush orders
+- **Allow Rush Orders**: Enable/disable rush order functionality
 - **Maximum Order Quantity**: Order size limits
+- **Maximum Order Value**: Maximum total order value
 
 ### Modifying Configuration
 1. Change any parameter value in the form
-2. Click "Save" to apply changes
-3. Changes take effect immediately for new orders
-4. Click "Reset" to restore default values (with confirmation)
+2. Real-time validation provides visual feedback (green/red borders)
+3. Click "Save" to apply changes to both memory and file
+4. Click "Load" to reload configuration from file
+5. Click "Refresh" to update form with current memory values
+6. Click "Reset" to restore default values (with confirmation)
+7. Changes take effect immediately for new orders
 
 ### Configuration Best Practices
 - Review pricing regularly to maintain profitability
@@ -227,24 +254,28 @@ The Pricing/Config section allows you to manage all business rules and pricing p
 
 ### Generating Invoices
 1. Click "Invoices" from the Dashboard
-2. Search for orders by Order ID
-3. Click "Generate Invoice" to create an invoice
+2. Search for orders by Order ID or click "Show All Orders"
+3. Select an order from the table and click "Generate Invoice"
 4. Review the invoice details and pricing breakdown
+5. The invoice displays comprehensive order and cost information
 
 ### Invoice Features
-- **Order Details**: Complete order specifications
+- **Order Details**: Complete order specifications including customer information
 - **Pricing Breakdown**: Detailed cost analysis including:
-  - Material costs
-  - Labor costs
+  - Material costs (based on actual usage)
+  - Labor costs (machine time)
   - Electricity costs
   - Setup fees
-  - Taxes and discounts
+  - Taxes and discounts (VIP, bulk quantity)
 - **Professional Formatting**: Clean, business-ready invoice layout
+- **Invoice ID**: Unique identifier for each invoice
+- **Date Issued**: Timestamp of invoice generation
 
 ### Export Options
-- **CSV Export**: For spreadsheet integration
-- **JSON Export**: For data exchange and integration
-- **Print**: Direct printing capability
+- **CSV Export**: For spreadsheet integration with timestamped filenames
+- **JSON Export**: For data exchange and integration with timestamped filenames
+- **Clear**: Reset the invoice display
+- **Hide Orders**: Hide the orders table to focus on invoice
 
 ### Invoice Management Best Practices
 - Generate invoices promptly after order completion
@@ -265,12 +296,14 @@ The Factory Reset feature restores the system to its original state:
 - Removes all user accounts except default admin
 - Clears all orders and order queue data
 - Resets system configuration to defaults
+- Creates a new default admin account (username: admin, password: admin)
 
 #### Performing a Factory Reset
-1. Access the Factory Reset function (admin-only)
-2. Read the warning message carefully
-3. Confirm the action in the dialog
-4. System will reset and restart with default settings
+1. Access the Factory Reset function (admin-only, visible only to admin users)
+2. Read the comprehensive warning message carefully
+3. Confirm the action in the first dialog
+4. Provide final confirmation in the second dialog
+5. System will reset and redirect to login screen with default settings
 
 ### Data Backup and Recovery
 - **Automatic Backups**: System creates timestamped backups automatically
@@ -297,16 +330,78 @@ PrintFlow automatically saves all data:
 
 ### Data Files
 All data is stored in the `data/` directory:
-- `users.txt`: User account information
+- `users.txt`: User account information with hashed passwords
 - `materials.txt`: Material definitions and properties
 - `orders.txt`: Order history and status
 - `inventory.txt`: Current stock levels
 - `system_config.txt`: Business rules and pricing
+- `order_queue.txt`: Active order queue
+- `user_session.txt`: Session data for "Remember Me" functionality
 
 ### Backup Management
 - **Automatic Backups**: Created with timestamps in `backups/` directory
 - **Manual Exports**: Use export functions for additional data protection
 - **Recovery**: Restore from backup files if needed
+
+---
+
+## Theme Management
+
+### Light and Dark Themes
+PrintFlow supports both light and dark themes for improved user experience:
+
+- **Theme Toggle**: Available on the Dashboard
+- **Automatic Application**: Theme changes apply immediately to the current scene
+- **Persistent Settings**: Theme preference is maintained during the session
+- **Visual Feedback**: Button text updates to show current theme and next action
+
+### Using Themes
+1. Click the theme toggle button on the Dashboard
+2. The interface switches between light and dark modes
+3. Button text changes to indicate the next theme (🌙 Dark / ☀️ Light)
+4. Status message confirms the theme change
+
+---
+
+## Export and Reporting
+
+### System Reports
+Generate comprehensive system reports from the Dashboard:
+
+- **CSV Export**: Complete system data in spreadsheet format
+- **JSON Export**: Structured data for integration and analysis
+- **Timestamped Files**: Automatic filename generation with current date/time
+- **Comprehensive Data**: Includes users, materials, orders, inventory, and configuration
+
+### Invoice Exports
+Individual invoice exports with multiple formats:
+
+- **CSV Format**: Spreadsheet-compatible invoice data
+- **JSON Format**: Structured invoice information
+- **Professional Layout**: Business-ready invoice formatting
+- **Unique Filenames**: Automatic timestamp-based naming
+
+---
+
+## Security Features
+
+### Password Security
+- **BCrypt Hashing**: Secure password storage with salt
+- **Strength Validation**: Real-time password strength assessment
+- **Common Password Detection**: Rejects easily guessable passwords
+- **Character Requirements**: Enforces complexity rules
+
+### Session Management
+- **Secure Sessions**: 32-character session IDs
+- **Automatic Timeout**: 30-minute inactivity timeout
+- **Session Limits**: Maximum 3 concurrent sessions per user
+- **Remember Me**: 7-day session validity for convenience
+
+### Authentication
+- **Role-Based Access**: Different permissions for user types
+- **Admin Controls**: Factory reset and system management
+- **Session Validation**: Continuous authentication verification
+- **Secure Logout**: Complete session cleanup
 
 ---
 
@@ -318,21 +413,29 @@ All data is stored in the `data/` directory:
 - **Forgotten Password**: Contact system administrator for password reset
 - **Account Locked**: Check with administrator for account status
 - **Invalid Credentials**: Verify username and password accuracy
+- **Session Expired**: Re-login if session has timed out (30 minutes)
+- **Remember Me Not Working**: Check if session file exists and is valid
 
 #### Order Issues
 - **Order Not Submitting**: Check material availability and order limits
 - **Pricing Errors**: Verify system configuration settings
 - **Queue Problems**: Refresh the order queue display
+- **Material Not Available**: Ensure material is in inventory with sufficient stock
+- **Validation Errors**: Check all form fields meet requirements
 
 #### Inventory Problems
 - **Stock Not Updating**: Refresh inventory display and check data files
 - **Material Not Available**: Verify material is properly added to system
 - **Cost Discrepancies**: Check material cost settings
+- **Material Not Showing**: Ensure material was saved properly after creation
+- **Stock Display Issues**: Check if inventory file is corrupted
 
 #### System Performance
 - **Slow Response**: Check system resources and restart if needed
 - **Data Not Saving**: Verify file permissions and disk space
 - **Display Issues**: Refresh displays and restart application
+- **Theme Not Applying**: Restart application if theme changes don't take effect
+- **Export Failures**: Check disk space and file permissions
 
 ### Getting Help
 - Check system status messages for guidance
@@ -362,16 +465,19 @@ All data is stored in the `data/` directory:
 
 ### Security Best Practices
 - Change default passwords immediately
-- Use strong, unique passwords
-- Log out when finished
+- Use strong, unique passwords meeting all requirements
+- Log out when finished to end sessions
 - Don't share login credentials
 - Regular password updates
+- Use "Remember Me" only on trusted devices
+- Monitor session activity
 
 ### Data Management
-- Regular system backups
-- Monitor disk space
-- Keep data files organized
-- Test restore procedures
+- Regular system backups using export functions
+- Monitor disk space for data and backup files
+- Keep data files organized in the data/ directory
+- Test restore procedures from backups
+- Export system reports regularly for analysis
 
 ### Customer Service
 - Process orders promptly
@@ -380,10 +486,12 @@ All data is stored in the `data/` directory:
 - Provide detailed invoices
 
 ### System Maintenance
-- Regular configuration reviews
-- Monitor system performance
-- Update material information
-- Review pricing accuracy
+- Regular configuration reviews and updates
+- Monitor system performance and resource usage
+- Update material information and costs
+- Review pricing accuracy and profitability
+- Test theme changes and UI responsiveness
+- Verify export functionality regularly
 
 ---
 
@@ -392,11 +500,13 @@ All data is stored in the `data/` directory:
 PrintFlow provides comprehensive tools for managing a 3D printing service business. This manual covers all administrative functions available through the GUI interface. For technical support or advanced configuration, contact your system administrator.
 
 Remember to:
-- Keep your password secure
-- Regular backup your data
-- Monitor system performance
-- Maintain accurate inventory
-- Process orders efficiently
+- Keep your password secure and change default passwords
+- Regular backup your data using export functions
+- Monitor system performance and resource usage
+- Maintain accurate inventory and material information
+- Process orders efficiently and update statuses
+- Use theme management for better user experience
+- Leverage export features for business analysis
 
 **PrintFlow - Streamlining Your 3D Printing Business Operations**
 

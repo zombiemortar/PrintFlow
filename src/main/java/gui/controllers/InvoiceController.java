@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import model.Invoice;
 import model.Order;
 import service.OrderManager;
+import util.ExportManager;
 
 import java.util.Map;
 
@@ -175,9 +176,10 @@ public class InvoiceController implements SceneNavigator.WithParams {
         }
         
         try {
-            boolean success = currentInvoice.exportToCSV();
+            String filename = "invoice_" + currentInvoice.getInvoiceID() + "_" + ExportManager.getCurrentTimestamp() + ".csv";
+            boolean success = ExportManager.exportInvoiceToCSV(currentInvoice, filename);
             if (success) {
-                AlertUtil.showInfo("Export Successful", "Invoice exported to CSV successfully.");
+                AlertUtil.showInfo("Export Successful", "Invoice exported to CSV successfully.\nFile: " + filename);
             } else {
                 AlertUtil.showError("Export Failed", "Failed to export invoice to CSV.");
             }
@@ -194,9 +196,10 @@ public class InvoiceController implements SceneNavigator.WithParams {
         }
         
         try {
-            boolean success = currentInvoice.exportToJSON();
+            String filename = "invoice_" + currentInvoice.getInvoiceID() + "_" + ExportManager.getCurrentTimestamp() + ".json";
+            boolean success = ExportManager.exportInvoiceToJSON(currentInvoice, filename);
             if (success) {
-                AlertUtil.showInfo("Export Successful", "Invoice exported to JSON successfully.");
+                AlertUtil.showInfo("Export Successful", "Invoice exported to JSON successfully.\nFile: " + filename);
             } else {
                 AlertUtil.showError("Export Failed", "Failed to export invoice to JSON.");
             }

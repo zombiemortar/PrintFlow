@@ -23,14 +23,46 @@ PrintFlow is a Java-based business management system for 3D printing service pro
 ## Quick Start
 
 ### Prerequisites
-- Java Development Kit (JDK) 8 or higher
+- Java Development Kit (JDK) 17 or higher
+- Apache Maven 3.6 or higher
 
-### Installation
-1. Download all Java files to a directory
-2. Compile: `javac *.java`
-3. Run demo: `java Tests`
-4. Run CLI (interactive): `java MainCLI`
-5. Run CLI (single command):
+### Running the JavaFX GUI Application (Windows)
+
+#### Method 1: Using Maven (Recommended)
+1. Open Command Prompt or PowerShell in the project directory
+2. Compile and run the application:
+   ```cmd
+   mvn clean javafx:run
+   ```
+
+#### Method 2: Using Maven with JavaFX Plugin
+1. Compile the project:
+   ```cmd
+   mvn clean compile
+   ```
+2. Run the application:
+   ```cmd
+   mvn javafx:run
+   ```
+
+#### Method 3: Manual JavaFX Module Path (Alternative)
+If Maven JavaFX plugin doesn't work, you can run manually:
+1. Download JavaFX SDK 21.0.4 from [OpenJFX](https://openjfx.io/)
+2. Extract to a directory (e.g., `C:\javafx-sdk-21.0.4`)
+3. Compile the project:
+   ```cmd
+   mvn clean compile
+   ```
+4. Run with module path:
+   ```cmd
+   java --module-path "C:\javafx-sdk-21.0.4\lib" --add-modules javafx.controls,javafx.fxml -cp "target\classes" gui.Main
+   ```
+
+### Running the CLI Version (Legacy)
+1. Compile: `javac *.java`
+2. Run demo: `java Tests`
+3. Run CLI (interactive): `java MainCLI`
+4. Run CLI (single command):
    - Add material: `java MainCLI add-material PLA 0.02 200 White`
    - Place order: `java MainCLI place-order john_doe PLA 2 "10cm x 5cm x 3cm" rush`
 
@@ -100,7 +132,13 @@ The system can export data in multiple formats:
 - Security and input validation
 - Export and reporting capabilities
 
-🔄 **Next Phase**: GUI development with JavaFX
+✅ **JavaFX GUI Complete**: Full graphical user interface implemented
+- Modern JavaFX interface with FXML layouts
+- Complete user workflow from login to invoice generation
+- Theme support (light/dark mode)
+- Data persistence and factory reset functionality
+- Export capabilities (CSV/JSON)
+- Responsive design with proper error handling
 
 ## Business Value
 
@@ -113,3 +151,93 @@ PrintFlow streamlines 3D printing service operations by:
 - Supporting business growth and scaling
 
 Perfect for small to medium 3D printing service businesses looking to professionalize their operations.
+
+## Troubleshooting
+
+### Common Issues on Windows
+
+**JavaFX Module Not Found Error:**
+- Ensure you're using JDK 17 or higher
+- Use the Maven JavaFX plugin: `mvn javafx:run`
+- If that fails, download JavaFX SDK and use the manual module path method
+
+**Maven Not Found:**
+- Install Maven from [Apache Maven](https://maven.apache.org/download.cgi)
+- Add Maven to your system PATH
+- Verify installation: `mvn --version`
+
+**Application Won't Start:**
+- Check that all dependencies are installed: `mvn dependency:resolve`
+- Ensure the `data/` directory exists with proper permissions
+- Check console output for specific error messages
+
+**GUI Not Displaying:**
+- Verify JavaFX dependencies in `pom.xml`
+- Try running with: `mvn clean javafx:run`
+- Check that your system supports JavaFX (most modern Windows systems do)
+
+### Default Login Credentials
+- **Admin Account**: username: `admin`, password: `admin`
+- **Factory Reset**: Available from admin dashboard to restore default settings
+
+## Software Bill of Materials (SBOM)
+
+### Project Information
+- **Project Name**: PrintFlow
+- **Version**: 1.0.0
+- **Language**: Java
+- **Build System**: Apache Maven
+- **Java Version**: 17+
+
+### Dependencies
+
+#### Runtime Dependencies
+| Component | Version | License | Purpose |
+|-----------|---------|---------|---------|
+| **JavaFX Controls** | 21.0.4 | GPL v2 with Classpath Exception | GUI components and controls |
+| **JavaFX FXML** | 21.0.4 | GPL v2 with Classpath Exception | FXML layout and scene management |
+
+#### Development Dependencies
+| Component | Version | License | Purpose |
+|-----------|---------|---------|---------|
+| **JUnit Jupiter Engine** | 5.10.0 | EPL 2.0 | Test execution engine |
+| **JUnit Jupiter API** | 5.10.0 | EPL 2.0 | Test framework API |
+
+#### Build Tools
+| Component | Version | License | Purpose |
+|-----------|---------|---------|---------|
+| **Maven Compiler Plugin** | 3.11.0 | Apache 2.0 | Java compilation |
+| **JavaFX Maven Plugin** | 0.0.8 | Apache 2.0 | JavaFX application packaging |
+| **Maven Surefire Plugin** | 3.1.2 | Apache 2.0 | Test execution |
+
+#### Java Standard Library
+- **java.util** - Collections, data structures, utilities
+- **java.io** - File I/O operations
+- **java.security** - Security and cryptography
+- **java.time** - Date and time handling
+- **java.lang** - Core language features
+
+### Security Considerations
+- **Password Security**: BCrypt-style hashing implemented
+- **Input Validation**: Comprehensive validation against injection attacks
+- **Session Management**: Secure session handling with timeouts
+- **Data Protection**: Automatic backup and restore functionality
+
+### License Summary
+- **Primary License**: GPL v2 with Classpath Exception (JavaFX components)
+- **Test Framework**: EPL 2.0 (JUnit)
+- **Build Tools**: Apache 2.0 (Maven plugins)
+- **Custom Code**: Proprietary (PrintFlow application code)
+
+### Vulnerability Management
+- All dependencies are regularly updated to latest stable versions
+- Security patches applied through Maven dependency management
+- No known critical vulnerabilities in current dependency versions
+
+---
+
+## Copyright
+
+© 2025 Joseph M. Sparks. All rights reserved.
+
+This software is proprietary and confidential. Unauthorized copying, distribution, or modification is strictly prohibited.
