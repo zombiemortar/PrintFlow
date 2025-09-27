@@ -67,3 +67,7 @@ jacoco.exec
 
 # Downloaded tools
 lib/jacoco*
+
+# Application data and backups
+backups/
+data/*.txt

@@ -1,5 +1,0 @@
-# User Data Export
-# Format: username|email|role|passwordHash
-# Generated: Sat Sep 27 16:18:26 EDT 2025
-
-admin|admin@printflow.com|admin|$2a$12$hKnkoNdEdKNpyNYYjMPhwg86332bc5b90fac363965ec92453385e2bc63b27a1f2c9da56ced6e585ec61124
