@@ -1,3 +1,11 @@
+package model;
+
+import service.OrderManager;
+import util.InputValidator;
+import util.Inventory;
+import util.SystemConfig;
+import util.ValidationResult;
+
 /**
  * AdminUser subclass that extends User with administrative privileges.
  * Provides methods for system management and oversight.

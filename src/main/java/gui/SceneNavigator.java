@@ -11,9 +11,11 @@ import java.util.Map;
 
 public class SceneNavigator {
     private final Stage primaryStage;
+    private ThemeManager themeManager;
 
     public SceneNavigator(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        this.themeManager = ThemeManager.getInstance();
     }
 
     public <T> T navigate(String fxmlPath, String title) {
@@ -50,9 +52,20 @@ public class SceneNavigator {
             if (controller instanceof WithParams) {
                 ((WithParams) controller).setParams(params);
             }
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 1000, 700); // Consistent window size
             primaryStage.setTitle(title);
             primaryStage.setScene(scene);
+            
+            // Apply current theme to the scene
+            themeManager.applyTheme(scene);
+            
+            // Set scene background color based on theme
+            if (themeManager.isLightTheme()) {
+                scene.setFill(javafx.scene.paint.Color.web("#FAFAFA"));
+            } else {
+                scene.setFill(javafx.scene.paint.Color.web("#121212"));
+            }
+            
             primaryStage.show();
             @SuppressWarnings("unchecked")
             T typed = (T) controller;

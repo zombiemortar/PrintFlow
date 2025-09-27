@@ -9,13 +9,13 @@
             <padding>
                 <Insets top="40" bottom="40" left="40" right="40" />
             </padding>
-            <Label text="PrintFlow - Login" style="-fx-font-size: 18; -fx-font-weight: bold;" />
+            <Label text="PrintFlow - Login" styleClass="subtitle" />
             <TextField fx:id="usernameField" promptText="Username" />
             <PasswordField fx:id="passwordField" promptText="Password" />
             <CheckBox fx:id="rememberMeCheckbox" text="Remember Me" />
             <HBox spacing="10" alignment="CENTER">
-                <Button text="Login" onAction="#onLogin" />
-                <Button text="Create Account" onAction="#onOpenAccountCreation" />
+                <Button text="Login" onAction="#onLogin" styleClass="success" />
+                <Button text="Create Account" onAction="#onOpenAccountCreation" styleClass="secondary" />
             </HBox>
         </VBox>
     </center>

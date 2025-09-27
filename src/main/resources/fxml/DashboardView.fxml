@@ -9,8 +9,8 @@
             <padding>
                 <Insets top="20" bottom="10" left="20" right="20" />
             </padding>
-            <Label text="PrintFlow - Dashboard" style="-fx-font-size: 24; -fx-font-weight: bold;" />
-            <Label fx:id="welcomeLabel" text="Welcome, User" style="-fx-font-size: 14;" />
+            <Label text="PrintFlow - Dashboard" styleClass="title" />
+            <Label fx:id="welcomeLabel" text="Welcome, User" styleClass="status" />
         </VBox>
     </top>
     
@@ -20,7 +20,7 @@
                 <Insets top="40" bottom="40" left="40" right="40" />
             </padding>
             
-            <Label text="Main Menu" style="-fx-font-size: 18; -fx-font-weight: bold;" />
+            <Label text="Main Menu" styleClass="subtitle" />
             
             <GridPane hgap="20" vgap="15" alignment="CENTER">
                 <columnConstraints>
@@ -45,7 +45,7 @@
                 
                 <!-- Admin-only Factory Reset button -->
                 <Button fx:id="factoryResetButton" text="Factory Reset" onAction="#onFactoryReset" GridPane.columnIndex="0" GridPane.rowIndex="2" 
-                        style="-fx-min-width: 120; -fx-min-height: 40; -fx-background-color: #ff4444; -fx-text-fill: white;" 
+                        styleClass="factory-reset" style="-fx-min-width: 120; -fx-min-height: 40;" 
                         visible="false" />
             </GridPane>
         </VBox>
@@ -56,7 +56,9 @@
             <padding>
                 <Insets top="10" bottom="20" left="20" right="20" />
             </padding>
-            <Label fx:id="statusLabel" text="Ready" style="-fx-font-size: 12; -fx-text-fill: gray;" />
+            <Label fx:id="statusLabel" text="Ready" styleClass="status" />
+            <Button fx:id="themeToggleButton" text="🌙 Dark" onAction="#onThemeToggle" 
+                    styleClass="theme-toggle" />
         </HBox>
     </bottom>
 </BorderPane>

@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import gui.controllers.LoginController;
+import gui.ThemeManager;
 import service.DataManager;
 import java.util.Map;
 import java.io.InputStream;
@@ -44,6 +45,9 @@ public class Main extends Application {
         
         // Initialize the scene navigator
         SceneNavigator navigator = new SceneNavigator(primaryStage);
+        
+        // Apply saved theme preference
+        ThemeManager themeManager = ThemeManager.getInstance();
         
         // Check for auto-login session
         Map<String, Object> sessionData = LoginController.loadUserSession();

@@ -10,44 +10,44 @@
                 <Insets top="30" bottom="30" left="40" right="40" />
             </padding>
             
-            <Label text="Create New Account" style="-fx-font-size: 20; -fx-font-weight: bold;" />
+            <Label text="Create New Account" styleClass="title" />
             
             <VBox spacing="10" alignment="CENTER">
-                <Label text="Account Type:" style="-fx-font-weight: bold;" />
+                <Label text="Account Type:" styleClass="section-header" />
                 <ComboBox fx:id="accountTypeComboBox" prefWidth="200" />
             </VBox>
             
             <VBox spacing="10" alignment="CENTER">
-                <Label text="Username:" style="-fx-font-weight: bold;" />
+                <Label text="Username:" styleClass="section-header" />
                 <TextField fx:id="usernameField" promptText="Enter username" prefWidth="250" />
             </VBox>
             
             <VBox spacing="10" alignment="CENTER">
-                <Label text="Email:" style="-fx-font-weight: bold;" />
+                <Label text="Email:" styleClass="section-header" />
                 <TextField fx:id="emailField" promptText="Enter email address" prefWidth="250" />
             </VBox>
             
             <VBox spacing="10" alignment="CENTER">
-                <Label text="Password:" style="-fx-font-weight: bold;" />
+                <Label text="Password:" styleClass="section-header" />
                 <PasswordField fx:id="passwordField" promptText="Enter password" prefWidth="250" />
             </VBox>
             
             <VBox spacing="10" alignment="CENTER">
-                <Label text="Confirm Password:" style="-fx-font-weight: bold;" />
+                <Label text="Confirm Password:" styleClass="section-header" />
                 <PasswordField fx:id="confirmPasswordField" promptText="Confirm password" prefWidth="250" />
             </VBox>
             
             <VBox spacing="10" alignment="CENTER">
-                <Label fx:id="passwordStrengthLabel" text="" style="-fx-font-size: 12;" />
+                <Label fx:id="passwordStrengthLabel" text="" styleClass="status" />
             </VBox>
             
             <HBox spacing="15" alignment="CENTER">
-                <Button text="Create Account" onAction="#onCreateAccount" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
-                <Button text="Cancel" onAction="#onCancel" style="-fx-background-color: #f44336; -fx-text-fill: white;" />
+                <Button text="Create Account" onAction="#onCreateAccount" styleClass="success" />
+                <Button text="Cancel" onAction="#onCancel" styleClass="danger" />
             </HBox>
             
             <VBox spacing="5" alignment="CENTER">
-                <Label text="Account Type Descriptions:" style="-fx-font-weight: bold;" />
+                <Label text="Account Type Descriptions:" styleClass="section-header" />
                 <Label text="• User: Basic user with standard order capabilities" style="-fx-font-size: 11;" />
                 <Label text="• Customer: Standard user with basic order capabilities" style="-fx-font-size: 11;" />
                 <Label text="• VIP: Premium user with priority processing and discounts" style="-fx-font-size: 11;" />

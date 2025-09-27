@@ -10,9 +10,9 @@
          <children>
             <HBox alignment="CENTER_LEFT" spacing="10.0">
                <children>
-                  <Label styleClass="title" text="Inventory Management" />
+                  <Label text="Inventory Management" styleClass="title" />
                   <Region HBox.hgrow="ALWAYS" />
-                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBack" text="Back to Dashboard" />
+                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBack" text="Back to Dashboard" styleClass="secondary" />
                </children>
             </HBox>
             <Separator />
@@ -29,8 +29,8 @@
                <children>
                   <Label text="Materials and Stock:" />
                   <Region HBox.hgrow="ALWAYS" />
-                  <Button fx:id="addMaterialButton" mnemonicParsing="false" onAction="#onAddMaterial" text="Add Material" />
-                  <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#onRefresh" text="Refresh" />
+                  <Button fx:id="addMaterialButton" mnemonicParsing="false" onAction="#onAddMaterial" text="Add Material" styleClass="success" />
+                  <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#onRefresh" text="Refresh" styleClass="secondary" />
                </children>
             </HBox>
             <TableView fx:id="materialsTable" prefHeight="400.0">
@@ -52,7 +52,7 @@
    <bottom>
       <HBox alignment="CENTER_RIGHT" spacing="10.0">
          <children>
-            <Label fx:id="statusLabel" text="Ready" />
+            <Label fx:id="statusLabel" text="Ready" styleClass="status" />
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />

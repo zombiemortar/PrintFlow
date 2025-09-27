@@ -9,8 +9,8 @@
             <padding>
                 <Insets top="20" bottom="10" left="20" right="20" />
             </padding>
-            <Label text="New Order" style="-fx-font-size: 24; -fx-font-weight: bold;" />
-            <Label fx:id="userLabel" text="User: Loading..." style="-fx-font-size: 14;" />
+            <Label text="New Order" styleClass="title" />
+            <Label fx:id="userLabel" text="User: Loading..." styleClass="status" />
         </VBox>
     </top>
     
@@ -29,52 +29,52 @@
                     
                     <!-- Material Selection -->
                     <Label text="Material:" GridPane.columnIndex="0" GridPane.rowIndex="0" 
-                           style="-fx-font-weight: bold;" />
+                           styleClass="section-header" />
                     <ComboBox fx:id="materialComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" 
                               promptText="Select Material" style="-fx-min-width: 200;" />
                     
                     <!-- Dimensions -->
                     <Label text="Dimensions (LxWxH cm):" GridPane.columnIndex="0" GridPane.rowIndex="1" 
-                           style="-fx-font-weight: bold;" />
+                           styleClass="section-header" />
                     <TextField fx:id="dimensionsField" GridPane.columnIndex="1" GridPane.rowIndex="1" 
                                promptText="e.g., 10x5x3" style="-fx-min-width: 200;" />
                     
                     <!-- Quantity -->
                     <Label text="Quantity:" GridPane.columnIndex="0" GridPane.rowIndex="2" 
-                           style="-fx-font-weight: bold;" />
+                           styleClass="section-header" />
                     <TextField fx:id="quantityField" GridPane.columnIndex="1" GridPane.rowIndex="2" 
                                promptText="1" style="-fx-min-width: 200;" />
                     
                     <!-- Material Usage -->
                     <Label text="Material Usage per Part (grams):" GridPane.columnIndex="0" GridPane.rowIndex="3" 
-                           style="-fx-font-weight: bold;" />
+                           styleClass="section-header" />
                     <TextField fx:id="materialGramsField" GridPane.columnIndex="1" GridPane.rowIndex="3" 
                                promptText="e.g., 50" style="-fx-min-width: 200;" />
                     
                     <!-- Priority -->
                     <Label text="Priority:" GridPane.columnIndex="0" GridPane.rowIndex="4" 
-                           style="-fx-font-weight: bold;" />
+                           styleClass="section-header" />
                     <ComboBox fx:id="priorityComboBox" GridPane.columnIndex="1" GridPane.rowIndex="4" 
                               style="-fx-min-width: 200;" />
                     
                     <!-- Special Instructions -->
                     <Label text="Special Instructions:" GridPane.columnIndex="0" GridPane.rowIndex="5" 
-                           style="-fx-font-weight: bold;" />
+                           styleClass="section-header" />
                     <TextArea fx:id="instructionsField" GridPane.columnIndex="1" GridPane.rowIndex="5" 
                               promptText="Any special requirements or notes..." 
                               style="-fx-min-width: 200; -fx-min-height: 80;" />
                 </GridPane>
                 
                 <!-- Material Info Display -->
-                <VBox spacing="10" alignment="CENTER" style="-fx-background-color: #f0f0f0; -fx-padding: 15; -fx-background-radius: 5;">
-                    <Label text="Selected Material Information" style="-fx-font-weight: bold;" />
+                <VBox spacing="10" alignment="CENTER" style="-fx-background-color: -fx-background-tertiary; -fx-padding: 15; -fx-background-radius: 5;">
+                    <Label text="Selected Material Information" styleClass="section-header" />
                     <Label fx:id="materialInfoLabel" text="Select a material to see details" 
                            style="-fx-text-alignment: center;" wrapText="true" />
                 </VBox>
                 
                 <!-- Order Summary -->
-                <VBox spacing="10" alignment="CENTER" style="-fx-background-color: #e8f4fd; -fx-padding: 15; -fx-background-radius: 5;">
-                    <Label text="Order Summary" style="-fx-font-weight: bold;" />
+                <VBox spacing="10" alignment="CENTER" style="-fx-background-color: -fx-background-tertiary; -fx-padding: 15; -fx-background-radius: 5;">
+                    <Label text="Order Summary" styleClass="section-header" />
                     <Label fx:id="orderSummaryLabel" text="Fill in the form to see order details" 
                            style="-fx-text-alignment: center;" wrapText="true" />
                 </VBox>
@@ -82,11 +82,11 @@
                 <!-- Action Buttons -->
                 <HBox spacing="15" alignment="CENTER">
                     <Button fx:id="submitButton" text="Submit Order" onAction="#onSubmitOrder" 
-                            style="-fx-min-width: 120; -fx-min-height: 40; -fx-background-color: #4CAF50; -fx-text-fill: white;" />
+                            styleClass="success" style="-fx-min-width: 120; -fx-min-height: 40;" />
                     <Button fx:id="clearButton" text="Clear Form" onAction="#onClearForm" 
-                            style="-fx-min-width: 120; -fx-min-height: 40;" />
+                            styleClass="secondary" style="-fx-min-width: 120; -fx-min-height: 40;" />
                     <Button fx:id="backButton" text="Back to Dashboard" onAction="#onBackToDashboard" 
-                            style="-fx-min-width: 120; -fx-min-height: 40;" />
+                            styleClass="secondary" style="-fx-min-width: 120; -fx-min-height: 40;" />
                 </HBox>
             </VBox>
         </ScrollPane>
@@ -97,7 +97,7 @@
             <padding>
                 <Insets top="10" bottom="20" left="20" right="20" />
             </padding>
-            <Label fx:id="statusLabel" text="Ready" style="-fx-font-size: 12; -fx-text-fill: gray;" />
+            <Label fx:id="statusLabel" text="Ready" styleClass="status" />
         </HBox>
     </bottom>
 </BorderPane>

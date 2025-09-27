@@ -9,8 +9,8 @@
             <padding>
                 <Insets top="20" bottom="10" left="20" right="20" />
             </padding>
-            <Label text="PrintFlow - Invoice Management" style="-fx-font-size: 24; -fx-font-weight: bold;" />
-            <Label fx:id="userLabel" text="User: Loading..." style="-fx-font-size: 14;" />
+            <Label text="PrintFlow - Invoice Management" styleClass="title" />
+            <Label fx:id="userLabel" text="User: Loading..." styleClass="status" />
         </VBox>
     </top>
     
@@ -22,22 +22,22 @@
             
             <!-- Order Search Section -->
             <VBox spacing="15" alignment="CENTER">
-                <Label text="Search Invoice by Order ID" style="-fx-font-size: 18; -fx-font-weight: bold;" />
+                <Label text="Search Invoice by Order ID" styleClass="subtitle" />
                 
                 <HBox spacing="10" alignment="CENTER">
-                    <Label text="Order ID:" style="-fx-font-size: 14;" />
+                    <Label text="Order ID:" styleClass="section-header" />
                     <TextField fx:id="orderIdField" promptText="Enter Order ID" style="-fx-min-width: 150;" />
                     <Button fx:id="searchButton" text="Search" onAction="#onSearchOrder" 
-                            style="-fx-min-width: 80; -fx-min-height: 30;" />
+                            styleClass="info" style="-fx-min-width: 80; -fx-min-height: 30;" />
                 </HBox>
                 
                 <Button fx:id="showAllOrdersButton" text="Show All Orders" onAction="#onShowAllOrders" 
-                        style="-fx-min-width: 120; -fx-min-height: 30;" />
+                        styleClass="secondary" style="-fx-min-width: 120; -fx-min-height: 30;" />
             </VBox>
             
             <!-- Invoice Display Section -->
             <VBox spacing="15" alignment="CENTER" fx:id="invoiceDisplaySection" visible="false">
-                <Label text="Invoice Details" style="-fx-font-size: 18; -fx-font-weight: bold;" />
+                <Label text="Invoice Details" styleClass="subtitle" />
                 
                 <ScrollPane fx:id="invoiceScrollPane" style="-fx-max-width: 600; -fx-max-height: 400;">
                     <TextArea fx:id="invoiceTextArea" editable="false" wrapText="true" 
@@ -46,17 +46,17 @@
                 
                 <HBox spacing="10" alignment="CENTER">
                     <Button fx:id="exportCsvButton" text="Export CSV" onAction="#onExportCSV" 
-                            style="-fx-min-width: 100; -fx-min-height: 30;" />
+                            styleClass="success" style="-fx-min-width: 100; -fx-min-height: 30;" />
                     <Button fx:id="exportJsonButton" text="Export JSON" onAction="#onExportJSON" 
-                            style="-fx-min-width: 100; -fx-min-height: 30;" />
+                            styleClass="success" style="-fx-min-width: 100; -fx-min-height: 30;" />
                     <Button fx:id="clearButton" text="Clear" onAction="#onClear" 
-                            style="-fx-min-width: 80; -fx-min-height: 30;" />
+                            styleClass="secondary" style="-fx-min-width: 80; -fx-min-height: 30;" />
                 </HBox>
             </VBox>
             
             <!-- All Orders Table Section -->
             <VBox spacing="15" alignment="CENTER" fx:id="allOrdersSection" visible="false">
-                <Label text="All Orders" style="-fx-font-size: 18; -fx-font-weight: bold;" />
+                <Label text="All Orders" styleClass="subtitle" />
                 
                 <TableView fx:id="ordersTable" style="-fx-max-width: 800; -fx-max-height: 300;">
                     <columns>
@@ -71,9 +71,9 @@
                 
                 <HBox spacing="10" alignment="CENTER">
                     <Button fx:id="generateInvoiceButton" text="Generate Invoice" onAction="#onGenerateInvoice" 
-                            style="-fx-min-width: 120; -fx-min-height: 30;" />
+                            styleClass="info" style="-fx-min-width: 120; -fx-min-height: 30;" />
                     <Button fx:id="hideOrdersButton" text="Hide Orders" onAction="#onHideOrders" 
-                            style="-fx-min-width: 100; -fx-min-height: 30;" />
+                            styleClass="secondary" style="-fx-min-width: 100; -fx-min-height: 30;" />
                 </HBox>
             </VBox>
         </VBox>
@@ -85,8 +85,8 @@
                 <Insets top="10" bottom="20" left="20" right="20" />
             </padding>
             <Button fx:id="backButton" text="Back to Dashboard" onAction="#onBackToDashboard" 
-                    style="-fx-min-width: 150; -fx-min-height: 30;" />
-            <Label fx:id="statusLabel" text="Ready" style="-fx-font-size: 12; -fx-text-fill: gray;" />
+                    styleClass="secondary" style="-fx-min-width: 150; -fx-min-height: 30;" />
+            <Label fx:id="statusLabel" text="Ready" styleClass="status" />
         </HBox>
     </bottom>
 </BorderPane>

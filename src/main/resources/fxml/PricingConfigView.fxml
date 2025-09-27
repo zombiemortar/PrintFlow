@@ -10,10 +10,10 @@
                 <Insets top="20" bottom="10" left="20" right="20" />
             </padding>
             <HBox alignment="CENTER_LEFT" spacing="10">
-                <Button fx:id="backButton" text="Back to Dashboard" onAction="#onBack" />
-                <Label text="PrintFlow - Pricing Configuration" style="-fx-font-size: 24; -fx-font-weight: bold;" />
+                <Button fx:id="backButton" text="Back to Dashboard" onAction="#onBack" styleClass="secondary" />
+                <Label text="PrintFlow - Pricing Configuration" styleClass="title" />
             </HBox>
-            <Label fx:id="statusLabel" text="Ready" style="-fx-font-size: 12; -fx-text-fill: gray;" />
+            <Label fx:id="statusLabel" text="Ready" styleClass="status" />
         </VBox>
     </top>
     
@@ -23,7 +23,7 @@
                 
                 <!-- Pricing Constants Section -->
                 <VBox spacing="10">
-                    <Label text="Pricing Constants" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-underline: true;" />
+                    <Label text="Pricing Constants" styleClass="subtitle" />
                     
                     <GridPane hgap="15" vgap="10">
                         <columnConstraints>
@@ -48,7 +48,7 @@
                 
                 <!-- Tax and Currency Section -->
                 <VBox spacing="10">
-                    <Label text="Tax and Currency" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-underline: true;" />
+                    <Label text="Tax and Currency" styleClass="subtitle" />
                     
                     <GridPane hgap="15" vgap="10">
                         <columnConstraints>
@@ -68,7 +68,7 @@
                 
                 <!-- Order Limits Section -->
                 <VBox spacing="10">
-                    <Label text="Order Limits" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-underline: true;" />
+                    <Label text="Order Limits" styleClass="subtitle" />
                     
                     <GridPane hgap="15" vgap="10">
                         <columnConstraints>
@@ -89,7 +89,7 @@
                 
                 <!-- Rush Order Settings Section -->
                 <VBox spacing="10">
-                    <Label text="Rush Order Settings" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-underline: true;" />
+                    <Label text="Rush Order Settings" styleClass="subtitle" />
                     
                     <GridPane hgap="15" vgap="10">
                         <columnConstraints>
@@ -109,10 +109,10 @@
                 
                 <!-- Action Buttons -->
                 <HBox spacing="15" alignment="CENTER">
-                    <Button fx:id="loadButton" text="Load from File" onAction="#onLoad" />
-                    <Button fx:id="saveButton" text="Save to File" onAction="#onSave" />
-                    <Button fx:id="resetButton" text="Reset to Defaults" onAction="#onReset" />
-                    <Button fx:id="refreshButton" text="Refresh Values" onAction="#onRefresh" />
+                    <Button fx:id="loadButton" text="Load from File" onAction="#onLoad" styleClass="secondary" />
+                    <Button fx:id="saveButton" text="Save to File" onAction="#onSave" styleClass="success" />
+                    <Button fx:id="resetButton" text="Reset to Defaults" onAction="#onReset" styleClass="warning" />
+                    <Button fx:id="refreshButton" text="Refresh Values" onAction="#onRefresh" styleClass="info" />
                 </HBox>
                 
             </VBox>
@@ -124,7 +124,7 @@
             <padding>
                 <Insets top="10" bottom="20" left="20" right="20" />
             </padding>
-            <Label fx:id="configStatusLabel" text="Configuration loaded" style="-fx-font-size: 12; -fx-text-fill: green;" />
+            <Label fx:id="configStatusLabel" text="Configuration loaded" styleClass="success" />
         </HBox>
     </bottom>
 </BorderPane>

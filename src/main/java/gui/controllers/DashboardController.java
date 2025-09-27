@@ -2,6 +2,7 @@ package gui.controllers;
 
 import gui.AlertUtil;
 import gui.SceneNavigator;
+import gui.ThemeManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,12 +22,15 @@ public class DashboardController implements SceneNavigator.WithParams {
     @FXML private Button invoicesButton;
     @FXML private Button logoutButton;
     @FXML private Button factoryResetButton;
+    @FXML private Button themeToggleButton;
 
     private SceneNavigator navigator;
     private String currentUser;
+    private ThemeManager themeManager;
 
     public void setNavigator(SceneNavigator navigator) {
         this.navigator = navigator;
+        this.themeManager = ThemeManager.getInstance();
     }
 
     @FXML
@@ -75,6 +79,17 @@ public class DashboardController implements SceneNavigator.WithParams {
             statusLabel.setText("Logging out...");
             // Navigate back to login screen
             navigator.navigate("/fxml/LoginView.fxml", "PrintFlow - Login");
+        }
+    }
+
+    @FXML
+    public void onThemeToggle() {
+        if (themeManager != null) {
+            themeManager.toggleTheme();
+            themeToggleButton.setText(themeManager.getToggleButtonText());
+            // Apply theme to current scene with background color
+            themeManager.applyThemeToCurrentScene(navigator.getPrimaryStage().getScene());
+            statusLabel.setText("Theme switched to " + themeManager.getCurrentTheme());
         }
     }
 
@@ -150,6 +165,11 @@ public class DashboardController implements SceneNavigator.WithParams {
         } else {
             welcomeLabel.setText("Welcome, User");
             factoryResetButton.setVisible(false);
+        }
+        
+        // Initialize theme toggle button
+        if (themeManager != null && themeToggleButton != null) {
+            themeToggleButton.setText(themeManager.getToggleButtonText());
         }
     }
 }
