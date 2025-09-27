@@ -42,6 +42,11 @@
                         style="-fx-min-width: 120; -fx-min-height: 40;" />
                 <Button fx:id="logoutButton" text="Logout" onAction="#onLogout" GridPane.columnIndex="2" GridPane.rowIndex="1" 
                         style="-fx-min-width: 120; -fx-min-height: 40;" />
+                
+                <!-- Admin-only Factory Reset button -->
+                <Button fx:id="factoryResetButton" text="Factory Reset" onAction="#onFactoryReset" GridPane.columnIndex="0" GridPane.rowIndex="2" 
+                        style="-fx-min-width: 120; -fx-min-height: 40; -fx-background-color: #ff4444; -fx-text-fill: white;" 
+                        visible="false" />
             </GridPane>
         </VBox>
     </center>

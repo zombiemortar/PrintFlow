@@ -2,13 +2,37 @@ package gui;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 import gui.controllers.LoginController;
 import service.DataManager;
 import java.util.Map;
+import java.io.InputStream;
 
 public class Main extends Application {
+    
+    @Override
+    public void init() throws Exception {
+        super.init();
+    }
+    
+    
     @Override
     public void start(Stage primaryStage) {
+        // Set application icon
+        try {
+            InputStream iconStream = getClass().getResourceAsStream("/images/printer-3d.png");
+            if (iconStream != null) {
+                Image icon = new Image(iconStream);
+                primaryStage.getIcons().add(icon);
+                System.out.println("Successfully set application icon from printer-3d.png");
+            } else {
+                System.out.println("Warning: Could not load printer-3d.png icon file");
+            }
+        } catch (Exception e) {
+            System.out.println("Error setting application icon: " + e.getMessage());
+            e.printStackTrace();
+        }
+        
         // Load all system data on startup
         System.out.println("Starting PrintFlow application...");
         boolean dataLoaded = DataManager.loadAllData();
@@ -56,6 +80,3 @@ public class Main extends Application {
         launch(args);
     }
 }
-
-
-

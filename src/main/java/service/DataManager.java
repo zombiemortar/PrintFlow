@@ -168,6 +168,77 @@ public class DataManager {
     }
     
     /**
+     * Performs a factory reset of the entire system.
+     * This method:
+     * - Resets all price baselines to system defaults
+     * - Clears all materials from inventory
+     * - Removes all user accounts except the default admin account
+     * - Creates a single default admin account with username "admin" and password "admin"
+     * - Clears all orders and order queue data
+     * - Resets system configuration to factory defaults
+     * 
+     * @return true if factory reset was successful
+     */
+    public static boolean performFactoryReset() {
+        System.out.println("Performing factory reset...");
+        
+        try {
+            // 1. Reset system configuration to defaults
+            SystemConfig.resetToDefaults();
+            System.out.println("System configuration reset to defaults");
+            
+            // 2. Clear all data from memory
+            clearAllData();
+            System.out.println("All data cleared from memory");
+            
+            // 3. Create default admin account
+            User defaultAdmin = new User("admin", "admin@printflow.com", "admin", "admin");
+            addUser(defaultAdmin);
+            System.out.println("Default admin account created");
+            
+            // 4. Clear all files by writing empty content
+            boolean allFilesCleared = true;
+            
+            // Clear materials file
+            allFilesCleared &= FileManager.writeToFile("materials.txt", "");
+            System.out.println("Materials file cleared: " + allFilesCleared);
+            
+            // Clear users file (will be overwritten with admin account)
+            allFilesCleared &= FileManager.writeToFile("users.txt", "");
+            System.out.println("Users file cleared: " + allFilesCleared);
+            
+            // Clear inventory file
+            allFilesCleared &= FileManager.writeToFile("inventory.txt", "");
+            System.out.println("Inventory file cleared: " + allFilesCleared);
+            
+            // Clear orders file
+            allFilesCleared &= FileManager.writeToFile("orders.txt", "");
+            System.out.println("Orders file cleared: " + allFilesCleared);
+            
+            // Clear order queue file
+            allFilesCleared &= FileManager.writeToFile("order_queue.txt", "");
+            System.out.println("Order queue file cleared: " + allFilesCleared);
+            
+            // 5. Save the default admin account and system config
+            boolean adminSaved = saveUsers();
+            boolean configSaved = SystemConfig.saveToFile();
+            
+            System.out.println("Admin account saved: " + adminSaved);
+            System.out.println("System config saved: " + configSaved);
+            
+            boolean success = allFilesCleared && adminSaved && configSaved;
+            System.out.println("Factory reset completed: " + (success ? "SUCCESS" : "FAILED"));
+            
+            return success;
+            
+        } catch (Exception e) {
+            System.err.println("Error during factory reset: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    /**
      * Saves all system data to files.
      * @return true if all saves were successful
      */

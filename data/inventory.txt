@@ -1,7 +1,0 @@
-# Inventory Data Export
-# Format: materialName|stockInGrams
-# Generated: Sat Sep 27 00:15:11 EDT 2025
-
-Elegoo PETG|950
-Overture PLA|1000
-Overture PLA|1000

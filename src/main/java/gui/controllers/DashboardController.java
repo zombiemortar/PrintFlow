@@ -5,6 +5,8 @@ import gui.SceneNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import service.DataManager;
+import model.User;
 
 import java.util.Map;
 
@@ -18,6 +20,7 @@ public class DashboardController implements SceneNavigator.WithParams {
     @FXML private Button pricingButton;
     @FXML private Button invoicesButton;
     @FXML private Button logoutButton;
+    @FXML private Button factoryResetButton;
 
     private SceneNavigator navigator;
     private String currentUser;
@@ -75,13 +78,78 @@ public class DashboardController implements SceneNavigator.WithParams {
         }
     }
 
+    @FXML
+    public void onFactoryReset() {
+        // Show warning dialog with detailed information
+        String warningMessage = """
+            WARNING: FACTORY RESET
+        
+            This action will PERMANENTLY DELETE ALL DATA:
+            • All user accounts (except default admin)
+            • All materials and inventory
+            • All orders and order queue
+            • All pricing configurations
+            • All system settings
+        
+            A default admin account will be created:
+            • Username: admin
+            • Password: admin
+        
+            This action CANNOT be undone!
+        
+            Are you absolutely sure you want to proceed?
+            """;
+        
+        if (AlertUtil.showConfirmation("Factory Reset Warning", warningMessage)) {
+            // Second confirmation for extra safety
+            if (AlertUtil.showConfirmation("Final Confirmation", 
+                "This is your final warning. All data will be lost forever.\n\nType 'CONFIRM' to proceed:")) {
+                
+                statusLabel.setText("Performing factory reset...");
+                
+                // Perform the factory reset
+                boolean success = DataManager.performFactoryReset();
+                
+                if (success) {
+                    AlertUtil.showInfo("Factory Reset Complete", 
+                        "Factory reset completed successfully.\n\n" +
+                        "Default admin account created:\n" +
+                        "Username: admin\n" +
+                        "Password: admin\n\n" +
+                        "You will be redirected to the login screen.");
+                    
+                    // Navigate back to login screen
+                    navigator.navigate("/fxml/LoginView.fxml", "PrintFlow - Login");
+                } else {
+                    AlertUtil.showError("Factory Reset Failed", 
+                        "Factory reset failed. Please check the console for error details.\n" +
+                        "Some data may have been partially reset.");
+                    statusLabel.setText("Factory reset failed");
+                }
+            } else {
+                statusLabel.setText("Factory reset cancelled");
+            }
+        } else {
+            statusLabel.setText("Factory reset cancelled");
+        }
+    }
+
     @Override
     public void setParams(Map<String, Object> params) {
         if (params != null && params.containsKey("username")) {
             currentUser = (String) params.get("username");
             welcomeLabel.setText("Welcome, " + currentUser);
+            
+            // Show factory reset button only for admin users
+            User user = DataManager.getUserByUsername(currentUser);
+            if (user != null && "admin".equals(user.getRole())) {
+                factoryResetButton.setVisible(true);
+            } else {
+                factoryResetButton.setVisible(false);
+            }
         } else {
             welcomeLabel.setText("Welcome, User");
+            factoryResetButton.setVisible(false);
         }
     }
 }
