@@ -1,6 +1,7 @@
 # Material Data Export
-# Format: name|costPerGram|printTemp|color
-# Generated: Fri Sep 26 11:31:27 EDT 2025
+# Format: brand|type|costPerGram|printTemp|color
+# Generated: Sat Sep 27 00:15:11 EDT 2025
 
-Overture PLA|0.02|210|Black
-Elegoo PETG|0.04|240|Green
+Elegoo|PETG|0.04|240|Green
+Overture|PLA|0.02|210|Orange
+Overture|PLA|0.02|210|Yellow

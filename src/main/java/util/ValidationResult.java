@@ -63,6 +63,17 @@ public class ValidationResult {
     }
     
     /**
+     * Gets the first error message or a default message.
+     * @return The first error message or "Validation failed" if no errors
+     */
+    public String getMessage() {
+        if (!errors.isEmpty()) {
+            return errors.get(0);
+        }
+        return "Validation failed";
+    }
+    
+    /**
      * Gets a formatted summary of the validation result.
      * @return Formatted string with all validation information
      */

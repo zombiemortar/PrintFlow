@@ -16,7 +16,7 @@ public class DataManager {
     
     // Static collections for in-memory data management
     private static final Map<String, User> users = new HashMap<>();
-    private static final Map<String, Material> materials = new HashMap<>();
+    public static final Map<String, Material> materials = new HashMap<>();
     private static final Map<Integer, Order> orders = new HashMap<>();
     private static final Map<String, Integer> inventory = new HashMap<>();
     
@@ -49,13 +49,29 @@ public class DataManager {
     
     // Material management methods
     public static void addMaterial(Material material) {
-        if (material != null && material.getName() != null) {
-            materials.put(material.getName(), material);
+        if (material != null) {
+            String uniqueKey = material.getBrand() + "|" + material.getType() + "|" + material.getColor();
+            materials.put(uniqueKey, material);
         }
     }
     
     public static Material getMaterialByName(String name) {
-        return materials.get(name);
+        // For backward compatibility, try to find by name first
+        for (Material material : materials.values()) {
+            if (material.getName().equals(name)) {
+                return material;
+            }
+        }
+        return null;
+    }
+    
+    public static Material getMaterialByDisplayName(String displayName) {
+        for (Material material : materials.values()) {
+            if (material.getDisplayName().equals(displayName)) {
+                return material;
+            }
+        }
+        return null;
     }
     
     public static Material[] getAllMaterials() {
@@ -63,11 +79,26 @@ public class DataManager {
     }
     
     public static boolean materialExists(String name) {
-        return materials.containsKey(name);
+        for (Material material : materials.values()) {
+            if (material.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
     
     public static void removeMaterial(String name) {
-        materials.remove(name);
+        // Find and remove by name
+        String keyToRemove = null;
+        for (Map.Entry<String, Material> entry : materials.entrySet()) {
+            if (entry.getValue().getName().equals(name)) {
+                keyToRemove = entry.getKey();
+                break;
+            }
+        }
+        if (keyToRemove != null) {
+            materials.remove(keyToRemove);
+        }
     }
     
     public static int getMaterialCount() {
@@ -278,7 +309,7 @@ public class DataManager {
         
         StringBuilder data = new StringBuilder();
         data.append("# Material Data Export\n");
-        data.append("# Format: name|costPerGram|printTemp|color\n");
+        data.append("# Format: brand|type|costPerGram|printTemp|color\n");
         data.append("# Generated: ").append(new Date()).append("\n\n");
         
         for (Material material : materials) {
@@ -606,7 +637,8 @@ public class DataManager {
     
     // Serialization helper methods
     private static String serializeMaterial(Material material) {
-        return material.getName() + "|" + 
+        return material.getBrand() + "|" + 
+               material.getType() + "|" + 
                material.getCostPerGram() + "|" + 
                material.getPrintTemp() + "|" + 
                material.getColor();
@@ -615,12 +647,25 @@ public class DataManager {
     private static Material deserializeMaterial(String line) {
         try {
             String[] parts = line.split("\\|");
-            if (parts.length == 4) {
+            if (parts.length == 5) {
+                // New format: brand|type|costPerGram|printTemp|color
+                String brand = parts[0].trim();
+                String type = parts[1].trim();
+                double costPerGram = Double.parseDouble(parts[2].trim());
+                int printTemp = Integer.parseInt(parts[3].trim());
+                String color = parts[4].trim();
+                return new Material(brand, type, costPerGram, printTemp, color);
+            } else if (parts.length == 4) {
+                // Legacy format: name|costPerGram|printTemp|color (for backward compatibility)
                 String name = parts[0].trim();
                 double costPerGram = Double.parseDouble(parts[1].trim());
                 int printTemp = Integer.parseInt(parts[2].trim());
                 String color = parts[3].trim();
-                return new Material(name, costPerGram, printTemp, color);
+                // Try to parse brand and type from name (assume "Brand Type" format)
+                String[] nameParts = name.split(" ", 2);
+                String brand = nameParts.length > 0 ? nameParts[0] : "Unknown";
+                String type = nameParts.length > 1 ? nameParts[1] : "Unknown";
+                return new Material(brand, type, costPerGram, printTemp, color);
             }
         } catch (Exception e) {
             System.err.println("Error deserializing material: " + line);
@@ -693,10 +738,15 @@ public class DataManager {
                 
                 // Create user and material objects
                 User user = new User(username, email, role, "");
-                Material material = new Material(materialName, materialCost, materialTemp, materialColor);
+                // Parse material name to extract brand and type (legacy format)
+                String[] nameParts = materialName.split(" ", 2);
+                String brand = nameParts.length > 0 ? nameParts[0] : "Unknown";
+                String type = nameParts.length > 1 ? nameParts[1] : "Unknown";
+                Material material = new Material(brand, type, materialCost, materialTemp, materialColor);
                 
-                // Create order
-                Order order = new Order(user, material, dimensions, quantity, instructions);
+                // Create order (using default material grams for legacy orders)
+                double materialGrams = quantity * 10.0; // Default assumption
+                Order order = new Order(user, material, dimensions, quantity, instructions, materialGrams);
                 order.setOrderID(orderID); // Set the original order ID
                 order.updateStatus(status);
                 order.setPriority(priority);

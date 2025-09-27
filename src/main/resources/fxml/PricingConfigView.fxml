@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="gui.controllers.PricingConfigController">
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="20" bottom="10" left="20" right="20" />
+            </padding>
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Button fx:id="backButton" text="Back to Dashboard" onAction="#onBack" />
+                <Label text="PrintFlow - Pricing Configuration" style="-fx-font-size: 24; -fx-font-weight: bold;" />
+            </HBox>
+            <Label fx:id="statusLabel" text="Ready" style="-fx-font-size: 12; -fx-text-fill: gray;" />
+        </VBox>
+    </top>
+    
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true">
+            <VBox spacing="20" style="-fx-padding: 20;">
+                
+                <!-- Pricing Constants Section -->
+                <VBox spacing="10">
+                    <Label text="Pricing Constants" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-underline: true;" />
+                    
+                    <GridPane hgap="15" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="200" />
+                            <ColumnConstraints minWidth="150" />
+                            <ColumnConstraints minWidth="100" />
+                        </columnConstraints>
+                        
+                        <Label text="Electricity Cost per Hour:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="electricityCostField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="USD" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                        
+                        <Label text="Machine Time Cost per Hour:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="machineTimeCostField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="USD" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        
+                        <Label text="Base Setup Cost:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <TextField fx:id="baseSetupCostField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="USD" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                    </GridPane>
+                </VBox>
+                
+                <!-- Tax and Currency Section -->
+                <VBox spacing="10">
+                    <Label text="Tax and Currency" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-underline: true;" />
+                    
+                    <GridPane hgap="15" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="200" />
+                            <ColumnConstraints minWidth="150" />
+                            <ColumnConstraints minWidth="100" />
+                        </columnConstraints>
+                        
+                        <Label text="Tax Rate:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="taxRateField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="percent" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                        
+                        <Label text="Currency:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="currencyField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    </GridPane>
+                </VBox>
+                
+                <!-- Order Limits Section -->
+                <VBox spacing="10">
+                    <Label text="Order Limits" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-underline: true;" />
+                    
+                    <GridPane hgap="15" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="200" />
+                            <ColumnConstraints minWidth="150" />
+                            <ColumnConstraints minWidth="100" />
+                        </columnConstraints>
+                        
+                        <Label text="Max Order Quantity:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="maxOrderQuantityField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="items" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                        
+                        <Label text="Max Order Value:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="maxOrderValueField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="USD" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    </GridPane>
+                </VBox>
+                
+                <!-- Rush Order Settings Section -->
+                <VBox spacing="10">
+                    <Label text="Rush Order Settings" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-underline: true;" />
+                    
+                    <GridPane hgap="15" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="200" />
+                            <ColumnConstraints minWidth="150" />
+                            <ColumnConstraints minWidth="100" />
+                        </columnConstraints>
+                        
+                        <Label text="Allow Rush Orders:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <CheckBox fx:id="allowRushOrdersCheckBox" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        
+                        <Label text="Rush Order Surcharge:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="rushOrderSurchargeField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="percent" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    </GridPane>
+                </VBox>
+                
+                <!-- Action Buttons -->
+                <HBox spacing="15" alignment="CENTER">
+                    <Button fx:id="loadButton" text="Load from File" onAction="#onLoad" />
+                    <Button fx:id="saveButton" text="Save to File" onAction="#onSave" />
+                    <Button fx:id="resetButton" text="Reset to Defaults" onAction="#onReset" />
+                    <Button fx:id="refreshButton" text="Refresh Values" onAction="#onRefresh" />
+                </HBox>
+                
+            </VBox>
+        </ScrollPane>
+    </center>
+    
+    <bottom>
+        <HBox alignment="CENTER" spacing="10">
+            <padding>
+                <Insets top="10" bottom="20" left="20" right="20" />
+            </padding>
+            <Label fx:id="configStatusLabel" text="Configuration loaded" style="-fx-font-size: 12; -fx-text-fill: green;" />
+        </HBox>
+    </bottom>
+</BorderPane>

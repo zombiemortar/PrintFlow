@@ -37,6 +37,14 @@ public class SceneNavigator {
                 ((gui.controllers.DashboardController) controller).setNavigator(this);
             } else if (controller instanceof gui.controllers.OrderFormController) {
                 ((gui.controllers.OrderFormController) controller).setNavigator(this);
+            } else if (controller instanceof gui.controllers.OrderQueueController) {
+                ((gui.controllers.OrderQueueController) controller).setNavigator(this);
+            } else if (controller instanceof gui.controllers.InventoryController) {
+                ((gui.controllers.InventoryController) controller).setNavigator(this);
+            } else if (controller instanceof gui.controllers.PricingConfigController) {
+                ((gui.controllers.PricingConfigController) controller).setNavigator(this);
+            } else if (controller instanceof gui.controllers.InvoiceController) {
+                ((gui.controllers.InvoiceController) controller).setNavigator(this);
             }
             
             if (controller instanceof WithParams) {
@@ -52,6 +60,10 @@ public class SceneNavigator {
         } catch (IOException e) {
             throw new RuntimeException("Failed to load scene: " + fxmlPath, e);
         }
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 
     public interface WithParams {

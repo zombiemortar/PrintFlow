@@ -13,7 +13,6 @@ import java.io.File;
 public class SystemConfigTest {
     
     private static final String TEST_CONFIG_FILENAME = "test_config.txt";
-    private static final String TEST_DATA_DIR = "data";
     
     @BeforeEach
     void setUp() {

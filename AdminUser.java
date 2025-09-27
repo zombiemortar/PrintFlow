@@ -34,18 +34,28 @@ public class AdminUser extends User {
     
     /**
      * Adds a new material to the system's available materials.
-     * @param name The name of the material
+     * @param brand The brand of the material
+     * @param type The type of the material (PLA, PETG, ABS, etc.)
      * @param costPerGram The cost per gram of the material
      * @param printTemp The recommended printing temperature
      * @param color The available color of the material
      * @return The created Material object
      */
-    public Material addMaterial(String name, double costPerGram, int printTemp, String color) {
+    public Material addMaterial(String brand, String type, double costPerGram, int printTemp, String color) {
         // Enhanced input validation
-        ValidationResult nameValidation = InputValidator.validateMaterialName(name);
-        if (!nameValidation.isValid()) {
-            System.err.println("Material name validation failed:");
-            for (String error : nameValidation.getErrors()) {
+        ValidationResult brandValidation = InputValidator.validateMaterialName(brand);
+        if (!brandValidation.isValid()) {
+            System.err.println("Material brand validation failed:");
+            for (String error : brandValidation.getErrors()) {
+                System.err.println("  - " + error);
+            }
+            return null;
+        }
+        
+        ValidationResult typeValidation = InputValidator.validateMaterialName(type);
+        if (!typeValidation.isValid()) {
+            System.err.println("Material type validation failed:");
+            for (String error : typeValidation.getErrors()) {
                 System.err.println("  - " + error);
             }
             return null;
@@ -69,10 +79,11 @@ public class AdminUser extends User {
             return null;
         }
         
-        if (name == null || name.trim().isEmpty() || costPerGram <= 0 || printTemp <= 0 || color == null || color.trim().isEmpty()) {
+        if (brand == null || brand.trim().isEmpty() || type == null || type.trim().isEmpty() || 
+            costPerGram <= 0 || printTemp <= 0 || color == null || color.trim().isEmpty()) {
             return null;
         }
-        Material material = new Material(name.trim(), costPerGram, printTemp, color.trim());
+        Material material = new Material(brand.trim(), type.trim(), costPerGram, printTemp, color.trim());
         // For simplicity, when adding a material, seed some stock in inventory
         Inventory.setStock(material, 1000); // 1000 grams default
         return material;

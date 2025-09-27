@@ -37,33 +37,33 @@ public class DashboardController implements SceneNavigator.WithParams {
     @FXML
     public void onQueue() {
         statusLabel.setText("Opening Order Queue...");
-        // TODO: Navigate to Order Queue screen
-        AlertUtil.showInfo("Feature Coming Soon", "Order Queue functionality will be implemented in step 8.");
-        statusLabel.setText("Ready");
+        Map<String, Object> params = new java.util.HashMap<>();
+        params.put("username", currentUser);
+        navigator.navigate("/fxml/OrderQueueView.fxml", "PrintFlow - Order Queue", params);
     }
 
     @FXML
     public void onInventory() {
         statusLabel.setText("Opening Inventory...");
-        // TODO: Navigate to Inventory screen
-        AlertUtil.showInfo("Feature Coming Soon", "Inventory functionality will be implemented in step 10.");
-        statusLabel.setText("Ready");
+        Map<String, Object> params = new java.util.HashMap<>();
+        params.put("username", currentUser);
+        navigator.navigate("/fxml/InventoryView.fxml", "PrintFlow - Inventory", params);
     }
 
     @FXML
     public void onPricing() {
         statusLabel.setText("Opening Pricing/Config...");
-        // TODO: Navigate to Pricing/Config screen
-        AlertUtil.showInfo("Feature Coming Soon", "Pricing/Config functionality will be implemented in step 11.");
-        statusLabel.setText("Ready");
+        Map<String, Object> params = new java.util.HashMap<>();
+        params.put("username", currentUser);
+        navigator.navigate("/fxml/PricingConfigView.fxml", "PrintFlow - Pricing Configuration", params);
     }
 
     @FXML
     public void onInvoices() {
         statusLabel.setText("Opening Invoices...");
-        // TODO: Navigate to Invoice screen
-        AlertUtil.showInfo("Feature Coming Soon", "Invoice functionality will be implemented in step 12.");
-        statusLabel.setText("Ready");
+        Map<String, Object> params = new java.util.HashMap<>();
+        params.put("username", currentUser);
+        navigator.navigate("/fxml/InvoiceView.fxml", "PrintFlow - Invoice Management", params);
     }
 
     @FXML

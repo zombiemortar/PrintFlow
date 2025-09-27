@@ -1,0 +1,5 @@
+# Order Data Export
+# Format: orderID|username|email|role|materialName|materialCostPerGram|materialPrintTemp|materialColor|dimensions|quantity|specialInstructions|status|priority|estimatedPrintHours
+# Generated: Sat Sep 27 00:15:11 EDT 2025
+
+1001|test|test@example.com|customer|Elegoo PETG|0.04|240|Green|10x10x10|1|test|completed|normal|1.0

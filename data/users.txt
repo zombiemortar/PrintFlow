@@ -1,5 +1,7 @@
 # User Data Export
 # Format: username|email|role|passwordHash
-# Generated: Fri Sep 26 11:31:27 EDT 2025
+# Generated: Sat Sep 27 00:15:11 EDT 2025
 
+test|test@example.com|customer|$2a$12$4sU7RN2SdsdusrNbRriGaA955edab5d49862c422ebbd3f195f487334c4bf4c215ec224619f2918cb306d0b
+zombiemortar|zombiemortar@gmail.com|admin|$2a$12$zeouxhg9+75Y/KPd/nnQ0Q04f962b3c47fc4249f1caa5f5aeb7da6c33a044246c73e455e026629744ab13a
 joseph|josephsparks2@me.com|admin|$2a$12$hqAP289g25nBf2IchLOUFgab1d43c6d5b6d06a40893392e4e085635b98e3670dfe8867d6627c0a8bcb837c

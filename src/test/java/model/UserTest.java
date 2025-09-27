@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserTest {
     
     private User testUser;
-    private Material testMaterial;
     
     @BeforeEach
     void setUp() {
@@ -21,16 +20,12 @@ public class UserTest {
         
         // Create test user
         testUser = new User("testuser", "test@example.com", "customer", "password123");
-        
-        // Create test material
-        testMaterial = new Material("PLA", 0.02, 200, "White");
     }
     
     @AfterEach
     void tearDown() {
         // Clean up after each test
         testUser = null;
-        testMaterial = null;
     }
     
     // ==================== CONSTRUCTOR TESTS ====================

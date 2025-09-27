@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="gui.controllers.OrderQueueController">
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="20" bottom="10" left="20" right="20" />
+            </padding>
+            <Label text="PrintFlow - Order Queue" style="-fx-font-size: 24; -fx-font-weight: bold;" />
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label fx:id="queueStatusLabel" text="Queue Status: Loading..." style="-fx-font-size: 14;" />
+                <Button fx:id="refreshButton" text="Refresh" onAction="#onRefresh" 
+                        style="-fx-min-width: 80; -fx-min-height: 30;" />
+            </HBox>
+        </VBox>
+    </top>
+    
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" bottom="10" left="20" right="20" />
+            </padding>
+            
+            <TableView fx:id="orderTable" style="-fx-min-height: 400;">
+                <columns>
+                    <TableColumn fx:id="idColumn" text="Order ID" prefWidth="80" />
+                    <TableColumn fx:id="userColumn" text="User" prefWidth="120" />
+                    <TableColumn fx:id="materialColumn" text="Material" prefWidth="120" />
+                    <TableColumn fx:id="quantityColumn" text="Qty" prefWidth="60" />
+                    <TableColumn fx:id="statusColumn" text="Status" prefWidth="100" />
+                    <TableColumn fx:id="priorityColumn" text="Priority" prefWidth="80" />
+                    <TableColumn fx:id="estHoursColumn" text="Est. Hours" prefWidth="90" />
+                </columns>
+            </TableView>
+            
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Selected Order Actions:" style="-fx-font-weight: bold;" />
+                <Button fx:id="setProcessingButton" text="Set Processing" onAction="#onSetProcessing" 
+                        style="-fx-min-width: 120; -fx-min-height: 30;" />
+                <Button fx:id="setCompletedButton" text="Set Completed" onAction="#onSetCompleted" 
+                        style="-fx-min-width: 120; -fx-min-height: 30;" />
+                <Button fx:id="setRushButton" text="Set Rush" onAction="#onSetRush" 
+                        style="-fx-min-width: 100; -fx-min-height: 30;" />
+            </HBox>
+        </VBox>
+    </center>
+    
+    <bottom>
+        <HBox alignment="CENTER" spacing="10">
+            <padding>
+                <Insets top="10" bottom="20" left="20" right="20" />
+            </padding>
+            <Button fx:id="backButton" text="Back to Dashboard" onAction="#onBack" 
+                    style="-fx-min-width: 150; -fx-min-height: 35;" />
+            <Label fx:id="statusLabel" text="Ready" style="-fx-font-size: 12; -fx-text-fill: gray;" />
+        </HBox>
+    </bottom>
+</BorderPane>

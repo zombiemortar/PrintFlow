@@ -42,7 +42,7 @@ public class InputValidator {
     private static final Pattern EMAIL_PATTERN = Pattern.compile(
         "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
     );
-    private static final Pattern ROLE_PATTERN = Pattern.compile("^(customer|admin|vip)$");
+    private static final Pattern ROLE_PATTERN = Pattern.compile("^(customer|admin|vip|user)$");
     private static final Pattern MATERIAL_NAME_PATTERN = Pattern.compile("^[a-zA-Z0-9\\s-]{1,100}$");
     private static final Pattern DIMENSIONS_PATTERN = Pattern.compile("^[0-9xX\\s.,-]{1,200}$");
     
@@ -185,7 +185,7 @@ public class InputValidator {
         }
         
         if (!ROLE_PATTERN.matcher(role.toLowerCase()).matches()) {
-            result.addError("Role must be one of: customer, admin, vip");
+            result.addError("Role must be one of: customer, admin, vip, user");
         }
         
         if (containsInjectionPatterns(role)) {

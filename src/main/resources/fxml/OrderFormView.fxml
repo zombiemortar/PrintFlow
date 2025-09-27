@@ -45,16 +45,22 @@
                     <TextField fx:id="quantityField" GridPane.columnIndex="1" GridPane.rowIndex="2" 
                                promptText="1" style="-fx-min-width: 200;" />
                     
-                    <!-- Priority -->
-                    <Label text="Priority:" GridPane.columnIndex="0" GridPane.rowIndex="3" 
+                    <!-- Material Usage -->
+                    <Label text="Material Usage per Part (grams):" GridPane.columnIndex="0" GridPane.rowIndex="3" 
                            style="-fx-font-weight: bold;" />
-                    <ComboBox fx:id="priorityComboBox" GridPane.columnIndex="1" GridPane.rowIndex="3" 
+                    <TextField fx:id="materialGramsField" GridPane.columnIndex="1" GridPane.rowIndex="3" 
+                               promptText="e.g., 50" style="-fx-min-width: 200;" />
+                    
+                    <!-- Priority -->
+                    <Label text="Priority:" GridPane.columnIndex="0" GridPane.rowIndex="4" 
+                           style="-fx-font-weight: bold;" />
+                    <ComboBox fx:id="priorityComboBox" GridPane.columnIndex="1" GridPane.rowIndex="4" 
                               style="-fx-min-width: 200;" />
                     
                     <!-- Special Instructions -->
-                    <Label text="Special Instructions:" GridPane.columnIndex="0" GridPane.rowIndex="4" 
+                    <Label text="Special Instructions:" GridPane.columnIndex="0" GridPane.rowIndex="5" 
                            style="-fx-font-weight: bold;" />
-                    <TextArea fx:id="instructionsField" GridPane.columnIndex="1" GridPane.rowIndex="4" 
+                    <TextArea fx:id="instructionsField" GridPane.columnIndex="1" GridPane.rowIndex="5" 
                               promptText="Any special requirements or notes..." 
                               style="-fx-min-width: 200; -fx-min-height: 80;" />
                 </GridPane>

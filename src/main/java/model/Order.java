@@ -16,6 +16,7 @@ public class Order {
     private String status;
     private String priority; // normal, rush, vip
     private double estimatedPrintHours;
+    private double materialGrams; // estimated material usage in grams
     
     // Static counter for generating unique order IDs
     private static int nextOrderID = 1000;
@@ -27,14 +28,16 @@ public class Order {
      * @param dimensions The dimensions of the print object
      * @param quantity The quantity of items to print
      * @param specialInstructions Any special instructions for the print job
+     * @param materialGrams The estimated material usage in grams
      */
-    public Order(User user, Material material, String dimensions, int quantity, String specialInstructions) {
+    public Order(User user, Material material, String dimensions, int quantity, String specialInstructions, double materialGrams) {
         this.orderID = nextOrderID++;
         this.user = user;
         this.material = material;
         this.dimensions = dimensions;
         this.quantity = quantity;
         this.specialInstructions = specialInstructions;
+        this.materialGrams = materialGrams;
         this.status = "pending";
         this.priority = "normal";
         this.estimatedPrintHours = estimatePrintTimeHours();
@@ -58,6 +61,7 @@ public class Order {
         this.dimensions = "";
         this.quantity = 0;
         this.specialInstructions = "";
+        this.materialGrams = 0.0;
         this.status = "pending";
         this.priority = "normal";
         this.estimatedPrintHours = 0.0;
@@ -71,8 +75,8 @@ public class Order {
         if (material == null || quantity <= 0) {
             return 0.0;
         }
-        // grams usage assumption: 10g per item
-        double gramsUsed = quantity * 10.0;
+        // Use actual material grams specified in order
+        double gramsUsed = materialGrams;
         double materialCost = material.getCostPerGram() * gramsUsed;
         double baseCost = SystemConfig.getBaseSetupCost();
         double machineHours = estimatePrintTimeHours();
@@ -204,6 +208,14 @@ public class Order {
 
     public double getEstimatedPrintHours() {
         return estimatedPrintHours;
+    }
+    
+    public double getMaterialGrams() {
+        return materialGrams;
+    }
+    
+    public void setMaterialGrams(double materialGrams) {
+        this.materialGrams = materialGrams;
     }
     
     @Override

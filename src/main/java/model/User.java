@@ -61,11 +61,12 @@ public class User {
      * @param dimensions The dimensions of the print object
      * @param quantity The quantity of items to print
      * @param specialInstructions Any special instructions for the print job
+     * @param materialGrams The estimated material usage in grams
      * @return The created Order object
      */
-    public Order submitOrder(Material material, String dimensions, int quantity, String specialInstructions) {
+    public Order submitOrder(Material material, String dimensions, int quantity, String specialInstructions, double materialGrams) {
         // Enhanced input validation
-        ValidationResult validation = SecurityManager.validateOrder(new Order(this, material, dimensions, quantity, specialInstructions));
+        ValidationResult validation = SecurityManager.validateOrder(new Order(this, material, dimensions, quantity, specialInstructions, materialGrams));
         if (!validation.isValid()) {
             System.err.println("Order validation failed:");
             for (String error : validation.getErrors()) {
@@ -84,14 +85,17 @@ public class User {
             return null;
         }
 
-        // Simple stock check: assume 10g per item
-        int gramsNeeded = quantity * 10;
+        // Calculate total material needed (quantity × grams per part)
+        double totalMaterialGrams = quantity * materialGrams;
+        int gramsNeeded = (int) Math.ceil(totalMaterialGrams);
+        
+        // Check stock using total material grams needed
         if (!Inventory.hasSufficient(material, gramsNeeded)) {
             return null;
         }
 
-        // Create order
-        Order order = new Order(this, material, dimensions.trim(), quantity, specialInstructions);
+        // Create order with total material usage
+        Order order = new Order(this, material, dimensions.trim(), quantity, specialInstructions, totalMaterialGrams);
         // Set rush priority if noted in instructions and rush orders are allowed
         if (specialInstructions != null && specialInstructions.toLowerCase().contains("rush") && SystemConfig.isAllowRushOrders()) {
             order.setPriority("rush");
@@ -101,7 +105,7 @@ public class User {
         OrderManager.registerOrder(order);
         OrderManager.enqueueOrder(order);
 
-        // Consume stock
+        // Consume stock using total material grams needed
         Inventory.consume(material, gramsNeeded);
 
         return order;
